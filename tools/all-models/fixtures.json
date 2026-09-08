@@ -157,8 +157,8 @@
    ],
    "capacity": "23,380",
    "part_numbers": [
-    "R.461-S.2FLG125.20D.B.13",
-    "R.461-S.2FLG125.20D.B.14"
+    "R.461-8-S.2FLG125.20D.B.13",
+    "R.461-8-S.2FLG125.20D.B.14"
    ],
    "control_line": "CONTROL LINE KIT",
    "control_line_qty": 2,
@@ -708,7 +708,7 @@
    ],
    "capacity": "6,028",
    "part_numbers": [
-    "R.461-S.2FLG125.22D.B.13"
+    "R.461-8-S.2FLG125.22D.B.13"
    ],
    "control_line": "CONTROL LINE KIT",
    "control_line_qty": 1,
@@ -1038,7 +1038,7 @@
    ],
    "capacity": "6,448",
    "part_numbers": [
-    "R.461-S.2FLG125.20S.PT.14"
+    "R.461-8-S.2FLG125.20S.PT.14"
    ],
    "control_line": "CONTROL LINE KIT",
    "control_line_qty": 1,

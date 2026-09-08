@@ -88,6 +88,12 @@ function driver(dom) {
         })(),
         adjustments: Array.from(out.querySelectorAll('.usg-table tbody tr'))
           .map(tr => Array.from(tr.querySelectorAll('td')).map(td => td.textContent.trim())),
+        // One quantity box per cart line, in cart order: a regulator each,
+        // then any control line kit. The kit's quantity used to be printed
+        // beside its name; this box is where it lives now.
+        qtys: Array.from(out.querySelectorAll('[data-qty-for]')).map(i => i.value),
+        // Static note above Add to Cart, on every result.
+        hasAccountNote: !!out.querySelector('.usg-signin'),
         tables: Array.from(out.querySelectorAll('.usg-dfwrap')).map(w => ({
           title: w.previousElementSibling && w.previousElementSibling.classList.contains('usg-df-title')
             ? w.previousElementSibling.textContent.trim() : null,
@@ -238,14 +244,36 @@ async function testTool(slug) {
       }
     }
 
-    // Control line kit, shown as "<KIT NAME>: <qty>" below the part numbers.
-    // It is not a regulator, so it must NOT reach the cart link or the PDF.
+    // Control line kit, shown by name below the part numbers. Its quantity is
+    // the default of the quantity box under it rather than text beside the
+    // name. It is not a regulator, so it must NOT reach the PDF - but it is a
+    // real SKU, so it does belong in the cart, which the check below proves.
     if (want.control_line) {
-      const line = want.control_line + ': ' + want.control_line_qty;
-      if (got.text.indexOf(line) === -1) problems.push('missing control line "' + line + '"');
-      // It is a real SKU, so it belongs in the cart with its own quantity.
+      if (got.text.indexOf(want.control_line) === -1) {
+        problems.push('missing control line "' + want.control_line + '"');
+      }
+      if (got.text.indexOf(want.control_line + ': ') !== -1) {
+        problems.push('control line still prints its quantity beside the name');
+      }
     } else if (want.control_line === null && /CONTROL LINE KIT/.test(got.text)) {
       problems.push('control line shown when the algorithm returned none');
+    }
+
+    // A quantity box per cart line: 1 for each regulator, its own figure for
+    // the kit. These are the defaults, before anyone touches them.
+    if ((want.part_numbers || []).length) {
+      const wantBoxes = (want.part_numbers || []).map(() => '1');
+      if (want.control_line) {
+        wantBoxes.push(String(want.control_line_qty === null || want.control_line_qty === undefined
+          ? 1 : want.control_line_qty));
+      }
+      if (JSON.stringify(got.qtys) !== JSON.stringify(wantBoxes)) {
+        problems.push('quantity boxes ' + JSON.stringify(got.qtys) + ' vs ' + JSON.stringify(wantBoxes));
+      }
+      if (!got.hasAccountNote) problems.push('missing the account-pricing note above Add to Cart');
+      if (got.html.indexOf('usg-signin') > got.html.indexOf('usg-btn-cart')) {
+        problems.push('account-pricing note is below Add to Cart');
+      }
     }
 
     // Add to Cart: one matched part[]/qty[] pair per part number, in order,

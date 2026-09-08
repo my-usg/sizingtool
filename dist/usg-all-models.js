@@ -8,8 +8,8 @@
  *
  * tool:      all-models
  * version:   1.1.0
- * algorithm: sha256:31223a399c16
- * sources:   sha256:1b1965d9fa08
+ * algorithm: sha256:d8fe331254c9
+ * sources:   sha256:e0cc6f3564f0
  *
  * Adds to the shared namespace:
  *   USGSizing.sizeAllModels(input)  -> result object
@@ -2985,7 +2985,7 @@ function run_regulator_selection461(inlet_p, outlet_p, max_flow, min_flow, opp, 
 function hsc_pnc461(match) {
   let body, body_map, diap, diap_map, end, model, mon_spring, opp, orifice, orifice_map, output, seat, spring, spring_map, $t124, $t125, $t126, $t127, $t128, $t129, $t130, $t131;
   body_map = new Map([["2\" ANSI125", "2FLG125"], ["2\" ANSI250", "2FLG250"], ["2\" ANSI300", "2FLG300"], ["2\" ANSI600", "2FLG600"], ["3\" ANSI125", "3FLG125"], ["3\" ANSI250", "3FLG250"], ["3\" ANSI300", "3FLG300"], ["3\" ANSI600", "3FLG600"], ["4\" ANSI125", "4FLG125"], ["4\" ANSI250", "4FLG250"], ["4\" ANSI300", "4FLG300"], ["6\" ANSI125", "6FLG125"], ["6\" ANSI250", "6FLG250"]]);
-  diap_map = new Map([["10\"", "10"], ["12\"", "12"], ["14\"", "14"], ["16\"", "16"], ["18\"", "18"], ["20\"", "20"], ["12\" CI", "461S-12"], ["12\" Al", "461-12-S"], ["8\" AL", "461-8-S"]]);
+  diap_map = new Map([["10\"", "10"], ["12\"", "12"], ["14\"", "14"], ["16\"", "16"], ["18\"", "18"], ["20\"", "20"], ["12\" CI", "461S-12"], ["12\" Al", "461-12-S"], ["8\" Al", "461-8-S"]]);
   orifice_map = new Map([["11/16\" single", "22S"], ["11/16\" double", "22D"], ["1\" single", "20S"], ["1\" double", "20D"], ["1-1/2\"", "23"], ["1-3/4\"", "24"], ["2-1/8\"", "25"], ["3\"", "26"], ["4-1/4\"", "27"], ["1\" single VP", "20VPS"], ["1\" double VP", "20VPD"], ["1-1/2\" VP", "23VP"], ["1-3/4\" VP", "24VP"], ["2-1/8\" VP", "25VP"], ["3\" VP", "26VP"], ["4-1/4\" VP", "27VP"]]);
   spring_map = new Map([["Aluminum", "24"], ["Green", "12"], ["Yellow", "23"], ["Gray", "27"], ["Blue", "11"], ["Red", "10"], ["Orange", "13"], ["Black", "14"], ["Cadmium", "15"], ["Cadmium + White", "21"], ["Brown", "22"], ["Brown + White", "31"]]);
   model = $get(match, "model");
@@ -3587,7 +3587,7 @@ function sizeTool(rawInput) {
   ns.versions = ns.versions || {};
   ns.versions['all-models'] = {
     version: '1.1.0',
-    algorithm: 'sha256:31223a399c16',
-    sources: 'sha256:1b1965d9fa08'
+    algorithm: 'sha256:d8fe331254c9',
+    sources: 'sha256:e0cc6f3564f0'
   };
 })(typeof window !== 'undefined' ? window : this);

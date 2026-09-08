@@ -323,11 +323,19 @@
 #usg-sizing-tool .usg-btn:hover { border-color: rgb(255, 75, 75); color: rgb(255, 75, 75) !important; background: #fff; }
 #usg-sizing-tool .usg-btn-primary { background: rgb(255, 75, 75) !important; border-color: rgb(255, 75, 75) !important; color: #fff !important; }
 #usg-sizing-tool .usg-btn-primary:hover { background: rgb(255, 51, 51) !important; border-color: rgb(255, 51, 51) !important; color: #fff !important; }
+/* Part numbers read like the product-page title: the site's own blue, the
+   body font, and on their own line under the label. The monospace green chip
+   this replaced belonged to the Streamlit build. The colour is sampled from a
+   product page, so it matches by value rather than by inheriting - nothing in
+   the theme exposes it as a variable. */
 #usg-sizing-tool code.usg-pn {
-  font-family: "Source Code Pro", Menlo, Consolas, monospace !important;
-  font-size: 15px !important; color: rgb(9, 171, 59) !important;
-  background: rgb(240, 242, 246) !important; border: 0 !important;
-  padding: 2px 7px !important; border-radius: 5px;
+  display: block; margin-top: 2px;
+  font-family: inherit !important;
+  font-size: 24px !important; font-weight: 600 !important;
+  color: rgb(49, 65, 122) !important;
+  background: none !important; border: 0 !important;
+  padding: 0 !important; border-radius: 0;
+  overflow-wrap: break-word;
 }
 /* ---- Add to Cart ----
    Deliberately UNSTYLED, the same way the 441 configurator does it: the cart
@@ -340,8 +348,9 @@
    that would otherwise inherit this block's font; a theme that sets its own
    button font still wins. The configurator needs no equivalent because it sets
    no font of its own at all. */
+/* Total above the button, both left-aligned, the way the product pages read. */
 #usg-sizing-tool .usg-cart {
-  display: flex; align-items: center; flex-wrap: wrap; gap: 14px;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 10px;
   margin: 14px 0 0 !important;
   font-family: var(--bs-body-font-family, inherit);
 }
@@ -351,13 +360,22 @@
    lookup is unavailable, so nothing shifts on the page when it fails. */
 #usg-sizing-tool [hidden] { display: none !important; }
 #usg-sizing-tool .usg-price {
-  font-size: 20px !important; font-weight: 700 !important;
-  color: rgb(49, 51, 63) !important; margin: -6px 0 10px !important;
+  font-size: 30px !important; font-weight: 600 !important;
+  color: rgb(49, 51, 63) !important; margin: 0 0 10px !important;
 }
 #usg-sizing-tool .usg-price small {
-  font-size: 14px !important; font-weight: 400;
+  font-size: 15px !important; font-weight: 400;
   color: rgba(49, 51, 63, 0.65) !important; margin-left: 7px;
 }
+/* Quantity box under each part number. It inherits the block's number-input
+   styling, including the suppressed spinners, and is capped narrow so it does
+   not read as a pressure field. */
+#usg-sizing-tool .usg-qty { display: block; margin: 10px 0 12px; }
+#usg-sizing-tool .usg-qty > span {
+  display: block; margin-bottom: 5px;
+  font-size: 15px !important; color: rgb(49, 51, 63);
+}
+#usg-sizing-tool .usg-qty .usg-numwrap { max-width: 120px; }
 #usg-sizing-tool .usg-avail {
   background: #f7f7f7; border-left: 3px solid #b4741d; border-radius: 0 4px 4px 0;
   padding: 9px 15px; margin: 0 0 14px; font-size: 15px !important; line-height: 1.5;
@@ -370,7 +388,20 @@
 #usg-sizing-tool .usg-avail a { color: inherit !important; }
 #usg-sizing-tool .usg-avail.is-stock { border-left-color: #1e7d3a; }
 #usg-sizing-tool .usg-avail.is-stock strong { color: #1e7d3a !important; }
-#usg-sizing-tool .usg-total { font-weight: 700; white-space: nowrap; }
+/* Same size as the line prices above it - it is one of them, summed. */
+#usg-sizing-tool .usg-total {
+  font-size: 30px !important; font-weight: 700; white-space: nowrap;
+}
+/* Its links are left unstyled so they are the theme's links, the same as on a
+   product page. */
+#usg-sizing-tool .usg-signin {
+  font-size: 16px !important; line-height: 1.6;
+  color: rgb(49, 51, 63); max-width: 620px;
+}
+/* An estimate on screen for a quantity the customer has since changed: dimmed
+   while the new one loads, rather than blanked, which would make the page jump
+   on every keystroke. */
+#usg-sizing-tool .usg-avail.is-stale { opacity: 0.45; }
 #usg-sizing-tool .usg-hr { border: none; border-top: 1px solid rgba(49, 51, 63, 0.2); margin: 24px 0; }
 #usg-sizing-tool .usg-alert { border-radius: 8px; padding: 16px; margin: 8px 0 16px; font-size: 16px !important; line-height: 1.6; }
 #usg-sizing-tool .usg-error { background: rgba(255, 43, 43, 0.09); color: rgb(125, 53, 59) !important; }
@@ -379,6 +410,19 @@
 #usg-sizing-tool .usg-info { background: rgba(28, 131, 225, 0.1); color: rgb(0, 66, 128) !important; }
 #usg-sizing-tool .usg-field { font-size: 16px !important; color: rgb(49, 51, 63) !important; margin: 0 0 12px !important; }
 #usg-sizing-tool .usg-field strong { color: rgb(49, 51, 63) !important; font-weight: 600; }
+/* The control line kit is a part number too - a SKU that goes in the cart with
+   its own quantity - so the whole line reads like one, quantity included. It
+   carries no separate label, which is why this covers the paragraph and not
+   just the name inside it. It sits directly after the .usg-field rules it has
+   to beat: it is more specific, but keeping it later as well means no cascade
+   argument decides the colour. */
+#usg-sizing-tool .usg-field.usg-clkit,
+#usg-sizing-tool .usg-field.usg-clkit strong {
+  font-family: inherit !important;
+  font-size: 24px !important; font-weight: 600 !important;
+  color: rgb(49, 65, 122) !important;
+  overflow-wrap: break-word;
+}
 #usg-sizing-tool .usg-code {
   background: rgb(240, 242, 246); border-radius: 8px; padding: 12px 16px;
   font-family: "Source Code Pro", Menlo, Consolas, monospace !important; font-size: 15px !important;
@@ -520,6 +564,20 @@ function buildInput() {
 // if a part number is not recognised).
 var CART_ENDPOINT = 'https://hollandsupplycompany.com/api/sizing-tool/add-to-cart';
 
+// The account-pricing note that sits above Add to Cart on the product pages.
+// It shows unconditionally: the tool cannot tell whether this visitor is
+// signed in or already on account pricing, and a note about better prices is
+// harmless to someone who already has them.
+// Both links go to the one login page - registration is reached from there -
+// so there is a single URL to keep right. Absolute, matching CART_ENDPOINT
+// above.
+var ACCOUNT_URL = 'https://hollandsupplycompany.com/login';
+function accountNote() {
+  return '<span class="usg-signin">You may qualify for lower pricing by establishing an ' +
+    'account with Holland Supply. <a href="' + ACCOUNT_URL + '">Login in</a> or ' +
+    '<a href="' + ACCOUNT_URL + '">Create an account here</a>.</span>';
+}
+
 // items is a list of { part, qty } - the regulators first, then any control
 // line kit with its own quantity.
 function cartUrl(items) {
@@ -593,11 +651,22 @@ var leadCache = {};
 // A late response must not paint over a newer sizing run.
 var lookupToken = 0;
 
-// Placeholders rendered with each part number. Empty and hidden until a
-// lookup fills them in.
-function infoSlots(sku) {
-  return '<p class="usg-price" data-price-for="' + esc(sku) + '" hidden></p>' +
-    '<div class="usg-avail" data-avail-for="' + esc(sku) + '" hidden></div>';
+// Rendered under each part number: the quantity box, then the price and
+// availability placeholders, which are empty and hidden until a lookup fills
+// them in. Quantity is a real input now - it drives the cart, the line total
+// and the lead time request - so it defaults to what the sizing produced (1
+// for a regulator, its own figure for a control line kit).
+// `line` is the position in the cart list, and it is what the quantity is
+// tracked by - NOT the part number. A monitor can carry the same part number
+// as its worker, and keying on the SKU made the two lines share one quantity,
+// with the last one on the page winning.
+function infoSlots(sku, qty, line) {
+  var n = (qty === null || qty === undefined || !(Number(qty) > 0)) ? 1 : Math.round(Number(qty));
+  return '<label class="usg-qty"><span>Quantity</span>' +
+    '<span class="usg-numwrap"><input type="number" inputmode="numeric" min="1" max="999" step="1"' +
+    ' value="' + n + '" data-qty-for="' + line + '"></span></label>' +
+    '<p class="usg-price" data-price-for="' + esc(sku) + '" hidden></p>' +
+    '<div class="usg-avail" data-avail-for="' + esc(sku) + '" data-line="' + line + '" hidden></div>';
 }
 
 // The part/quantity list travels on the Add to Cart paragraph so the lookup
@@ -611,16 +680,53 @@ function itemsAttr(items) {
   }
   return bits.join('|');
 }
+// data-items fixes which parts are on screen and in what order; the quantity
+// boxes hold the live figure, one per line, in the same order.
+function qtyByLine(root) {
+  var els = root.querySelectorAll('[data-qty-for]'), qty = [];
+  for (var i = 0; i < els.length; i++) {
+    var n = parseInt(els[i].value, 10);
+    qty[Number(els[i].getAttribute('data-qty-for'))] = (isFinite(n) && n > 0) ? n : 1;
+  }
+  return qty;
+}
 function itemsFromDom(root) {
   var el = root.querySelector('.usg-cart[data-items]');
   if (!el) return [];
+  var live = qtyByLine(root);
   var pairs = (el.getAttribute('data-items') || '').split('|'), items = [];
   for (var i = 0; i < pairs.length; i++) {
     if (!pairs[i]) continue;
     var bits = pairs[i].split('~');
-    items.push({ part: bits[0], qty: Number(bits[1]) || 1 });
+    var qty = (live[items.length] !== undefined) ? live[items.length] : (Number(bits[1]) || 1);
+    items.push({ part: bits[0], qty: qty });
   }
   return items;
+}
+
+// A lead time is quoted for a quantity, so it is cached against one: change
+// the quantity and the estimate has to be asked for again.
+function leadKey(part, qty) { return part + '|' + qty; }
+
+// Quantity changed: the cart URL, the line total and the estimates all follow
+// from it. The URL is rewritten in place so the click handler stays a plain
+// read of data-cart.
+function onQtyChange(root) {
+  var items = itemsFromDom(root);
+  var wrap = root.querySelector('.usg-cart[data-items]');
+  var btn = wrap ? wrap.querySelector('.usg-btn-cart') : null;
+  if (btn) btn.setAttribute('data-cart', cartUrl(items));
+  paintInfo(root);
+  scheduleLeadTimes(items, root);
+}
+var qtyTimer = null;
+function scheduleLeadTimes(items, root) {
+  if (qtyTimer) window.clearTimeout(qtyTimer);
+  // Typing "12" is two changes; only the second one is worth a request.
+  qtyTimer = window.setTimeout(function () {
+    qtyTimer = null;
+    fetchLeadTimes(items, lookupToken, root);
+  }, 500);
 }
 
 function money(n, currency) {
@@ -708,11 +814,24 @@ function paintInfo(root) {
     el.innerHTML = html;
     el.hidden = !html;
   }
+  var live = qtyByLine(root);
   var avails = root.querySelectorAll('[data-avail-for]');
   for (i = 0; i < avails.length; i++) {
     el = avails[i];
-    var a = availability(leadCache[el.getAttribute('data-avail-for')]);
-    if (!a) { el.hidden = true; el.innerHTML = ''; continue; }
+    var sku = el.getAttribute('data-avail-for');
+    var lineQty = live[Number(el.getAttribute('data-line'))];
+    var a = availability(leadCache[leadKey(sku, lineQty === undefined ? 1 : lineQty)]);
+    if (!a) {
+      // Nothing for this quantity yet. Anything already on screen was quoted
+      // for a different one, so dim it until the new estimate lands instead of
+      // clearing it and making the page jump.
+      if (el.innerHTML) {
+        if (el.className.indexOf('is-stale') === -1) el.className += ' is-stale';
+      } else {
+        el.hidden = true;
+      }
+      continue;
+    }
     el.hidden = false;
     el.className = 'usg-avail' + (a.stocked ? ' is-stock' : '');
     el.innerHTML = '<strong>' + esc(a.label) + '</strong><span>' + esc(a.text) + '</span>' + a.extra;
@@ -778,8 +897,9 @@ function fetchPrice(sku, token, root) {
 function fetchLeadTimes(items, token, root) {
   var need = [];
   for (var i = 0; i < items.length && need.length < 8; i++) {
-    if (items[i].part in leadCache) continue;
-    leadCache[items[i].part] = null;
+    var key = leadKey(items[i].part, items[i].qty);
+    if (key in leadCache) continue;
+    leadCache[key] = null;
     need.push({ partNumber: items[i].part, quantity: items[i].qty });
   }
   if (!need.length) return;
@@ -830,27 +950,27 @@ function absorbLeadTimes(need, data) {
     var row = rows[k];
     if (!row || typeof row !== 'object') continue;
     var key = row.partNumber || row.part_number || row.sku || row.part;
-    var target = key ? matchPart(need, key) : null;
-    if (!target && !key && need[k]) target = need[k].partNumber;   // positional
-    if (!target) {
+    var entry = key ? matchNeed(need, key) : null;
+    if (!entry && !key && need[k]) entry = need[k];   // positional
+    if (!entry) {
       lookupWarn('lead time row matched no part on screen (' + JSON.stringify(key) + ')');
       continue;
     }
-    leadCache[target] = row;
+    leadCache[leadKey(entry.partNumber, entry.quantity)] = row;
     if (!availability(row)) {
-      lookupWarn('lead time row for ' + target + ' had no status or message, so nothing is shown: ' +
-        JSON.stringify(row).slice(0, 300));
+      lookupWarn('lead time row for ' + entry.partNumber + ' had no status or message, so nothing ' +
+        'is shown: ' + JSON.stringify(row).slice(0, 300));
     }
   }
 }
-function matchPart(need, key) {
+function matchNeed(need, key) {
   var s = String(key), i;
   for (i = 0; i < need.length; i++) {
-    if (need[i].partNumber === s) return need[i].partNumber;
+    if (need[i].partNumber === s) return need[i];
   }
   var flat = s.toUpperCase().replace(/\s+/g, '');
   for (i = 0; i < need.length; i++) {
-    if (need[i].partNumber.toUpperCase().replace(/\s+/g, '') === flat) return need[i].partNumber;
+    if (need[i].partNumber.toUpperCase().replace(/\s+/g, '') === flat) return need[i];
   }
   return null;
 }
@@ -871,20 +991,24 @@ function runSizing() {
 
   // Yield once so the spinner paints before the calculation runs.
   setTimeout(function () {
+    // The form values are kept as well as passed on: the Excel summary
+    // reports what was entered, unit by unit, rather than the converted
+    // figures the algorithm works in.
+    var input = buildInput();
     var result;
     try {
-      result = window.USGSizing.sizeAllModels(buildInput());
+      result = window.USGSizing.sizeAllModels(input);
     } catch (err) {
       if (window.console && console.error) console.error('USG sizing failed', err);
       out.innerHTML = alertBox('error', 'Something went wrong while sizing. Please try again.');
       return;
     }
-    render(result);
+    render(result, input);
   }, 30);
 }
 
 // ---- render the result ----
-function render(body) {
+function render(body, input) {
   var out = $('output');
   var html = '';
   lastRun = null;
@@ -926,16 +1050,17 @@ function render(body) {
                 : 'Part Number ' + (p + 1);
     html += '<p class="usg-field"><strong>' + pnLabel + ':</strong> ' +
       '<code class="usg-pn">' + esc(pns[p]) + '</code></p>';
-    html += infoSlots(pns[p]);
+    html += infoSlots(pns[p], 1, p);
   }
 
   // Control line kit, below the part numbers. It is a real SKU, so it goes in
   // the cart with its own quantity, but it stays out of the PDF.
   if (body.control_line) {
-    html += '<p class="usg-field"><strong>' + esc(body.control_line) + ':</strong> ' +
-      esc(body.control_line_qty === null || body.control_line_qty === undefined
-          ? '' : body.control_line_qty) + '</p>';
-    html += infoSlots(body.control_line);
+    // The kit name only. Its quantity used to be printed after it, which now
+    // duplicates the quantity box below - and that box is the editable one, so
+    // printing a second figure beside it could contradict it.
+    html += '<p class="usg-field usg-clkit"><strong>' + esc(body.control_line) + '</strong></p>';
+    html += infoSlots(body.control_line, body.control_line_qty, pns.length);
   }
 
   if (body.pipe_note) {
@@ -947,9 +1072,10 @@ function render(body) {
     // selection returns two different regulators, so both go in the cart.
     var items = cartItems(body);
     html += '<p class="usg-cart" data-items="' + esc(itemsAttr(items)) + '">' +
+      '<span class="usg-total" hidden></span>' +
+      accountNote() +
       '<button type="button" class="usg-btn-cart" data-cart="' +
-      esc(cartUrl(items)) + '">Add to Cart</button>' +
-      '<span class="usg-total" hidden></span></p>';
+      esc(cartUrl(items)) + '">Add to Cart</button></p>';
 
     // The PDF summary sits with the part numbers: those are what a customer
     // acts on. The adjustments below are reference material, so they follow it.
@@ -960,7 +1086,8 @@ function render(body) {
       pns: pns,
       msgs: warnings,
       adjustments: body.adjustments || [],
-      pipeNote: body.pipe_note || null
+      pipeNote: body.pipe_note || null,
+      input: input || null   // raw form values, for the Excel summary
     };
     html += '<hr class="usg-hr">';
     html += '<h3 class="usg-h3">Download PDF Summary</h3>';
@@ -978,10 +1105,21 @@ function render(body) {
     html += '</tbody></table>';
   }
 
+  // Excel summary last, below everything else. The PDF stays where it is,
+  // with the part numbers, because that is what a customer acts on; the
+  // spreadsheet is for keeping and comparing, so it sits at the foot of the
+  // page.
+  if (lastRun) {
+    html += '<hr class="usg-hr">';
+    html += '<h3 class="usg-h3">Download Excel Summary</h3>';
+    html += '<button type="button" class="usg-btn" id="usg-xlsx-btn">\u2B07\uFE0F&nbsp; Download Excel Summary</button>';
+  }
 
   out.innerHTML = html;
   var pdfBtn = $('pdf-btn');
   if (pdfBtn) pdfBtn.addEventListener('click', downloadPdf);
+  var xlsxBtn = $('xlsx-btn');
+  if (xlsxBtn) xlsxBtn.addEventListener('click', downloadXlsx);
   // Add to Cart is a <button> so that the theme styles it, which means the
   // navigation an <a href> used to do for free is wired up here - the same
   // arrangement as the 441 configurator, URL carried in data-cart.
@@ -991,9 +1129,169 @@ function render(body) {
       window.location.href = cartBtn.getAttribute('data-cart');
     });
   }
+  // Quantity drives the cart, the total and the lead time, so every box gets a
+  // listener. `input` rather than `change` so the total keeps up with typing;
+  // the request behind it is debounced.
+  var qtys = out.querySelectorAll('[data-qty-for]');
+  for (var q = 0; q < qtys.length; q++) {
+    qtys[q].addEventListener('input', function () { onQtyChange(out); });
+  }
   // Price and lead time come from the customer's browser after the result is
   // on screen, so the selection never waits on the network.
   loadInfo(out);
+}
+
+// ---- Excel summary ----
+// One sheet, laid out exactly like the workbook this was modelled on: labels
+// down column A, this run's values in column B, and B1 numbering the run. The
+// row positions are FIXED - a value that does not apply leaves its cell empty
+// rather than shifting the rows - so two downloads can be pasted side by side
+// and compared line for line. Adding, removing or reordering a row here breaks
+// that, so treat the list below as a layout, not a convenience.
+//
+// The inputs are the raw form values with their units, not the converted
+// figures: this sheet is a record of what was asked for.
+//
+// Two things are deliberately absent, both matching the PDF: the control line
+// kit (it is not a regulator) and the price and lead time (session-specific
+// and changeable, so a saved file must not carry them).
+var XLSX_SRC = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+var xlsxLoading = false;
+
+// Loaded on the first click rather than with the page: most visitors never
+// download the spreadsheet, and the library is not small. cdnjs is already in
+// the site's script-src for jsPDF, so no policy change is needed.
+function withXlsx(cb) {
+  if (window.XLSX) { cb(window.XLSX); return; }
+  if (xlsxLoading) return;
+  xlsxLoading = true;
+  var s = document.createElement('script');
+  s.src = XLSX_SRC;
+  s.onload = function () { xlsxLoading = false; cb(window.XLSX || null); };
+  s.onerror = function () { xlsxLoading = false; cb(null); };
+  document.head.appendChild(s);
+}
+
+function yn(v) { return v ? 'Yes' : 'No'; }
+// Capacity reaches here as a formatted string ("1,520"); Excel should hold a
+// number so it can be sorted and totalled.
+function num(v) {
+  if (v === null || v === undefined || v === '') return null;
+  var n = Number(String(v).replace(/,/g, ''));
+  return isFinite(n) ? n : String(v);
+}
+
+// The rows of the sheet, in order: [label, value]. A null value writes no cell.
+function summaryRows(run) {
+  var i = run.input || {};
+  var sel = {};
+  for (var s = 0; s < (run.selection || []).length; s++) {
+    sel[run.selection[s].label] = run.selection[s].value;
+  }
+  function field(label) {
+    var v = sel[label];
+    return (v === undefined || v === null || v === '') ? null : v;
+  }
+  var pns = run.pns || [];
+  var msgs = run.msgs || [];
+
+  var rows = [
+    ['Inputs', 1],
+    ['Inlet Units', i.inlet_units || null],
+    ['Inlet Pressure', num(i.inlet)],
+    ['Outlet Units', i.outlet_units || null],
+    ['Outlet Pressure', num(i.outlet)],
+    ['Flow rate units', i.flow_units || null],
+    ['Max gas load/flow rate', num(i.flow)],
+    ['Min gas load/flow rate', num(i.min_flow)],
+    ['MAOP (psi)', num(i.maop)],
+    ['Desired pipe size', i.pipe_size || null],
+    ['OPP required', yn(i.opp_required)],
+    // Only one of the next three applies: a protection preference and an IRV
+    // pressure when protection was asked for, the partial-IRV answer when it
+    // was not.
+    ['Prioritize IRV or Monitor', i.opp_required ? i.opp_pref : null],
+    ['IRV protect downstream to', (i.opp_required && i.opp_pref === 'IRV') ? num(i.irv_pressure) : null],
+    ['IRV for partial OPP', i.opp_required ? null : yn(i.partial_irv)],
+    ['Feeding generator/high-eff', yn(i.high_efficiency)],
+    ['Percent load feeding generator/high-eff', i.high_efficiency ? num(i.high_efficiency_pct) : null],
+    ['Prefer combustion regulator', yn(i.prefer_combustion)],
+    ['Standard or V-Port Orifice', i.vp_preference === 'vport' ? 'V-Port' : 'Standard'],
+    ['Gas type', i.gas_type || null],
+    ['Specific gravity', i.gas_type === 'Other' ? num(i.specific_gravity) : null],
+    ['Altitude above 3,000 feet or atmospheric pressure below 13 psi', yn(i.high_altitude)],
+    ['Atmospheric Pressure (psi)', i.high_altitude ? num(i.atmospheric_pressure) : null],
+    ['Output', null],
+    ['Model', field('Model')],
+    ['Diaphragm Size:', field('Diaphragm Size')],
+    ['Body Size:', field('Body Size')],
+    ['Orifice Size:', field('Orifice Size')],
+    ['Seat:', field('Seat')],
+    ['Spring:', field('Spring')],
+    ['Monitor Spring:', field('Monitor Spring')],
+    ['Calculated Capacity:', num(run.capacity)],
+    ['Part Number:', pns[0] || null],
+    ['Part Number:', pns[1] || null],
+    ['Warning:', msgs[0] || null],
+    ['Warning:', msgs[1] || null]
+  ];
+  // Rows 1-35 above are the layout and never move. These two go on the end
+  // because they have no row in it: a monitor diaphragm, which only the 441-S
+  // and 461-S report and which would otherwise be lost, and any warning past
+  // the second. Both are rare; move the diaphragm up to a fixed row of its own
+  // if you would rather every file have identical geometry.
+  if (field('Monitor Diaphragm')) rows.push(['Monitor Diaphragm:', field('Monitor Diaphragm')]);
+  for (var m = 2; m < msgs.length; m++) rows.push(['Warning:', msgs[m]]);
+  return rows;
+}
+
+function downloadXlsx() {
+  if (!lastRun) return;
+  var btn = $('xlsx-btn');
+  var label = btn ? btn.innerHTML : '';
+  if (btn) { btn.disabled = true; btn.innerHTML = 'Preparing\u2026'; }
+  function restore() { if (btn) { btn.disabled = false; btn.innerHTML = label; } }
+
+  withXlsx(function (XLSX) {
+    // If the library cannot be reached the same rows go out as CSV, which
+    // Excel opens. Better than a button that does nothing.
+    if (!XLSX) { downloadCsv(); restore(); return; }
+    try {
+      var ws = XLSX.utils.aoa_to_sheet(summaryRows(lastRun));
+      ws['!cols'] = [{ wch: 24 }, { wch: 10.71 }, { wch: 8.71 }];
+      var wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Initial Examples');
+      XLSX.writeFile(wb, 'regulator_sizing_summary.xlsx');
+    } catch (err) {
+      if (window.console && console.error) console.error('USG Excel summary failed', err);
+      downloadCsv();
+    }
+    restore();
+  });
+}
+
+function downloadCsv() {
+  var rows = summaryRows(lastRun), lines = [];
+  for (var r = 0; r < rows.length; r++) {
+    var cells = [];
+    for (var c = 0; c < rows[r].length; c++) {
+      var v = rows[r][c];
+      v = (v === null || v === undefined) ? '' : String(v);
+      if (/[",\r\n]/.test(v)) v = '"' + v.replace(/"/g, '""') + '"';
+      cells.push(v);
+    }
+    lines.push(cells.join(','));
+  }
+  // The BOM is what makes Excel read the inch marks and en dashes correctly.
+  var blob = new Blob(['\uFEFF' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'regulator_sizing_summary.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
 }
 
 // ---- PDF summary (same layout as the Streamlit build_summary_pdf) ----
