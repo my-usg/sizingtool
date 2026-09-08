@@ -354,10 +354,19 @@
    the two blocks read as one product. Both start hidden and stay hidden if the
    lookup is unavailable, so nothing shifts on the page when it fails. */
 #usg-sizing-tool [hidden] { display: none !important; }
+/* Price and availability in one panel, the product-page treatment: the outer
+   panel a shade lighter than the availability box inside it, which keeps its
+   own amber rule. */
+#usg-sizing-tool .usg-pricebox {
+  background: #fafafa; padding: 16px 18px; margin: 0 0 14px;
+}
 #usg-sizing-tool .usg-price {
   font-size: 30px !important; font-weight: 600 !important;
-  color: rgb(49, 51, 63) !important; margin: 0 0 10px !important;
+  color: rgb(49, 51, 63) !important; margin: 0 !important;
 }
+#usg-sizing-tool .usg-price + .usg-avail { margin-top: 14px; }
+/* Price missing but an estimate present: no gap to close. */
+#usg-sizing-tool .usg-price[hidden] + .usg-avail { margin-top: 0; }
 #usg-sizing-tool .usg-price small {
   font-size: 15px !important; font-weight: 400;
   color: rgba(49, 51, 63, 0.65) !important; margin-left: 7px;
@@ -373,7 +382,7 @@
 #usg-sizing-tool .usg-qty .usg-numwrap { max-width: 120px; }
 #usg-sizing-tool .usg-avail {
   background: #f7f7f7; border-left: 3px solid #b4741d; border-radius: 0 4px 4px 0;
-  padding: 9px 15px; margin: 0 0 14px; font-size: 15px !important; line-height: 1.5;
+  padding: 9px 15px; margin: 0; font-size: 15px !important; line-height: 1.5;
 }
 #usg-sizing-tool .usg-avail strong {
   display: block; font-size: 13px !important; font-weight: 700 !important;
@@ -666,13 +675,26 @@ var lookupToken = 0;
 // tracked by - NOT the part number. A monitor can carry the same part number
 // as its worker, and keying on the SKU made the two lines share one quantity,
 // with the last one on the page winning.
+// Pass qty === false for no quantity box. Only a control line kit gets one:
+// its quantity is a real figure the sizing produced and the customer may want
+// more, whereas a regulator is one per selection. A line without a box is
+// quantity 1, which itemsFromDom takes from the data-items default.
 function infoSlots(sku, qty, line) {
-  var n = (qty === null || qty === undefined || !(Number(qty) > 0)) ? 1 : Math.round(Number(qty));
-  return '<label class="usg-qty"><span>Quantity</span>' +
-    '<span class="usg-numwrap"><input type="number" inputmode="numeric" min="1" max="999" step="1"' +
-    ' value="' + n + '" data-qty-for="' + line + '"></span></label>' +
+  var html = '';
+  if (qty !== false) {
+    var n = (qty === null || qty === undefined || !(Number(qty) > 0)) ? 1 : Math.round(Number(qty));
+    html += '<label class="usg-qty"><span>Quantity</span>' +
+      '<span class="usg-numwrap"><input type="number" inputmode="numeric" min="1" max="999" step="1"' +
+      ' value="' + n + '" data-qty-for="' + line + '"></span></label>';
+  }
+  // Price and availability share one panel, as they do on a product page. The
+  // panel is hidden until one of them has something to say, so a failed
+  // lookup leaves no empty grey box behind.
+  return html +
+    '<div class="usg-pricebox" hidden>' +
     '<p class="usg-price" data-price-for="' + esc(sku) + '" hidden></p>' +
-    '<div class="usg-avail" data-avail-for="' + esc(sku) + '" data-line="' + line + '" hidden></div>';
+    '<div class="usg-avail" data-avail-for="' + esc(sku) + '" data-line="' + line + '" hidden></div>' +
+    '</div>';
 }
 
 // The part/quantity list travels on the Add to Cart paragraph so the lookup
@@ -842,6 +864,15 @@ function paintInfo(root) {
     el.className = 'usg-avail' + (a.stocked ? ' is-stock' : '');
     el.innerHTML = '<strong>' + esc(a.label) + '</strong><span>' + esc(a.text) + '</span>' + a.extra;
   }
+  // The panel exists for whichever of the two arrived. Both empty means the
+  // lookup is unavailable, and it stays out of the way entirely.
+  var boxes = root.querySelectorAll('.usg-pricebox');
+  for (i = 0; i < boxes.length; i++) {
+    var pr = boxes[i].querySelector('.usg-price');
+    var av = boxes[i].querySelector('.usg-avail');
+    boxes[i].hidden = !((pr && !pr.hidden) || (av && !av.hidden));
+  }
+
   // Line-item total beside Add to Cart, shown only when every part on screen
   // has a price - a partial total would understate the order.
   var wrap = root.querySelector('.usg-cart[data-items]');
@@ -1049,7 +1080,7 @@ function render(body) {
                     : 'Part Number ' + (p + 1);
         html += '<p class="usg-field"><strong>' + pnLabel + ':</strong> ' +
           '<code class="usg-pn">' + esc(pns[p]) + '</code></p>';
-        html += infoSlots(pns[p], 1, p);
+        html += infoSlots(pns[p], false, p);
       }
 
       // Control line kit, below the part numbers. It is a real SKU, so it goes

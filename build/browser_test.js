@@ -259,10 +259,11 @@ async function testTool(slug) {
       problems.push('control line shown when the algorithm returned none');
     }
 
-    // A quantity box per cart line: 1 for each regulator, its own figure for
-    // the kit. These are the defaults, before anyone touches them.
+    // A quantity box for the control line kit only, defaulting to its own
+    // figure. Regulators are one per selection and get no box - the cart
+    // check above proves they still go out at quantity 1.
     if ((want.part_numbers || []).length) {
-      const wantBoxes = (want.part_numbers || []).map(() => '1');
+      const wantBoxes = [];
       if (want.control_line) {
         wantBoxes.push(String(want.control_line_qty === null || want.control_line_qty === undefined
           ? 1 : want.control_line_qty));
