@@ -31,7 +31,7 @@
      "value": "Blue (5\" - 8.5\" wc)"
     }
    ],
-   "capacity": "1,020",
+   "capacity": "1,300",
    "part_numbers": [
     "R.143-1.3/4.16.11"
    ],
@@ -263,16 +263,16 @@
     },
     {
      "label": "Orifice Size",
-     "value": "5/16\""
+     "value": "1/4\""
     },
     {
      "label": "Spring",
      "value": "Blue (5\" - 8.5\" wc)"
     }
    ],
-   "capacity": "1,265",
+   "capacity": "1,308",
    "part_numbers": [
-    "R.143-2.3/4.13.11"
+    "R.143-2.3/4.12.11"
    ],
    "control_line": null,
    "control_line_qty": null,
@@ -380,7 +380,7 @@
      "value": "Red (3.5\" - 6.5\" wc)"
     }
    ],
-   "capacity": "924",
+   "capacity": "1,180",
    "part_numbers": [
     "R.143-2.3/4.16.10"
    ],
@@ -911,16 +911,16 @@
     },
     {
      "label": "Orifice Size",
-     "value": "3/8\""
+     "value": "5/16\""
     },
     {
      "label": "Spring",
      "value": "Black + White (0.5 - 2 psi)"
     }
    ],
-   "capacity": "897",
+   "capacity": "974",
    "part_numbers": [
-    "R.143-1.3/4.14.20"
+    "R.143-1.3/4.13.20"
    ],
    "control_line": null,
    "control_line_qty": null,
@@ -1150,7 +1150,7 @@
      "value": "Black + White (0.5 - 2 psi)"
     }
    ],
-   "capacity": "1,156",
+   "capacity": "1,302",
    "part_numbers": [
     "R.143-1.3/4.16.20"
    ],
