@@ -8,8 +8,8 @@
  *
  * tool:      all-models
  * version:   1.1.0
- * algorithm: sha256:ffbcc0154c43
- * sources:   sha256:2f2823cbcbde
+ * algorithm: sha256:d04e6a174f6b
+ * sources:   sha256:33be8e33d54a
  *
  * Adds to the shared namespace:
  *   USGSizing.sizeAllModels(input)  -> result object
@@ -1006,7 +1006,7 @@ function gen_match243(result, opp) {
     }
   } else {
     model_labels243 = new Map([["R243081Q", "243-8"], ["R243081H", "243-8"], ["R2430802", "243-8"], ["R243121Q", "243-12"], ["R243121H", "243-12"], ["R2431202", "243-12"], ["R24312EX", "243-12-1 with External Control Line"]]);
-    body_labels243 = new Map([["R243081Q", "1-1/4\""], ["R243081H", "1-1/2\""], ["R2430802", "2\""], ["R243121Q", "1-1/4\""], ["R243121H", "1-1/2\""], ["R2431202", "2\""], ["R24312EX", "Any Size"]]);
+    body_labels243 = new Map([["R243081Q", "1-1/4\""], ["R243081H", "1-1/2\""], ["R2430802", "2\""], ["R243121Q", "1-1/4\""], ["R243121H", "1-1/2\""], ["R2431202", "2\""], ["R24312EX", "2\""]]);
     orifice_order = ["1Q10", "1010", "1Q30", "1030", "3430", "3410", "1210", "3810", "1410", "2710"];
     std_pipe_priority = new Map([["1-1/4\"", ["R243081Q", "R243121Q"]], ["1-1/2\"", ["R243081H", "R243121H"]], ["2\"", ["R2430802", "R2431202"]]]);
     all_prefixes = $list($keys(body_labels243));
@@ -1207,7 +1207,7 @@ function run_regulator_selection243(inlet, outlet, opp) {
 }
 function hsc_pnc243(match) {
   let body, body_map, model, monitor_spring, opp, orifice, orifice_map, output, spring, spring_map, $t35, $t36, $t37, $t38;
-  body_map = new Map([["1-1/4\"", "1-1/4SCD"], ["1-1/2\"", "1-1/2SCD"], ["2\"", "2SCD"], ["Any Size", "2SCD"]]);
+  body_map = new Map([["1-1/4\"", "1-1/4SCD"], ["1-1/2\"", "1-1/2SCD"], ["2\"", "2SCD"]]);
   orifice_map = new Map([["0.207\"", "207"], ["1/4\"", "12"], ["3/8\"", "14"], ["1/2\"", "15"], ["3/4\", 10°", "18"], ["3/4\", 30°", "19"], ["1\", 10°", "20"], ["1\", 30°", "20"], ["1-1/4\", 10°", "21"], ["1-1/4\", 30°", "21"]]);
   spring_map = new Map([["Red-Black", "01"], ["Blue-Black", "02"], ["Green-Black", "03"], ["Red", "10"], ["Blue", "11"], ["Green", "12"], ["Orange-Black", "13A"], ["Orange", "13"], ["Black", "14"], ["Cadmium", "15"], ["Cadmium + White", "21"]]);
   model = $get(match, "model");
@@ -3603,7 +3603,7 @@ function sizeTool(rawInput) {
   ns.versions = ns.versions || {};
   ns.versions['all-models'] = {
     version: '1.1.0',
-    algorithm: 'sha256:ffbcc0154c43',
-    sources: 'sha256:2f2823cbcbde'
+    algorithm: 'sha256:d04e6a174f6b',
+    sources: 'sha256:33be8e33d54a'
   };
 })(typeof window !== 'undefined' ? window : this);
