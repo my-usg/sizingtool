@@ -108,12 +108,12 @@ README.md, DEPLOYING.md, VERSION
 
 | Tool | Page | Bundle | `algorithm` hash |
 | --- | --- | --- | --- |
-| all-models | `/resources/regulator-sizing-tools/general` | `usg-all-models.js` | `31223a399c16` |
+| all-models | `/resources/regulator-sizing-tools/general` | `usg-all-models.js` | `d04e6a174f6b` |
 | model-046 | `…/model-046` | `usg-model-046.js` | `208e4323a736` |
 | model-121 | `…/model-121-122` | `usg-model-121.js` | `81ddc8bad2ef` |
-| model-143 | `…/model-143` | `usg-model-143.js` | `a92413cd57bd` |
-| model-243 | `…/model-243` | `usg-model-243.js` | `70c1d9cc096d` |
-| model-461 | `…/model-441-461` | `usg-model-461.js` | `3e1a5a6c5018` |
+| model-143 | `…/model-143` | `usg-model-143.js` | `6df1df668d59` |
+| model-243 | `…/model-243` | `usg-model-243.js` | `caffb09e8169` |
+| model-461 | `…/model-441-461` | `usg-model-461.js` | `88ff4f73f9ed` |
 | model-496 | `…/model-496` | `usg-model-496.js` | `f6502f86324b` |
 | model-rpc | `…/model-243-rpc` | `usg-model-rpc.js` | `8bf4279e24d0` |
 
@@ -199,7 +199,9 @@ in `.github/workflows/build.yml`** — otherwise CI silently ignores it.
   line, error message, and every cell of every capacity table. ~10,000 inputs
   per tool. Any difference fails the build.
 * **`build/browser_test.js`** loads each real block in a headless browser and
-  checks the rendered page against `fixtures.json`. 399 checks currently.
+  checks the rendered page against `fixtures.json`. 402 checks currently. As
+  well as the sizing result it pins the cart link, the quantity box defaults,
+  the account-pricing note and its position above the button.
 * **`build/fault_sweep.py`** walks each tool's input ranges looking for inputs
   the algorithm cannot answer (a spring colour missing from a table, and so on).
 * **`fixtures.json`** pins exact expected output. CI fails if it is stale, which
@@ -299,6 +301,12 @@ separate copies. The input is pinned as an edge case in both.
 
 ### Fixed, for the record
 
+* **all-models and model-461**: `diap_map` was keyed `'8" AL'` while the sizing
+  code emits `'8" Al'`, so the lookup missed, `diap` fell through to `'EXTCON'`
+  and the line that promotes the model to `461-8-S` never fired. Every 461-S on
+  an 8" aluminium diaphragm came out as `R.461-S.…` instead of `R.461-8-S.…` —
+  a wrong model segment in a part number, silent, and in **both** copies. Like
+  the spring defect above, one character, fixed twice.
 * **model-046**: `will_irv_work046()` looked the spring up with
   `spring_map[spring]`; `spring_046()` returns `Gray` above 125 psi outlet and
   `None` above 200, so it raised `KeyError` and broke **every** IRV request with
@@ -320,9 +328,18 @@ separate copies. The input is pinned as an edge case in both.
 
 ## 10. Add to Cart
 
-Each result renders an **Add to Cart** link to a site endpoint that takes
-matched `part[]` / `qty[]` pairs, adds each to the cart and redirects to the
-cart page (or to a CMS "contact us" page if any part number is unrecognised).
+Each result renders an **Add to Cart** control pointing at a site endpoint that
+takes matched `part[]` / `qty[]` pairs, adds each to the cart and redirects to
+the cart page (or to a CMS "contact us" page if any part number is
+unrecognised).
+
+It is a bare `<button>` carrying the URL in `data-cart`, with a click handler
+that navigates — not an `<a href>`. The button is deliberately unstyled so the
+site theme's own button rules give it its colour, padding and radius and it
+matches every other button on the site; the same arrangement as the 441
+configurator. Adding any colour, border or padding rule for it in the block
+would out-specify the theme, since every rule there is `#usg-sizing-tool`
+scoped.
 
 ```
 https://hollandsupplycompany.com/api/sizing-tool/add-to-cart?part[]=…&qty[]=1&part[]=…&qty[]=2
@@ -331,7 +348,8 @@ https://hollandsupplycompany.com/api/sizing-tool/add-to-cart?part[]=…&qty[]=1&
 Rules the blocks implement:
 
 * Regulators first (worker, then monitor), each at quantity 1, then the control
-  line kit at its own `controllineqty`.
+  line kit at its own `controllineqty` — which the customer can now change, see
+  section 12.
 * Values are `encodeURIComponent`'d and then `%2F` is **restored to `/`** —
   part numbers contain slashes (`R.143-1.3/4.16.11`) and the endpoint's
   documented example shows them unencoded. Spaces stay `%20` and the inch mark
@@ -350,7 +368,10 @@ the endpoint then redirects the whole attempt to the contact page — so one bad
 part blocks an otherwise valid cart.
 
 The tools can only emit a **finite** set: **1,358 distinct SKUs** (1,355
-regulator part numbers plus 3 control line kits). The list was produced by
+regulator part numbers plus 3 control line kits) as at the sweep below. That
+figure is stale whenever an algorithm gains orifices or springs — the 143's
+9/64" and 5/32" orifices added `R.143-2.{3/4,1}.{30,31}.{11,13,20}`, and the
+`8" Al` fix turned some `R.461-S.*` numbers into `R.461-8-S.*`. The list was produced by
 sweeping 12,000 randomised inputs per tool plus every pinned edge case, and
 delivered as `usg-sizing-tool-skus.csv`. HSC is loading the missing ones into
 NetSuite.
@@ -387,8 +408,18 @@ script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com;
 ```
 
 `cdn.jsdelivr.net` serves the algorithms; `cdnjs.cloudflare.com` serves jsPDF
-for the Download PDF Summary button. The old
+for the Download PDF Summary button, and SheetJS for the all-models Excel
+summary, which is why that one needed no policy change. The old
 `frame-src https://*.streamlit.app` entry from the iframe era is not needed.
+
+`connect-src` matters too, for the lead time lookup (section 12). The policy
+already carries `*.hsc.faxon.tech`, which covers the production endpoint at
+`orchestrator.hsc.faxon.tech`. It does **not** cover the staging host
+`orchestrator.hsc-staging.faxon.tech` — `hsc-staging` is a different label, so
+the wildcard misses it and the browser refuses the request before it leaves,
+with `Refused to connect` in the console and nothing on the page. Pointing the
+blocks at staging therefore needs a CSP entry as well as a URL change. The
+price endpoint is same-origin and needs nothing.
 
 The repository **must stay public** — jsDelivr cannot read a private repo, and
 neither can a visitor's browser.
@@ -404,9 +435,44 @@ All eight blocks follow the same shape, and the browser test pins the order:
 2. Inputs
 3. Run Sizing
 4. **Results**: Regulator Selection — model, sizes, spring, capacity, then
-   `Part Number` and `Monitor Part Number` and the control line kit as fields —
-   then Add to Cart, then Download PDF Summary, then capacity tables, then
-   Sizing Adjustments
+   `Part Number` and `Monitor Part Number` and the control line kit as fields,
+   each followed by its live price and lead time — then Add to Cart, then
+   Download PDF Summary, then capacity tables, then Sizing Adjustments, and on
+   all-models only, Download Excel Summary at the foot of the page
+
+### Price, lead time and quantity
+
+Each part number on a result is followed by a panel holding its price and an
+availability estimate. Both are fetched from the customer's own browser after
+the result has rendered, so a slow or failing lookup never delays the sizing,
+and both slots stay hidden when a lookup fails — the panel with them.
+
+* **Price**: `GET /api/chatbot/products?sku=…`, one call per SKU, same-origin
+  with `credentials: 'include'`. Without the session cookie the endpoint
+  answers with list price rather than the customer's price, so the credentials
+  are not optional.
+* **Lead time**: `POST` to `LEAD_TIME_ENDPOINT`, one call for the whole
+  selection (it takes 1-8 items; a selection is at most three). An estimate is
+  quoted *for a quantity*, so it is cached against one and re-requested when
+  the quantity changes, debounced by 500 ms. While the new estimate loads the
+  old one dims rather than disappearing.
+* Failures are silent to the customer and **loud in the console**, prefixed
+  `[USG sizing]`. That is the only way to tell a blocked request from an empty
+  answer; without it the page just shows nothing and says nothing.
+* Neither figure reaches the PDF or the Excel summary. Prices are
+  session-specific and lead times move, so a saved file must not carry them —
+  the same reasoning that keeps the control line kit out of the PDF.
+* **Quantity** is an editable box, on the control line kit only. Regulators are
+  one per selection and have no box. Changing it rewrites the cart URL in
+  place, recomputes the line total and re-asks for the estimate. The boxes are
+  keyed by **line position, not part number**: a monitor can carry the same
+  part number as its worker, and keying on the SKU made the two lines share one
+  quantity, with the last one on the page winning.
+
+Part numbers render in the product-page blue at 24px rather than as a
+monospace chip, and the control line kit line matches them. That rule sits
+immediately after the `.usg-field` rules it overrides: it is more specific, but
+keeping it later as well means no cascade argument decides the colour.
 
 Details that were deliberate and are easy to undo by accident:
 
@@ -425,6 +491,13 @@ Details that were deliberate and are easy to undo by accident:
 * The PDF build is **reproducible** — no timestamp is embedded — so `dist/` only
   changes when sources change. A clock in there caused CI to republish every
   bundle on every push.
+* The Excel summary (all-models only) writes **one sheet with fixed row
+  positions**, matching the workbook it was modelled on: labels down column A,
+  the run's values in column B. A value that does not apply leaves its cell
+  empty rather than shifting the rows, so two downloads can be pasted side by
+  side and compared line for line. Adding, removing or reordering a row breaks
+  that. SheetJS loads from cdnjs on the first click rather than with the page;
+  if it cannot be reached the same rows download as CSV.
 
 ---
 
@@ -435,14 +508,36 @@ Details that were deliberate and are easy to undo by accident:
 2. **NetSuite SKU reconciliation** (section 10) — HSC loading missing part
    numbers; verify the three control line kits first.
 3. **Promote the SKU lister** to `build/list_skus.py` so regenerating the list
-   is one command.
+   is one command. More pressing now that two algorithms have gained part
+   numbers.
 4. **Confirm the workflow in GitHub is current.** A run finishing in ~44s is a
    sign of an older workflow: the current one diff-tests ~10,000 inputs across
    eight tools and takes several minutes. An old workflow also lacks the
    automatic CDN purge, which makes algorithm changes appear not to work.
-5. **Quantity is fixed at 1** per regulator in the cart. Add a quantity input if
-   customers should be able to order several.
-6. Optional: exhaustive SKU enumeration from the capacity tables rather than
+5. **Quantity** is editable for the control line kit only; regulators are fixed
+   at 1 each. Add boxes for them if customers should be able to order several.
+6. **Lead time status vocabulary.** The integration guide documents
+   `IN_STOCK`, `BUILD_TO_ORDER`, `INCOMING`, `PARTIAL`, `MADE_TO_ORDER`,
+   `CONTACT` and `NOT_FOUND`; the orchestrator renames some of them and the
+   blocks map what it actually sends (`AVAILABLE_TO_ORDER`,
+   `PARTIAL_AVAILABILITY`, `CONTACT_US`). If a Suitelet status ever passes
+   through unchanged it renders under a generic "Availability" heading, and
+   `CONTACT` would not be recognised as a contact case, so the phone number and
+   email would not appear. Map both vocabularies.
+7. **No timeout on the lead time request.** The guide's own helper waits four
+   seconds then shows a neutral "contact us" message. The blocks have no
+   deadline, so a request that hangs leaves the panel hidden for good — quiet
+   and safe, but the customer gets nothing where the guide would give them a
+   phone number.
+8. **The lead time endpoint is called from the browser**, which the integration
+   guide advises against: a public URL in page source can be used to read the
+   stock position part number by part number. There is no real alternative
+   here, since the sizing tools compute their part numbers in the browser and
+   have no PHP template to render a badge from, and the NetSuite Suitelet
+   address does stay private behind the orchestrator. Worth confirming the
+   orchestrator has origin restriction or rate limiting; if not, a same-origin
+   proxy would be a one-line change to `LEAD_TIME_ENDPOINT`.
+9. Optional: exhaustive SKU enumeration from the capacity tables rather than
    sampling.
 
 ---
@@ -464,3 +559,19 @@ Details that were deliberate and are easy to undo by accident:
 * jsPDF cannot initialise under jsdom, so the browser tests verify the PDF's
   *data* but not its rendered layout. Download a real PDF after changing PDF
   layout.
+* **A gap in a capacity table is not the same as a rule.** The 143 does not
+  answer above a 2 psi outlet with an inlet below 10 psi, and that is enforced
+  by the 6 psi outlet section of `data143` starting at a 10 psi inlet rather
+  than by any code. It is deliberate, but it is invisible: the 143 tool reports
+  "inlet pressure is out of range" (naming the inlet, which is fine), and
+  all-models silently drops the family and lets the next one take the job, so a
+  400 CFH load at 6 psi inlet / 2.5 psi outlet is answered with a 243 rather
+  than a 143. The two outlet sections are otherwise identical, which is what
+  makes capacity read flat from 2 to 6 psi; the 5 psi inlet row exists in the
+  2 psi section as an interpolation endpoint and not as a sizing case, since
+  validation already requires the outlet to be strictly below the inlet.
+* Neither `difftest.py` nor `fault_sweep.py` would catch that change: the first
+  compares JavaScript to Python, not new to old, and the second only looks for
+  inputs that crash. A tool that politely declines looks healthy to both. When
+  a data table changes, compare old and new answers over the affected pressure
+  window directly.
