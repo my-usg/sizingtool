@@ -408,8 +408,7 @@ script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com;
 ```
 
 `cdn.jsdelivr.net` serves the algorithms; `cdnjs.cloudflare.com` serves jsPDF
-for the Download PDF Summary button, and SheetJS for the all-models Excel
-summary, which is why that one needed no policy change. The old
+for the Download PDF Summary button. The old
 `frame-src https://*.streamlit.app` entry from the iframe era is not needed.
 
 `connect-src` matters too, for the lead time lookup (section 12). The policy
@@ -437,8 +436,7 @@ All eight blocks follow the same shape, and the browser test pins the order:
 4. **Results**: Regulator Selection — model, sizes, spring, capacity, then
    `Part Number` and `Monitor Part Number` and the control line kit as fields,
    each followed by its live price and lead time — then Add to Cart, then
-   Download PDF Summary, then capacity tables, then Sizing Adjustments, and on
-   all-models only, Download Excel Summary at the foot of the page
+   Download PDF Summary, then capacity tables, then Sizing Adjustments
 
 ### Price, lead time and quantity
 
@@ -459,9 +457,9 @@ and both slots stay hidden when a lookup fails — the panel with them.
 * Failures are silent to the customer and **loud in the console**, prefixed
   `[USG sizing]`. That is the only way to tell a blocked request from an empty
   answer; without it the page just shows nothing and says nothing.
-* Neither figure reaches the PDF or the Excel summary. Prices are
-  session-specific and lead times move, so a saved file must not carry them —
-  the same reasoning that keeps the control line kit out of the PDF.
+* Neither figure reaches the PDF. Prices are session-specific and lead times
+  move, so a saved file must not carry them — the same reasoning that keeps the
+  control line kit out of the PDF.
 * **Quantity** is an editable box, on the control line kit only. Regulators are
   one per selection and have no box. Changing it rewrites the cart URL in
   place, recomputes the line total and re-asks for the estimate. The boxes are
@@ -491,13 +489,6 @@ Details that were deliberate and are easy to undo by accident:
 * The PDF build is **reproducible** — no timestamp is embedded — so `dist/` only
   changes when sources change. A clock in there caused CI to republish every
   bundle on every push.
-* The Excel summary (all-models only) writes **one sheet with fixed row
-  positions**, matching the workbook it was modelled on: labels down column A,
-  the run's values in column B. A value that does not apply leaves its cell
-  empty rather than shifting the rows, so two downloads can be pasted side by
-  side and compared line for line. Adding, removing or reordering a row breaks
-  that. SheetJS loads from cdnjs on the first click rather than with the page;
-  if it cannot be reached the same rows download as CSV.
 
 ---
 
