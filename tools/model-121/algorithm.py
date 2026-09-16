@@ -978,7 +978,7 @@ def hsc_pnc121(match):
     elif model == '122-12' or model == '121-12':
         diap = '12'
     elif model == '121-8-HP':
-        diap = '8-HP'
+        diap = '8HP'
     else:
         diap = '8'
 

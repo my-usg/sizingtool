@@ -8,8 +8,8 @@
  *
  * tool:      all-models
  * version:   1.1.0
- * algorithm: sha256:36528be31d62
- * sources:   sha256:6921d87a8558
+ * algorithm: sha256:f42a198bd664
+ * sources:   sha256:454b3affdaec
  *
  * Adds to the shared namespace:
  *   USGSizing.sizeAllModels(input)  -> result object
@@ -2221,7 +2221,7 @@ function hsc_pnc121(match) {
       diap = "12";
     } else {
       if ($truthy(($eq(model, "121-8-HP")))) {
-        diap = "8-HP";
+        diap = "8HP";
       } else {
         diap = "8";
       }
@@ -3603,7 +3603,7 @@ function sizeTool(rawInput) {
   ns.versions = ns.versions || {};
   ns.versions['all-models'] = {
     version: '1.1.0',
-    algorithm: 'sha256:36528be31d62',
-    sources: 'sha256:6921d87a8558'
+    algorithm: 'sha256:f42a198bd664',
+    sources: 'sha256:454b3affdaec'
   };
 })(typeof window !== 'undefined' ? window : this);

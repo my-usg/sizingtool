@@ -538,7 +538,7 @@
    "capacity": "28,750",
    "pipe_note": "Model 121 regulators have outlet pipe sizing requirements. This regulator was sized for use with 1.5\" outlet pipe. For capacities with smaller outlet piping, see regulator brochure.",
    "part_numbers": [
-    "R.121-8-HP.STD.11/2SCD.8-HP.EXTCON.STD.STD.STD.15.ALU"
+    "R.121-8-HP.STD.11/2SCD.8HP.EXTCON.STD.STD.STD.15.ALU"
    ],
    "control_line": "CONTROL LINE KIT",
    "control_line_qty": 1,
