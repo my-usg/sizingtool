@@ -108,10 +108,10 @@ README.md, DEPLOYING.md, VERSION
 
 | Tool | Page | Bundle | `algorithm` hash |
 | --- | --- | --- | --- |
-| all-models | `/resources/regulator-sizing-tools/general` | `usg-all-models.js` | `d04e6a174f6b` |
+| all-models | `/resources/regulator-sizing-tools/general` | `usg-all-models.js` | `7e146cc79dc6` |
 | model-046 | `…/model-046` | `usg-model-046.js` | `208e4323a736` |
-| model-121 | `…/model-121-122` | `usg-model-121.js` | `81ddc8bad2ef` |
-| model-143 | `…/model-143` | `usg-model-143.js` | `6df1df668d59` |
+| model-121 | `…/model-121-122` | `usg-model-121.js` | `670558e9c77d` |
+| model-143 | `…/model-143` | `usg-model-143.js` | `64acd2ea6f51` |
 | model-243 | `…/model-243` | `usg-model-243.js` | `caffb09e8169` |
 | model-461 | `…/model-441-461` | `usg-model-461.js` | `88ff4f73f9ed` |
 | model-496 | `…/model-496` | `usg-model-496.js` | `f6502f86324b` |
@@ -139,11 +139,13 @@ another.
 * **model-121** returns **six** values (standard map, V-Port map, 122 map, then
   the selection). Tables list **body size** rather than orifice, drop six
   registers with no V-Port variant, and gate the PDF button on a separate
-  `apply121` flag. Has a min-flow field.
+  `apply121` flag. Has a min-flow field, and a **V-Port preference**
+  (`vp_preference`, `"standard"` or `"vport"`) supplied as an injected global —
+  the 441/461 tool has the same input but passes it as a function argument.
 * **model-461** entry takes the flows as **arguments**; tables come from the
   algorithm's own `build_standard_table()` / `build_vport_table()` with six
-  columns including Qmax/Qmin. No pipe-size input. Has a **V-Port preference**
-  input (`vp_preference`, `"standard"` or `"vport"`).
+  columns including Qmax/Qmin. No pipe-size input. Has a V-Port preference
+  input, passed as an argument rather than injected.
 * **model-rpc** the only tool with a **model selector** (N/A (any) / 243-RPC /
   -A / -B), passed as `model_input`.
 
@@ -181,6 +183,28 @@ honest).
 `wrapper.js` and `reference.py` **must change together** — they are compared
 field for field, so editing one alone fails the differential test. That is the
 point of having both.
+
+### The 121/122, two rules worth knowing
+
+Both live in `will_work_vp()` and `run_regulator_selection121()`, and both exist
+in **two copies** — `tools/model-121/` and the 121 section of
+`tools/all-models/`. Change one, change the other.
+
+* **A 122 is not offered on a high-efficiency or generator load.**
+  `will_work_vp()` returns `"No"` when `pload > 0` and the register starts
+  `R122`. It sits in that function rather than in the selection loop so the 122
+  capacity table reports "No" for the same reason the body was passed over,
+  instead of the row silently disappearing from contention. Note that `pload` is
+  the *share* of the load, so ticking the box and leaving the slider at 0 leaves
+  the 122 available — the two cannot be told apart from `pload` alone.
+* **The V-Port preference decides which valve type is tried first**, and the
+  other is tried when the first produces no match, so the preference only
+  changes the answer where both would work. One consequence is not obvious:
+  `gen_match121()` ignores `result122` entirely on a V-Port pass, because the
+  122 has no V-Port variant, so **a V-Port preference effectively removes the
+  122 from contention** — every input that selected a 122 under "Standard"
+  selected a 121-12 V-Port under "V-Port" in a sweep of the pressure range. If
+  the 122 should still win where it fits, the V-Port pass has to consider it.
 
 ### Adding a ninth tool
 
@@ -300,6 +324,14 @@ declining. Whichever you choose, apply it to **both**
 separate copies. The input is pinned as an edge case in both.
 
 ### Fixed, for the record
+
+* **all-models and model-121**: `hsc_pnc121()` built the diaphragm segment as
+  `'8-HP'` where the part number wants `'8HP'`, so every `121-8-HP` came out as
+  `R.121-8-HP.STD.…​.8-HP.…` instead of `…​.8HP.…`. Two copies again. Only a
+  narrow band of inputs reaches a 121-8-HP at all — in all-models the sweep
+  found none, because the 121/122 sits last in the priority order — so this was
+  rare in the field and is thinly covered by tests. `model-121`'s
+  `scenarios.json` pins one case; keep it.
 
 * **all-models and model-461**: `diap_map` was keyed `'8" AL'` while the sizing
   code emits `'8" Al'`, so the lookup missed, `diap` fell through to `'EXTCON'`
@@ -483,6 +515,12 @@ Details that were deliberate and are easy to undo by accident:
   on touch devices.
 * Capacity tables scroll horizontally on narrow screens rather than squashing;
   Yes/No cells are colour-coded.
+* The V-Port question is worded per tool: "Standard or V-Port orifice preferred
+  if applicable?" on the general tool, which sizes every family, and "Standard
+  or V-Port orifice preferred?" on the 121 and 441/461 tools. The (i) note is
+  the same on all three. The PDF summary does not reuse the form wording — it
+  says "Orifice Preference" — so relabelling the question is a block-only
+  change, while the summary line is not.
 * Each block's PDF and print-fallback subtitle must match its own `<h1>`. Three
   blocks once shipped with "Model 121 Sizing Tool" in the PDF heading because
   they were derived from that block; there is now a test for it.
@@ -530,6 +568,14 @@ Details that were deliberate and are easy to undo by accident:
    proxy would be a one-line change to `LEAD_TIME_ENDPOINT`.
 9. Optional: exhaustive SKU enumeration from the capacity tables rather than
    sampling.
+10. **Decide whether a V-Port preference should exclude the 122** (section 6).
+   It does today, as a side effect of the 122 having no V-Port variant.
+11. **Three behaviours nothing pins.** No fixture reaches the 243 external
+   control line body, a 122 under a high-efficiency load in all-models, or a
+   121-8-HP part number in all-models — so all three could be reverted by a
+   later edit without a test noticing. Inputs that reach them: inlet 25 psi /
+   outlet 2 psi / 18,000 CFH for the first; inlet 14 psi / outlet 0.25 psi /
+   30,000 CFH / min flow 3,000 with a high-efficiency load for the second.
 
 ---
 
@@ -546,7 +592,8 @@ Details that were deliberate and are easy to undo by accident:
   differential test — by design.
 * Bulk find-and-replace across a block leaks the wrong tool's name into user
   copy. Check the PDF subtitle after any rename.
-* Adding a tooltip changes the count that `form-map.js` asserts.
+* Adding a tooltip changes the count that `form-map.js` asserts. The 121 is at
+  8 since it gained the V-Port question.
 * jsPDF cannot initialise under jsdom, so the browser tests verify the PDF's
   *data* but not its rendered layout. Download a real PDF after changing PDF
   layout.
@@ -561,6 +608,12 @@ Details that were deliberate and are easy to undo by accident:
   makes capacity read flat from 2 to 6 psi; the 5 psi inlet row exists in the
   2 psi section as an interpolation endpoint and not as a sizing case, since
   validation already requires the outlet to be strictly below the inlet.
+* **A flag threaded through a call that does not want it.** The 121's
+  `result122` was interpolated with the same `vp` flag as the 121 maps. That was
+  harmless while `vp` always started `False`, and became a 20% cut to every 122
+  capacity the moment a V-Port-first pass existed — on the *standard* pass that
+  follows a failed V-Port one. It is pinned to `False` now. When a variable
+  stops being a constant, check every call it was passed to.
 * Neither `difftest.py` nor `fault_sweep.py` would catch that change: the first
   compares JavaScript to Python, not new to old, and the second only looks for
   inputs that crash. A tool that politely declines looks healthy to both. When
