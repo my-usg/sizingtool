@@ -257,6 +257,10 @@
      "value": "No"
     },
     {
+     "label": "Orifice Preference",
+     "value": "Standard"
+    },
+    {
      "label": "Percent Load Feeding High-Efficiency Appliance",
      "value": "0"
     },
@@ -489,6 +493,10 @@
      "value": "No"
     },
     {
+     "label": "Orifice Preference",
+     "value": "Standard"
+    },
+    {
      "label": "Percent Load Feeding High-Efficiency Appliance",
      "value": "0"
     },
@@ -649,6 +657,10 @@
     {
      "label": "Overpressure Protection Required",
      "value": "No"
+    },
+    {
+     "label": "Orifice Preference",
+     "value": "Standard"
     },
     {
      "label": "Percent Load Feeding High-Efficiency Appliance",
@@ -940,6 +952,10 @@
      "value": "Yes"
     },
     {
+     "label": "Orifice Preference",
+     "value": "Standard"
+    },
+    {
      "label": "Percent Load Feeding High-Efficiency Appliance",
      "value": "0"
     },
@@ -1182,6 +1198,10 @@
     {
      "label": "Overpressure Protection Required",
      "value": "Yes"
+    },
+    {
+     "label": "Orifice Preference",
+     "value": "Standard"
     },
     {
      "label": "Percent Load Feeding High-Efficiency Appliance",
@@ -1462,6 +1482,10 @@
      "value": "No"
     },
     {
+     "label": "Orifice Preference",
+     "value": "Standard"
+    },
+    {
      "label": "Percent Load Feeding High-Efficiency Appliance",
      "value": "0"
     },
@@ -1740,6 +1764,10 @@
      "value": "No"
     },
     {
+     "label": "Orifice Preference",
+     "value": "Standard"
+    },
+    {
      "label": "Percent Load Feeding High-Efficiency Appliance",
      "value": "0"
     },
@@ -1890,12 +1918,12 @@
         [
          "1\"",
          "9,780",
-         "Yes"
+         "No"
         ],
         [
          "1-1/4\"",
          "14,892",
-         "Yes"
+         "No"
         ]
        ]
       },
@@ -1910,17 +1938,17 @@
         [
          "1-1/2\"",
          "14,340",
-         "Yes"
+         "No"
         ],
         [
          "2\"",
          "33,768",
-         "Yes"
+         "No"
         ],
         [
          "2-1/2\"",
          "37,680",
-         "Yes"
+         "No"
         ]
        ]
       }
@@ -2017,6 +2045,10 @@
     {
      "label": "Overpressure Protection Required",
      "value": "No"
+    },
+    {
+     "label": "Orifice Preference",
+     "value": "Standard"
     },
     {
      "label": "Percent Load Feeding High-Efficiency Appliance",
@@ -2296,6 +2328,10 @@
     {
      "label": "Overpressure Protection Required",
      "value": "No"
+    },
+    {
+     "label": "Orifice Preference",
+     "value": "Standard"
     },
     {
      "label": "Percent Load Feeding High-Efficiency Appliance",
@@ -2580,6 +2616,10 @@
      "value": "No"
     },
     {
+     "label": "Orifice Preference",
+     "value": "Standard"
+    },
+    {
      "label": "Percent Load Feeding High-Efficiency Appliance",
      "value": "0"
     },
@@ -2861,6 +2901,10 @@
     {
      "label": "Overpressure Protection Required",
      "value": "No"
+    },
+    {
+     "label": "Orifice Preference",
+     "value": "Standard"
     },
     {
      "label": "Percent Load Feeding High-Efficiency Appliance",
@@ -3150,6 +3194,10 @@
      "value": "No"
     },
     {
+     "label": "Orifice Preference",
+     "value": "Standard"
+    },
+    {
      "label": "Percent Load Feeding High-Efficiency Appliance",
      "value": "0"
     },
@@ -3433,6 +3481,10 @@
      "value": "No"
     },
     {
+     "label": "Orifice Preference",
+     "value": "Standard"
+    },
+    {
      "label": "Percent Load Feeding High-Efficiency Appliance",
      "value": "0"
     },
@@ -3709,6 +3761,10 @@
     {
      "label": "Overpressure Protection Required",
      "value": "No"
+    },
+    {
+     "label": "Orifice Preference",
+     "value": "Standard"
     },
     {
      "label": "Percent Load Feeding High-Efficiency Appliance",
@@ -3989,6 +4045,10 @@
      "value": "No"
     },
     {
+     "label": "Orifice Preference",
+     "value": "Standard"
+    },
+    {
      "label": "Percent Load Feeding High-Efficiency Appliance",
      "value": "0"
     },
@@ -4266,6 +4326,10 @@
     {
      "label": "Overpressure Protection Required",
      "value": "No"
+    },
+    {
+     "label": "Orifice Preference",
+     "value": "Standard"
     },
     {
      "label": "Percent Load Feeding High-Efficiency Appliance",
@@ -4610,6 +4674,10 @@
     {
      "label": "Overpressure Protection Required",
      "value": "No"
+    },
+    {
+     "label": "Orifice Preference",
+     "value": "Standard"
     },
     {
      "label": "Percent Load Feeding High-Efficiency Appliance",

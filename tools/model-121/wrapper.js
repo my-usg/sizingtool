@@ -69,6 +69,7 @@ function defaulted(input) {
     maop: 0,
     pipe_size: "N/A",
     opp_required: false,
+    vp_preference: "standard",
     high_efficiency: false, high_efficiency_pct: 100,
     override_oversize: false, oversize_pct: 25,
     gas_type: "Natural Gas", specific_gravity: 0.6,
@@ -122,6 +123,10 @@ function sizeTool(rawInput) {
   var opp_type = p.opp_required ? "Monitor" : "None";
 
   // ---- oversizing ----
+  // Standard or V-Port orifice preference. Anything other than "vport" is
+  // treated as standard, matching the 441/461 tool.
+  var vp_preference = (p.vp_preference === "vport") ? "vport" : "standard";
+
   var pload = 0.0;
   var pload_pct = 0;
   if (p.high_efficiency) {
@@ -229,6 +234,7 @@ function sizeTool(rawInput) {
     oversize_percent: oversize_percent,
     gastypemult: gastypemult,
     pload: pload,
+    vp_preference: vp_preference,
     Patm: Patm
   });
 
@@ -434,6 +440,7 @@ function sizeTool(rawInput) {
     kv("Max Allowable Inlet Pressure (psi)", String(Math.trunc(maop))),
     kv("Requested Pipe Size", pipesize_raw),
     kv("Overpressure Protection Required", p.opp_required ? "Yes" : "No"),
+    kv("Orifice Preference", vp_preference === "vport" ? "V-Port" : "Standard"),
     kv("Percent Load Feeding High-Efficiency Appliance", p.high_efficiency ? (pload_pct + "%") : "0"),
     kv("Override percentage regulator is oversized by",
       p.override_oversize ? ($format(oversize_percent, ".0f") + "%") : "No"),

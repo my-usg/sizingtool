@@ -40,6 +40,7 @@ DEFAULTS = {
     "maop": 0,
     "pipe_size": "N/A",
     "opp_required": False,
+    "vp_preference": "standard",
     "high_efficiency": False, "high_efficiency_pct": 100,
     "override_oversize": False, "oversize_pct": 25,
     "gas_type": "Natural Gas", "specific_gravity": 0.6,
@@ -102,6 +103,11 @@ def run(payload) -> Dict[str, Any]:
     # ---- overpressure protection ----
     # The 121/122 offers monitor protection only - there is no IRV option.
     opp_type = "Monitor" if payload.opp_required else "None"
+
+    # ---- orifice preference ----
+    # Anything other than "vport" is treated as standard, matching the
+    # 441/461 tool.
+    vp_preference = "vport" if payload.vp_preference == "vport" else "standard"
 
     # ---- oversizing ----
     pload = 0.0
@@ -208,6 +214,7 @@ def run(payload) -> Dict[str, Any]:
         oversize_percent=oversize_percent,
         gastypemult=gastypemult,
         pload=pload,
+        vp_preference=vp_preference,
         Patm=patm,
     )
 
@@ -417,6 +424,9 @@ def run(payload) -> Dict[str, Any]:
         _kv("Requested Pipe Size", pipesize_raw),
         _kv("Overpressure Protection Required", "Yes" if payload.opp_required else "No"),
     ]
+    summary.append(
+        _kv("Orifice Preference", "V-Port" if vp_preference == "vport" else "Standard")
+    )
     summary.append(
         _kv(
             "Percent Load Feeding High-Efficiency Appliance",

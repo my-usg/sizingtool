@@ -8,8 +8,8 @@
  *
  * tool:      all-models
  * version:   1.1.0
- * algorithm: sha256:f42a198bd664
- * sources:   sha256:454b3affdaec
+ * algorithm: sha256:7e146cc79dc6
+ * sources:   sha256:97f1cc7ea273
  *
  * Adds to the shared namespace:
  *   USGSizing.sizeAllModels(input)  -> result object
@@ -1840,19 +1840,23 @@ function spring_121_122(op, reg) {
   return new Map([["color", "None"], ["range", "None"]]);
 }
 function will_work_vp(cap, reg, vp) {
-  let min, $t68, $t69;
+  let min, $t68, $t69, $t70;
   if ($truthy(($eq(cap, "N/A")))) {
     return "No";
   } else {
-    if ($truthy(vp)) {
-      min = 40;
-    } else {
-      min = 20;
-    }
-    if ($truthy((($truthy(($t69 = ((cap >= (flow_rate * oversizeby)))))) ? ((($truthy(($t68 = (((cap / min) <= min_flow))))) ? (((body_max121(reg) >= maop))) : $t68)) : $t69))) {
-      return "Yes";
-    } else {
+    if ($truthy((($truthy(($t68 = ((pload > 0))))) ? ((reg).startsWith("R122")) : $t68))) {
       return "No";
+    } else {
+      if ($truthy(vp)) {
+        min = 40;
+      } else {
+        min = 20;
+      }
+      if ($truthy((($truthy(($t70 = ((cap >= (flow_rate * oversizeby)))))) ? ((($truthy(($t69 = (((cap / min) <= min_flow))))) ? (((body_max121(reg) >= maop))) : $t69)) : $t70))) {
+        return "Yes";
+      } else {
+        return "No";
+      }
     }
   }
 }
@@ -2030,7 +2034,7 @@ function body_size_min121(ip, reg) {
   }
 }
 function gen_match121(result121, result122, vp, opp) {
-  let body, body_order121, cap, label, match, model_labels_121, model_labels_121122, mon_color, monset, novp_pipe_priority, ordered_body121, prefix, priority_list, reg, res, vp_pipe_priority, $t70, $t71, $t72, $t73, $t74, $t75, $t76, $t77, $t78, $t79, $t80, $t81, $t82, $t83, $t84;
+  let body, body_order121, cap, label, match, model_labels_121, model_labels_121122, mon_color, monset, novp_pipe_priority, ordered_body121, prefix, priority_list, reg, res, vp_pipe_priority, $t71, $t72, $t73, $t74, $t75, $t76, $t77, $t78, $t79, $t80, $t81, $t82, $t83, $t84, $t85;
   match = null;
   monset = 0;
   if ($truthy(($eq(opp, "Monitor")))) {
@@ -2053,7 +2057,7 @@ function gen_match121(result121, result122, vp, opp) {
     }
   }
   if ($truthy(($in("irv_input", $GLOBALS)))) {
-    if ($truthy((($truthy(($t70 = ((!$eq(irv_input, 0)))))) ? (((monset > irv_input))) : $t70))) {
+    if ($truthy((($truthy(($t71 = ((!$eq(irv_input, 0)))))) ? (((monset > irv_input))) : $t71))) {
       monset = irv_input;
     }
   }
@@ -2071,7 +2075,7 @@ function gen_match121(result121, result122, vp, opp) {
             cap = $get(result121, reg);
             if ($truthy(($eq(will_work_vp(cap, reg, vp), "Yes")))) {
               mon_color = ($truthy(($eq(opp, "Monitor"))) ? ($get(spring_121_122(monset, reg), "color")) : (null));
-              if ($truthy((($truthy(($t72 = ($eq(opp, "None"))))) ? $t72 : ((($truthy(($t71 = ($eq(opp, "Monitor"))))) ? (((!$eq(mon_color, null)))) : $t71))))) {
+              if ($truthy((($truthy(($t73 = ($eq(opp, "None"))))) ? $t73 : ((($truthy(($t72 = ($eq(opp, "Monitor"))))) ? (((!$eq(mon_color, null)))) : $t72))))) {
                 match = new Map([["reg", reg], ["model", $get(model_labels_121, prefix)], ["diap", null], ["body", body_type121(reg)], ["orifice", "V-Port"], ["seat", null], ["color", $get(spring_121_122(outlet_input, reg), "color")], ["range", $get(spring_121_122(outlet_input, reg), "range")], ["capacity", cap], ["opp", opp], ["mon_color", mon_color], ["mon_range", $get(spring_121_122(monset, reg), "range")]]);
                 return match;
               }
@@ -2086,7 +2090,7 @@ function gen_match121(result121, result122, vp, opp) {
           cap = $get(result121, reg);
           if ($truthy(($eq(will_work_vp(cap, reg, vp), "Yes")))) {
             mon_color = ($truthy(($eq(opp, "Monitor"))) ? ($get(spring_121_122(monset, reg), "color")) : (null));
-            if ($truthy((($truthy(($t74 = ($eq(opp, "None"))))) ? $t74 : ((($truthy(($t73 = ($eq(opp, "Monitor"))))) ? (((!$eq(mon_color, null)))) : $t73))))) {
+            if ($truthy((($truthy(($t75 = ($eq(opp, "None"))))) ? $t75 : ((($truthy(($t74 = ($eq(opp, "Monitor"))))) ? (((!$eq(mon_color, null)))) : $t74))))) {
               match = new Map([["reg", reg], ["model", "121-8-HP"], ["diap", null], ["body", body_type121(reg)], ["orifice", "V-Port"], ["seat", null], ["color", $get(spring_121_122(outlet_input, reg), "color")], ["range", $get(spring_121_122(outlet_input, reg), "range")], ["capacity", cap], ["opp", opp], ["mon_color", mon_color], ["mon_range", $get(spring_121_122(monset, reg), "range")]]);
               return match;
             }
@@ -2101,7 +2105,7 @@ function gen_match121(result121, result122, vp, opp) {
     ordered_body121 = $add(priority_list, (() => { const $r = []; for (const b of $iter(body_order121)) { if ($truthy(((!$in(b, priority_list))))) $r.push(b); } return $r; })());
     model_labels_121122 = new Map([["R12108", "121-8"], ["R12112", "121-12"], ["R12116", "121-16"], ["R12208", "122-8"], ["R12212", "122-12"]]);
     model_labels_121 = new Map([["R12108", "121-8"], ["R12112", "121-12"], ["R12116", "121-16"]]);
-    if ($truthy((($truthy(($t78 = (($truthy(($t77 = (($truthy(($t75 = ((outlet_input <= 2))))) ? (($eq(opp, "None"))) : $t75)))) ? $t77 : ((($truthy(($t76 = ((outlet_input <= 1))))) ? (($eq(opp, "Monitor"))) : $t76)))))) ? (($eq(((typeof (result122) === 'string')), false))) : $t78))) {
+    if ($truthy((($truthy(($t79 = (($truthy(($t78 = (($truthy(($t76 = ((outlet_input <= 2))))) ? (($eq(opp, "None"))) : $t76)))) ? $t78 : ((($truthy(($t77 = ((outlet_input <= 1))))) ? (($eq(opp, "Monitor"))) : $t77)))))) ? (($eq(((typeof (result122) === 'string')), false))) : $t79))) {
       for (const [prefix, label] of $iter($items(model_labels_121122))) {
         res = ($truthy((prefix).startsWith("R121")) ? (result121) : (result122));
         for (const body of $iter(ordered_body121)) {
@@ -2110,7 +2114,7 @@ function gen_match121(result121, result122, vp, opp) {
             cap = $get(res, reg);
             if ($truthy(($eq(will_work_vp(cap, reg, vp), "Yes")))) {
               mon_color = ($truthy(($eq(opp, "Monitor"))) ? ($get(spring_121_122(monset, reg), "color")) : (null));
-              if ($truthy((($truthy(($t80 = ($eq(opp, "None"))))) ? $t80 : ((($truthy(($t79 = ($eq(opp, "Monitor"))))) ? (((!$eq(mon_color, null)))) : $t79))))) {
+              if ($truthy((($truthy(($t81 = ($eq(opp, "None"))))) ? $t81 : ((($truthy(($t80 = ($eq(opp, "Monitor"))))) ? (((!$eq(mon_color, null)))) : $t80))))) {
                 match = new Map([["reg", reg], ["model", $get(model_labels_121122, prefix)], ["diap", null], ["body", body_type121(reg)], ["orifice", null], ["seat", null], ["color", $get(spring_121_122(outlet_input, reg), "color")], ["range", $get(spring_121_122(outlet_input, reg), "range")], ["capacity", cap], ["opp", opp], ["mon_color", mon_color], ["mon_range", $get(spring_121_122(monset, reg), "range")]]);
                 return match;
               }
@@ -2127,7 +2131,7 @@ function gen_match121(result121, result122, vp, opp) {
               cap = $get(result121, reg);
               if ($truthy(($eq(will_work_vp(cap, reg, vp), "Yes")))) {
                 mon_color = ($truthy(($eq(opp, "Monitor"))) ? ($get(spring_121_122(monset, reg), "color")) : (null));
-                if ($truthy((($truthy(($t82 = ($eq(opp, "None"))))) ? $t82 : ((($truthy(($t81 = ($eq(opp, "Monitor"))))) ? (((!$eq(mon_color, null)))) : $t81))))) {
+                if ($truthy((($truthy(($t83 = ($eq(opp, "None"))))) ? $t83 : ((($truthy(($t82 = ($eq(opp, "Monitor"))))) ? (((!$eq(mon_color, null)))) : $t82))))) {
                   match = new Map([["reg", reg], ["model", $get(model_labels_121, prefix)], ["diap", null], ["body", body_type121(reg)], ["orifice", null], ["seat", null], ["color", $get(spring_121_122(outlet_input, reg), "color")], ["range", $get(spring_121_122(outlet_input, reg), "range")], ["capacity", cap], ["opp", opp], ["mon_color", mon_color], ["mon_range", $get(spring_121_122(monset, reg), "range")]]);
                   return match;
                 }
@@ -2142,7 +2146,7 @@ function gen_match121(result121, result122, vp, opp) {
             cap = $get(result121, reg);
             if ($truthy(($eq(will_work_vp(cap, reg, vp), "Yes")))) {
               mon_color = ($truthy(($eq(opp, "Monitor"))) ? ($get(spring_121_122(monset, reg), "color")) : (null));
-              if ($truthy((($truthy(($t84 = ($eq(opp, "None"))))) ? $t84 : ((($truthy(($t83 = ($eq(opp, "Monitor"))))) ? (((!$eq(mon_color, null)))) : $t83))))) {
+              if ($truthy((($truthy(($t85 = ($eq(opp, "None"))))) ? $t85 : ((($truthy(($t84 = ($eq(opp, "Monitor"))))) ? (((!$eq(mon_color, null)))) : $t84))))) {
                 match = new Map([["reg", reg], ["model", "121-8-HP"], ["diap", null], ["body", body_type121(reg)], ["orifice", null], ["seat", null], ["color", $get(spring_121_122(outlet_input, reg), "color")], ["range", $get(spring_121_122(outlet_input, reg), "range")], ["capacity", cap], ["opp", opp], ["mon_color", mon_color], ["mon_range", $get(spring_121_122(monset, reg), "range")]]);
                 return match;
               }
@@ -2154,13 +2158,13 @@ function gen_match121(result121, result122, vp, opp) {
   }
 }
 function run_regulator_selection121(inlet, outlet, opp) {
-  let apply, data_used121, match, monitor, result121, result121_VP, result122, vp, warning, $t85;
+  let apply, data_used121, match, monitor, result121, result121_VP, result122, vp, warning, $t86, $t87;
   if ($truthy(((outlet_input <= 3)))) {
     data_used121 = stddata121;
   } else {
     data_used121 = hpdata121;
   }
-  if ($truthy((($truthy(($t85 = ($eq(opp, "Monitor"))))) ? $t85 : (($eq(opp, "IRV")))))) {
+  if ($truthy((($truthy(($t86 = ($eq(opp, "Monitor"))))) ? $t86 : (($eq(opp, "IRV")))))) {
     opp = "Monitor";
     monitor = true;
     warning = "Sized for worker/monitor setup";
@@ -2169,7 +2173,11 @@ function run_regulator_selection121(inlet, outlet, opp) {
     monitor = false;
     warning = null;
   }
-  vp = false;
+  if ($truthy((($truthy(($t87 = ($in("vp_preference", $GLOBALS))))) ? (($eq(vp_preference, "vport"))) : $t87))) {
+    vp = true;
+  } else {
+    vp = false;
+  }
   result121 = interpolate_capacity(data_used121, inlet, outlet, monitor, false);
   result121_VP = interpolate_capacity(data_used121, inlet, outlet, monitor, true);
   if ($truthy(((typeof (result121) === 'string')))) {
@@ -2181,23 +2189,38 @@ function run_regulator_selection121(inlet, outlet, opp) {
     apply = false;
     return [result121, result121_VP, result122, match, apply, warning];
   }
-  result122 = interpolate_capacity(stddata122, inlet, outlet, monitor, vp);
-  match = gen_match121(result121, result122, vp, opp);
-  if ($truthy(match)) {
-    apply = true;
-  } else {
-    vp = true;
-    match = gen_match121(result121_VP, result122, vp, opp);
+  result122 = interpolate_capacity(stddata122, inlet, outlet, monitor, false);
+  if ($truthy(vp)) {
+    match = gen_match121(result121_VP, result122, true, opp);
     if ($truthy(match)) {
       apply = true;
     } else {
-      apply = false;
+      vp = false;
+      match = gen_match121(result121, result122, false, opp);
+      if ($truthy(match)) {
+        apply = true;
+      } else {
+        apply = false;
+      }
+    }
+  } else {
+    match = gen_match121(result121, result122, false, opp);
+    if ($truthy(match)) {
+      apply = true;
+    } else {
+      vp = true;
+      match = gen_match121(result121_VP, result122, true, opp);
+      if ($truthy(match)) {
+        apply = true;
+      } else {
+        apply = false;
+      }
     }
   }
   return [result121, result121_VP, result122, match, apply, warning];
 }
 function hsc_pnc121(match) {
-  let body, body_map121, body_map122, diap, model, monitor_spring, output, spring, spring_map, vp, $t86, $t87, $t88;
+  let body, body_map121, body_map122, diap, model, monitor_spring, output, spring, spring_map, vp, $t88, $t89, $t90;
   body_map121 = new Map([["3/4\" or 1\"", "1SCD"], ["1\"", "1SCD"], ["1-1/4\"", "11/4SCD"], ["1-1/2\"", "11/2SCD"], ["2\"", "2SCD"], ["2-1/2\"", "21/2SCD"], ["3\"", "3SCD"]]);
   body_map122 = new Map([["3/4\" or 1\"", "1SCD"], ["1\"", "1SCD"], ["1-1/4\"", "1-1/4SCD"], ["1-1/2\"", "1-1/2SCD"], ["2\"", "2SCD"], ["2-1/2\"", "2-1/2SCD"], ["3\"", "3SCD"]]);
   spring_map = new Map([["Blue-Black with Black-Red counter", "37"], ["Red-Black", "1"], ["Blue-Black", "2"], ["Green-Black", "3"], ["Green", "12"], ["Orange", "13"], ["Black", "14"], ["Red with counter", "39"], ["Red", "10"], ["Blue", "11"], ["Cadmium", "15"], ["Yellow", "23"], ["Cadmium + White", "21"], ["Blue-black with Black counter", "33"], ["Red with Red-Black counter", "35"]]);
@@ -2207,7 +2230,7 @@ function hsc_pnc121(match) {
     vp = "STD";
   }
   model = $get(match, "model");
-  if ($truthy((($truthy(($t86 = ($eq(model, "122-12"))))) ? $t86 : (($eq(model, "122-8")))))) {
+  if ($truthy((($truthy(($t88 = ($eq(model, "122-12"))))) ? $t88 : (($eq(model, "122-8")))))) {
     body = $dget(body_map122, $get(match, "body"), null);
   } else {
     body = $dget(body_map121, $get(match, "body"), null);
@@ -2217,7 +2240,7 @@ function hsc_pnc121(match) {
   if ($truthy(($eq(model, "121-16")))) {
     diap = "16";
   } else {
-    if ($truthy((($truthy(($t87 = ($eq(model, "122-12"))))) ? $t87 : (($eq(model, "121-12")))))) {
+    if ($truthy((($truthy(($t89 = ($eq(model, "122-12"))))) ? $t89 : (($eq(model, "121-12")))))) {
       diap = "12";
     } else {
       if ($truthy(($eq(model, "121-8-HP")))) {
@@ -2227,7 +2250,7 @@ function hsc_pnc121(match) {
       }
     }
   }
-  if ($truthy((($truthy(($t88 = ($eq(model, "122-8"))))) ? $t88 : (($eq(model, "122-12")))))) {
+  if ($truthy((($truthy(($t90 = ($eq(model, "122-8"))))) ? $t90 : (($eq(model, "122-12")))))) {
     if ($truthy(($eq($get(match, "opp"), "Monitor")))) {
       output = new Map([["worker", `R.${$str(model)}.STD.${$str(body)}.${$str(diap)}.INTCON.STD.STD.${$str(spring)}.ALU`], ["monitor", `R.${$str(model)}.STD.${$str(body)}.${$str(diap)}.EXTCON.STD.STD.${$str(monitor_spring)}.ALU`], ["controlline", "CONTROL LINE KIT"], ["controllineqty", 1]]);
     } else {
@@ -2243,8 +2266,8 @@ function hsc_pnc121(match) {
   return output;
 }
 function model_461_single(inlet_p, outlet_p) {
-  let $t89, $t90;
-  if ($truthy((($truthy(($t89 = ((inlet_p <= 175))))) ? (((maop <= 175))) : $t89))) {
+  let $t91, $t92;
+  if ($truthy((($truthy(($t91 = ((inlet_p <= 175))))) ? (((maop <= 175))) : $t91))) {
     if ($truthy(((outlet_p < 1)))) {
       return "N/A";
     } else {
@@ -2265,54 +2288,6 @@ function model_461_single(inlet_p, outlet_p) {
               } else {
                 return "N/A";
               }
-            }
-          }
-        }
-      }
-    }
-  } else {
-    if ($truthy((($truthy(($t90 = ((inlet_p <= 1000))))) ? (((maop <= 1000))) : $t90))) {
-      if ($truthy(((outlet_p < 3)))) {
-        return "N/A";
-      } else {
-        if ($truthy(((outlet_p <= 75)))) {
-          return "461-57S";
-        } else {
-          if ($truthy(((outlet_p <= 100)))) {
-            return "461-57S or 461-X57";
-          } else {
-            if ($truthy(((outlet_p <= 250)))) {
-              return "461-X57";
-            } else {
-              return "N/A";
-            }
-          }
-        }
-      }
-    } else {
-      return "N/A";
-    }
-  }
-}
-function model_461_double(inlet_p, outlet_p) {
-  let $t91, $t92;
-  if ($truthy((($truthy(($t91 = ((inlet_p <= 175))))) ? (((maop <= 175))) : $t91))) {
-    if ($truthy(((outlet_p <= 3)))) {
-      return "461-S";
-    } else {
-      if ($truthy(((outlet_p <= 10)))) {
-        return "461-S or 461-57S";
-      } else {
-        if ($truthy(((outlet_p <= 75)))) {
-          return "461-57S";
-        } else {
-          if ($truthy(((outlet_p <= 100)))) {
-            return "461-57S or 461-X57";
-          } else {
-            if ($truthy(((outlet_p <= 250)))) {
-              return "461-X57";
-            } else {
-              return "N/A";
             }
           }
         }
@@ -2342,12 +2317,60 @@ function model_461_double(inlet_p, outlet_p) {
     }
   }
 }
+function model_461_double(inlet_p, outlet_p) {
+  let $t93, $t94;
+  if ($truthy((($truthy(($t93 = ((inlet_p <= 175))))) ? (((maop <= 175))) : $t93))) {
+    if ($truthy(((outlet_p <= 3)))) {
+      return "461-S";
+    } else {
+      if ($truthy(((outlet_p <= 10)))) {
+        return "461-S or 461-57S";
+      } else {
+        if ($truthy(((outlet_p <= 75)))) {
+          return "461-57S";
+        } else {
+          if ($truthy(((outlet_p <= 100)))) {
+            return "461-57S or 461-X57";
+          } else {
+            if ($truthy(((outlet_p <= 250)))) {
+              return "461-X57";
+            } else {
+              return "N/A";
+            }
+          }
+        }
+      }
+    }
+  } else {
+    if ($truthy((($truthy(($t94 = ((inlet_p <= 1000))))) ? (((maop <= 1000))) : $t94))) {
+      if ($truthy(((outlet_p < 3)))) {
+        return "N/A";
+      } else {
+        if ($truthy(((outlet_p <= 75)))) {
+          return "461-57S";
+        } else {
+          if ($truthy(((outlet_p <= 100)))) {
+            return "461-57S or 461-X57";
+          } else {
+            if ($truthy(((outlet_p <= 250)))) {
+              return "461-X57";
+            } else {
+              return "N/A";
+            }
+          }
+        }
+      }
+    } else {
+      return "N/A";
+    }
+  }
+}
 function model_441_2(inlet_p, outlet_p, max_pressure = null, tier2_max = null) {
-  let $t93, $t94, $t95, $t96, $t97;
+  let $t95, $t96, $t97, $t98, $t99;
   if ($truthy(((outlet_p < (5.25 / 28))))) {
     return "N/A";
   } else {
-    if ($truthy((($truthy(($t93 = ((inlet_p <= 100))))) ? (((maop <= 100))) : $t93))) {
+    if ($truthy((($truthy(($t95 = ((inlet_p <= 100))))) ? (((maop <= 100))) : $t95))) {
       if ($truthy(((outlet_p < (5.25 / 28))))) {
         return "N/A";
       } else {
@@ -2374,7 +2397,7 @@ function model_441_2(inlet_p, outlet_p, max_pressure = null, tier2_max = null) {
         }
       }
     } else {
-      if ($truthy((($truthy(($t95 = max_pressure))) ? ((($truthy(($t94 = ((inlet_p <= max_pressure))))) ? (((maop <= max_pressure))) : $t94)) : $t95))) {
+      if ($truthy((($truthy(($t97 = max_pressure))) ? ((($truthy(($t96 = ((inlet_p <= max_pressure))))) ? (((maop <= max_pressure))) : $t96)) : $t97))) {
         if ($truthy(((outlet_p < 3)))) {
           return "N/A";
         } else {
@@ -2393,7 +2416,7 @@ function model_441_2(inlet_p, outlet_p, max_pressure = null, tier2_max = null) {
           }
         }
       } else {
-        if ($truthy((($truthy(($t97 = tier2_max))) ? ((($truthy(($t96 = ((inlet_p <= tier2_max))))) ? (((maop <= tier2_max))) : $t96)) : $t97))) {
+        if ($truthy((($truthy(($t99 = tier2_max))) ? ((($truthy(($t98 = ((inlet_p <= tier2_max))))) ? (((maop <= tier2_max))) : $t98)) : $t99))) {
           if ($truthy(((outlet_p < 3)))) {
             return "N/A";
           } else {
@@ -2411,8 +2434,8 @@ function model_441_2(inlet_p, outlet_p, max_pressure = null, tier2_max = null) {
   }
 }
 function model_441_3(inlet_p, outlet_p, max_pressure = null, tier2_max = null) {
-  let $t100, $t101, $t102, $t98, $t99;
-  if ($truthy((($truthy(($t98 = ((inlet_p <= 100))))) ? (((maop <= 100))) : $t98))) {
+  let $t100, $t101, $t102, $t103, $t104;
+  if ($truthy((($truthy(($t100 = ((inlet_p <= 100))))) ? (((maop <= 100))) : $t100))) {
     if ($truthy(((outlet_p <= 3)))) {
       return "441-S";
     } else {
@@ -2435,7 +2458,7 @@ function model_441_3(inlet_p, outlet_p, max_pressure = null, tier2_max = null) {
       }
     }
   } else {
-    if ($truthy((($truthy(($t100 = max_pressure))) ? ((($truthy(($t99 = ((inlet_p <= max_pressure))))) ? (((maop <= max_pressure))) : $t99)) : $t100))) {
+    if ($truthy((($truthy(($t102 = max_pressure))) ? ((($truthy(($t101 = ((inlet_p <= max_pressure))))) ? (((maop <= max_pressure))) : $t101)) : $t102))) {
       if ($truthy(((outlet_p < 3)))) {
         return "N/A";
       } else {
@@ -2454,7 +2477,7 @@ function model_441_3(inlet_p, outlet_p, max_pressure = null, tier2_max = null) {
         }
       }
     } else {
-      if ($truthy((($truthy(($t102 = tier2_max))) ? ((($truthy(($t101 = ((inlet_p <= tier2_max))))) ? (((maop <= tier2_max))) : $t101)) : $t102))) {
+      if ($truthy((($truthy(($t104 = tier2_max))) ? ((($truthy(($t103 = ((inlet_p <= tier2_max))))) ? (((maop <= tier2_max))) : $t103)) : $t104))) {
         if ($truthy(((outlet_p < 3)))) {
           return "N/A";
         } else {
@@ -2471,8 +2494,8 @@ function model_441_3(inlet_p, outlet_p, max_pressure = null, tier2_max = null) {
   }
 }
 function model_441_4(inlet_p, outlet_p, max_pressure) {
-  let $t103, $t104, $t105;
-  if ($truthy((($truthy(($t103 = ((inlet_p <= 100))))) ? (((maop <= 100))) : $t103))) {
+  let $t105, $t106, $t107;
+  if ($truthy((($truthy(($t105 = ((inlet_p <= 100))))) ? (((maop <= 100))) : $t105))) {
     if ($truthy(((outlet_p <= 3)))) {
       return "441-S";
     } else {
@@ -2487,11 +2510,11 @@ function model_441_4(inlet_p, outlet_p, max_pressure) {
       }
     }
   } else {
-    if ($truthy((($truthy(($t104 = ((inlet_p <= max_pressure))))) ? (((maop <= max_pressure))) : $t104))) {
+    if ($truthy((($truthy(($t106 = ((inlet_p <= max_pressure))))) ? (((maop <= max_pressure))) : $t106))) {
       if ($truthy(((outlet_p < 3)))) {
         return "N/A";
       } else {
-        if ($truthy((($truthy(($t105 = ((outlet_p <= 100))))) ? (((inlet_p < 720))) : $t105))) {
+        if ($truthy((($truthy(($t107 = ((outlet_p <= 100))))) ? (((inlet_p < 720))) : $t107))) {
           return "441-57S";
         } else {
           return "N/A";
@@ -2503,8 +2526,8 @@ function model_441_4(inlet_p, outlet_p, max_pressure) {
   }
 }
 function model_441_6(inlet_p, outlet_p, max_pressure) {
-  let $t106;
-  if ($truthy((($truthy(($t106 = ((inlet_p <= max_pressure))))) ? (((maop <= max_pressure))) : $t106))) {
+  let $t108;
+  if ($truthy((($truthy(($t108 = ((inlet_p <= max_pressure))))) ? (((maop <= max_pressure))) : $t108))) {
     if ($truthy(((outlet_p < 3)))) {
       return "N/A";
     } else {
@@ -2519,8 +2542,8 @@ function model_441_6(inlet_p, outlet_p, max_pressure) {
   }
 }
 function spring_diap_461S(op) {
-  let output, $t107;
-  if ($truthy((($truthy(($t107 = ((op >= (2 / 28)))))) ? (((op <= (3.5 / 28)))) : $t107))) {
+  let output, $t109;
+  if ($truthy((($truthy(($t109 = ((op >= (2 / 28)))))) ? (((op <= (3.5 / 28)))) : $t109))) {
     output = new Map([["diap", "12\" CI"], ["color", "Aluminum"], ["range", "(2\" - 10\" wc)"]]);
   } else {
     if ($truthy(((op < (6.5 / 28))))) {
@@ -2581,8 +2604,8 @@ function mon_spring_diap_461S(op) {
   return output;
 }
 function spring_diap_441S(op) {
-  let output, $t108;
-  if ($truthy((($truthy(($t108 = ((op >= (4.25 / 28)))))) ? (((op <= (4.75 / 28)))) : $t108))) {
+  let output, $t110;
+  if ($truthy((($truthy(($t110 = ((op >= (4.25 / 28)))))) ? (((op <= (4.75 / 28)))) : $t110))) {
     output = new Map([["diap", "18\""], ["color", "Aluminum"], ["range", "(4.25\" - 4.75\" wc)"]]);
   } else {
     if ($truthy(((op < (5.25 / 28))))) {
@@ -2659,8 +2682,8 @@ function mon_spring_diap_441S(op) {
   return output;
 }
 function spring_57S(op) {
-  let $t109;
-  if ($truthy((($truthy(($t109 = ((op < 6))))) ? (((op >= 3))) : $t109))) {
+  let $t111;
+  if ($truthy((($truthy(($t111 = ((op < 6))))) ? (((op >= 3))) : $t111))) {
     return new Map([["diap", null], ["color", "Yellow"], ["range", "(3 - 6 psi)"]]);
   } else {
     if ($truthy(((op < 9)))) {
@@ -2691,8 +2714,8 @@ function spring_57S(op) {
   }
 }
 function spring_X57(op) {
-  let $t110;
-  if ($truthy((($truthy(($t110 = ((op < 100))))) ? (((op >= 75))) : $t110))) {
+  let $t112;
+  if ($truthy((($truthy(($t112 = ((op < 100))))) ? (((op >= 75))) : $t112))) {
     return new Map([["diap", null], ["color", "Red"], ["range", "(75 - 100 psi)"]]);
   } else {
     if ($truthy(((op < 175)))) {
@@ -2723,19 +2746,19 @@ function calc_qmax(K, inlet_p, outlet_p, monitor) {
   return q;
 }
 function applicable(model_str, qmax, qmin, max_flow, min_flow) {
-  let $t111;
+  let $t113;
   if ($truthy(($eq(model_str, "N/A")))) {
     return "N";
   }
-  if ($truthy((($truthy(($t111 = (((max_flow * oversizeby) <= qmax))))) ? (((min_flow >= qmin))) : $t111))) {
+  if ($truthy((($truthy(($t113 = (((max_flow * oversizeby) <= qmax))))) ? (((min_flow >= qmin))) : $t113))) {
     return "Y";
   }
   return "N";
 }
 function build_standard_table(inlet_p, outlet_p, max_flow, min_flow, opp) {
-  let K, body, model, monitor, orifice, qmax, qmin, rows, table, yn, $t112;
+  let K, body, model, monitor, orifice, qmax, qmin, rows, table, yn, $t114;
   rows = [["2\"", "11/16\" single", 650, model_461_single(inlet_p, outlet_p)], ["2\"", "11/16\" double", 1000, model_461_double(inlet_p, outlet_p)], ["2\"", "1\" single", 1300, model_461_single(inlet_p, outlet_p)], ["2\"", "1\" double", 2000, model_461_double(inlet_p, outlet_p)], ["2\"", "1-1/2\"", 4270, model_441_2(inlet_p, outlet_p, 1000, null)], ["2\"", "1-3/4\"", 5450, model_441_2(inlet_p, outlet_p, 575, 1000)], ["3\"", "1-1/2\"", 4270, model_441_3(inlet_p, outlet_p, 1000, null)], ["3\"", "1-3/4\"", 6630, model_441_3(inlet_p, outlet_p, 575, 1000)], ["3\"", "2-1/8\"", 8880, model_441_3(inlet_p, outlet_p, 400, 500)], ["4\"", "1-3/4\"", 5420, model_441_4(inlet_p, outlet_p, 1000)], ["4\"", "2-1/8\"", 8880, model_441_4(inlet_p, outlet_p, 500)], ["4\"", "3\"", 17740, model_441_4(inlet_p, outlet_p, 300)], ["6\"", "2-1/8\"", 8880, model_441_6(inlet_p, outlet_p, 500)], ["6\"", "3\"", 18500, model_441_6(inlet_p, outlet_p, 300)], ["6\"", "4-1/4\"", 33000, model_441_6(inlet_p, outlet_p, 150)]];
-  if ($truthy((($truthy(($t112 = ($eq(opp, "Monitor"))))) ? $t112 : (($eq(opp, "IRV")))))) {
+  if ($truthy((($truthy(($t114 = ($eq(opp, "Monitor"))))) ? $t114 : (($eq(opp, "IRV")))))) {
     monitor = true;
     opp = "Monitor";
   } else {
@@ -2752,9 +2775,9 @@ function build_standard_table(inlet_p, outlet_p, max_flow, min_flow, opp) {
   return table;
 }
 function build_vport_table(inlet_p, outlet_p, max_flow, min_flow, opp) {
-  let K, body, model, monitor, orifice, qmax, qmin, rows, table, yn, $t113;
+  let K, body, model, monitor, orifice, qmax, qmin, rows, table, yn, $t115;
   rows = [["2\"", "1\" single", 975, model_461_single(inlet_p, outlet_p)], ["2\"", "1\" double", 1500, model_461_double(inlet_p, outlet_p)], ["2\"", "1-1/2\"", 4160, model_441_2(inlet_p, outlet_p, 1000, null)], ["2\"", "1-3/4\"", 5260, model_441_2(inlet_p, outlet_p, 575, 1000)], ["3\"", "1-1/2\"", 4160, model_441_3(inlet_p, outlet_p, 1000, null)], ["3\"", "1-3/4\"", 6390, model_441_3(inlet_p, outlet_p, 575, 1000)], ["3\"", "2-1/8\"", 8440, model_441_3(inlet_p, outlet_p, 400, 500)], ["4\"", "1-3/4\"", 5260, model_441_4(inlet_p, outlet_p, 1000)], ["4\"", "2-1/8\"", 8440, model_441_4(inlet_p, outlet_p, 500)], ["4\"", "3\"", 13850, model_441_4(inlet_p, outlet_p, 300)], ["6\"", "2-1/8\"", 8440, model_441_6(inlet_p, outlet_p, 500)], ["6\"", "3\"", 14430, model_441_6(inlet_p, outlet_p, 300)], ["6\"", "4-1/4\"", 25500, model_441_6(inlet_p, outlet_p, 150)]];
-  if ($truthy((($truthy(($t113 = ($eq(opp, "Monitor"))))) ? $t113 : (($eq(opp, "IRV")))))) {
+  if ($truthy((($truthy(($t115 = ($eq(opp, "Monitor"))))) ? $t115 : (($eq(opp, "IRV")))))) {
     monitor = true;
     opp = "Monitor";
   } else {
@@ -2780,8 +2803,8 @@ function find_first(table) {
   return null;
 }
 function run_regulator_selection461(inlet_p, outlet_p, max_flow, min_flow, opp, vp_preference) {
-  let ansi, apply, body, color, diap, dp, is_vport, match, max_capacity, model, mon_color, mon_range, monitor, monset, orifice, primary, range, raw_model, seat, std, std_match, vp, vp_match, warning, $t114, $t115, $t116, $t117, $t118, $t119, $t120, $t121, $t122, $t123;
-  if ($truthy((($truthy(($t114 = ($eq(opp, "Monitor"))))) ? $t114 : (($eq(opp, "IRV")))))) {
+  let ansi, apply, body, color, diap, dp, is_vport, match, max_capacity, model, mon_color, mon_range, monitor, monset, orifice, primary, range, raw_model, seat, std, std_match, vp, vp_match, warning, $t116, $t117, $t118, $t119, $t120, $t121, $t122, $t123, $t124, $t125;
+  if ($truthy((($truthy(($t116 = ($eq(opp, "Monitor"))))) ? $t116 : (($eq(opp, "IRV")))))) {
     monitor = true;
     opp = "Monitor";
     warning = "Sized for worker/monitor setup";
@@ -2842,10 +2865,10 @@ function run_regulator_selection461(inlet_p, outlet_p, max_flow, min_flow, opp, 
     }
   }
   body = $get(primary, "body");
-  if ($truthy((($truthy(($t115 = ($eq(model, "441-S"))))) ? $t115 : (($eq(model, "461-S")))))) {
+  if ($truthy((($truthy(($t117 = ($eq(model, "441-S"))))) ? $t117 : (($eq(model, "461-S")))))) {
     ansi = "ANSI125";
   } else {
-    if ($truthy((($truthy(($t116 = ($eq(model, "441-X57"))))) ? $t116 : (($eq(model, "461-X57")))))) {
+    if ($truthy((($truthy(($t118 = ($eq(model, "441-X57"))))) ? $t118 : (($eq(model, "461-X57")))))) {
       if ($truthy(((maop <= 575)))) {
         ansi = "ANSI250";
       } else {
@@ -2874,8 +2897,8 @@ function run_regulator_selection461(inlet_p, outlet_p, max_flow, min_flow, opp, 
   body = `${$str(body)} ${$str(ansi)}`;
   orifice = $add($get(primary, "orifice"), ($truthy(is_vport) ? (" VP") : ("")));
   dp = (inlet_p - outlet_p);
-  if ($truthy((($truthy(($t117 = ((maop < 575))))) ? (((dp < 250))) : $t117))) {
-    if ($truthy((($truthy(($t118 = ($eq($get(primary, "orifice"), "11/16\" single"))))) ? $t118 : (($eq($get(primary, "orifice"), "1\" single")))))) {
+  if ($truthy((($truthy(($t119 = ((maop < 575))))) ? (((dp < 250))) : $t119))) {
+    if ($truthy((($truthy(($t120 = ($eq($get(primary, "orifice"), "11/16\" single"))))) ? $t120 : (($eq($get(primary, "orifice"), "1\" single")))))) {
       seat = "Poly-Tan";
     } else {
       seat = "BUNA";
@@ -2929,13 +2952,13 @@ function run_regulator_selection461(inlet_p, outlet_p, max_flow, min_flow, opp, 
     }
   }
   if ($truthy(($in("irv_input", $GLOBALS)))) {
-    if ($truthy((($truthy(($t119 = ((!$eq(irv_input, 0)))))) ? (((monset > irv_input))) : $t119))) {
+    if ($truthy((($truthy(($t121 = ((!$eq(irv_input, 0)))))) ? (((monset > irv_input))) : $t121))) {
       monset = irv_input;
     }
   }
   mon_color = null;
   mon_range = null;
-  if ($truthy((($truthy(($t120 = ($eq(model, "461-57S"))))) ? $t120 : (($eq(model, "441-57S")))))) {
+  if ($truthy((($truthy(($t122 = ($eq(model, "461-57S"))))) ? $t122 : (($eq(model, "441-57S")))))) {
     color = $get(spring_57S(outlet_input), "color");
     range = $get(spring_57S(outlet_input), "range");
     if ($truthy(monitor)) {
@@ -2943,7 +2966,7 @@ function run_regulator_selection461(inlet_p, outlet_p, max_flow, min_flow, opp, 
       mon_range = $get(spring_57S(monset), "range");
     }
   } else {
-    if ($truthy((($truthy(($t121 = ($eq(model, "461-X57"))))) ? $t121 : (($eq(model, "441-X57")))))) {
+    if ($truthy((($truthy(($t123 = ($eq(model, "461-X57"))))) ? $t123 : (($eq(model, "441-X57")))))) {
       color = $get(spring_X57(outlet_input), "color");
       range = $get(spring_X57(outlet_input), "range");
       if ($truthy(monitor)) {
@@ -2973,10 +2996,10 @@ function run_regulator_selection461(inlet_p, outlet_p, max_flow, min_flow, opp, 
       }
     }
   }
-  if ($truthy((($truthy(($t122 = ($eq(model, "461-57S"))))) ? $t122 : (($eq(model, "441-57S")))))) {
+  if ($truthy((($truthy(($t124 = ($eq(model, "461-57S"))))) ? $t124 : (($eq(model, "441-57S")))))) {
     diap = null;
   } else {
-    if ($truthy((($truthy(($t123 = ($eq(model, "461-X57"))))) ? $t123 : (($eq(model, "441-X57")))))) {
+    if ($truthy((($truthy(($t125 = ($eq(model, "461-X57"))))) ? $t125 : (($eq(model, "441-X57")))))) {
       diap = null;
     } else {
       if ($truthy(($eq(model, "441-S")))) {
@@ -2999,7 +3022,7 @@ function run_regulator_selection461(inlet_p, outlet_p, max_flow, min_flow, opp, 
   return [match, apply, warning];
 }
 function hsc_pnc461(match) {
-  let body, body_map, diap, diap_map, end, model, mon_spring, opp, orifice, orifice_map, output, seat, spring, spring_map, $t124, $t125, $t126, $t127, $t128, $t129, $t130, $t131;
+  let body, body_map, diap, diap_map, end, model, mon_spring, opp, orifice, orifice_map, output, seat, spring, spring_map, $t126, $t127, $t128, $t129, $t130, $t131, $t132, $t133;
   body_map = new Map([["2\" ANSI125", "2FLG125"], ["2\" ANSI250", "2FLG250"], ["2\" ANSI300", "2FLG300"], ["2\" ANSI600", "2FLG600"], ["3\" ANSI125", "3FLG125"], ["3\" ANSI250", "3FLG250"], ["3\" ANSI300", "3FLG300"], ["3\" ANSI600", "3FLG600"], ["4\" ANSI125", "4FLG125"], ["4\" ANSI250", "4FLG250"], ["4\" ANSI300", "4FLG300"], ["6\" ANSI125", "6FLG125"], ["6\" ANSI250", "6FLG250"]]);
   diap_map = new Map([["10\"", "10"], ["12\"", "12"], ["14\"", "14"], ["16\"", "16"], ["18\"", "18"], ["20\"", "20"], ["12\" CI", "461S-12"], ["12\" Al", "461-12-S"], ["8\" Al", "461-8-S"]]);
   orifice_map = new Map([["11/16\" single", "22S"], ["11/16\" double", "22D"], ["1\" single", "20S"], ["1\" double", "20D"], ["1-1/2\"", "23"], ["1-3/4\"", "24"], ["2-1/8\"", "25"], ["3\"", "26"], ["4-1/4\"", "27"], ["1\" single VP", "20VPS"], ["1\" double VP", "20VPD"], ["1-1/2\" VP", "23VP"], ["1-3/4\" VP", "24VP"], ["2-1/8\" VP", "25VP"], ["3\" VP", "26VP"], ["4-1/4\" VP", "27VP"]]);
@@ -3023,16 +3046,16 @@ function hsc_pnc461(match) {
       output = new Map([["worker", `R.${$str(model)}.${$str(body)}.${$str(diap)}.${$str(orifice)}.${$str(seat)}.${$str(spring)}.ST`]]);
     }
   } else {
-    if ($truthy((($truthy(($t124 = ($eq(model, "461-57S"))))) ? $t124 : (($eq(model, "461-S")))))) {
+    if ($truthy((($truthy(($t126 = ($eq(model, "461-57S"))))) ? $t126 : (($eq(model, "461-S")))))) {
       seat = ($truthy(($eq(seat, "BUNA"))) ? ("B") : (seat));
-      model = ($truthy((($truthy(($t126 = ($eq(diap, "461S-12"))))) ? $t126 : ((($truthy(($t125 = ($eq(diap, "461-12-S"))))) ? $t125 : (($eq(diap, "461-8-S"))))))) ? (diap) : (model));
+      model = ($truthy((($truthy(($t128 = ($eq(diap, "461S-12"))))) ? $t128 : ((($truthy(($t127 = ($eq(diap, "461-12-S"))))) ? $t127 : (($eq(diap, "461-8-S"))))))) ? (diap) : (model));
       if ($truthy(($eq(opp, "Monitor")))) {
         output = new Map([["worker", `R.${$str(model)}.${$str(body)}.${$str(orifice)}.${$str(seat)}.${$str(spring)}`], ["monitor", `R.${$str(model)}.${$str(body)}.${$str(orifice)}.${$str(seat)}.${$str(mon_spring)}`]]);
       } else {
         output = new Map([["worker", `R.${$str(model)}.${$str(body)}.${$str(orifice)}.${$str(seat)}.${$str(spring)}`]]);
       }
     } else {
-      if ($truthy((($truthy(($t127 = ($eq(model, "441-57S"))))) ? (($in($get(body, 0), ["4", "6"]))) : $t127))) {
+      if ($truthy((($truthy(($t129 = ($eq(model, "441-57S"))))) ? (($in($get(body, 0), ["4", "6"]))) : $t129))) {
         seat = ($truthy(($eq(seat, "BUNA"))) ? ("B") : (seat));
         if ($truthy(($eq(opp, "Monitor")))) {
           output = new Map([["worker", `R.${$str(model)}.${$str(body)}.${$str(orifice)}.${$str(seat)}.${$str(spring)}.${$str(end)}`], ["monitor", `R.${$str(model)}.${$str(body)}.${$str(orifice)}.${$str(seat)}.${$str(mon_spring)}.${$str(end)}`]]);
@@ -3040,7 +3063,7 @@ function hsc_pnc461(match) {
           output = new Map([["worker", `R.${$str(model)}.${$str(body)}.${$str(orifice)}.${$str(seat)}.${$str(spring)}.${$str(end)}`]]);
         }
       } else {
-        if ($truthy((($truthy(($t129 = ($eq(model, "441-S"))))) ? ((($truthy(($t128 = ($eq(diap, "12"))))) ? (($eq(body, "2FLG125"))) : $t128)) : $t129))) {
+        if ($truthy((($truthy(($t131 = ($eq(model, "441-S"))))) ? ((($truthy(($t130 = ($eq(diap, "12"))))) ? (($eq(body, "2FLG125"))) : $t130)) : $t131))) {
           if ($truthy(($eq(opp, "Monitor")))) {
             output = new Map([["worker", `R.${$str(model)}.${$str(body)}.${$str(diap)}.${$str(orifice)}.${$str(seat)}.${$str(spring)}`], ["monitor", `R.${$str(model)}.${$str(body)}.${$str(diap)}.${$str(orifice)}.${$str(seat)}.${$str(mon_spring)}`]]);
           } else {
@@ -3059,7 +3082,7 @@ function hsc_pnc461(match) {
       }
     }
   }
-  if ($truthy((($truthy(($t131 = ($eq(model, "441-S"))))) ? $t131 : ((($truthy(($t130 = ($eq(model, "441-57S"))))) ? $t130 : (($eq(model, "441-X57")))))))) {
+  if ($truthy((($truthy(($t133 = ($eq(model, "441-S"))))) ? $t133 : ((($truthy(($t132 = ($eq(model, "441-57S"))))) ? $t132 : (($eq(model, "441-X57")))))))) {
     $set(output, "controlline", "CONTROL LINE KIT - 441-1/2\"");
     if ($truthy(($eq(opp, "Monitor")))) {
       $set(output, "controllineqty", 2);
@@ -3077,7 +3100,7 @@ function hsc_pnc461(match) {
   return output;
 }
 function allmodels_selector(inlet, outlet, opp) {
-  let add_cart, apply046, apply121, apply143, apply243, apply461, apply496, match, match046, match121, match143, match243, match461, match496, model_selection, partnumber, pipe_requirement, result046, result121, result121_VP, result122, result143, result243, result496, warning, warning046, warning121, warning143, warning243, warning461, warning496, $t132, $t133, $t134, $t135, $t136, $t137, $t138, $t139, $t140, $t141, $t142;
+  let add_cart, apply046, apply121, apply143, apply243, apply461, apply496, match, match046, match121, match143, match243, match461, match496, model_selection, partnumber, pipe_requirement, result046, result121, result121_VP, result122, result143, result243, result496, warning, warning046, warning121, warning143, warning243, warning461, warning496, $t134, $t135, $t136, $t137, $t138, $t139, $t140, $t141, $t142, $t143, $t144;
   model_selection = null;
   match = null;
   warning = null;
@@ -3095,7 +3118,7 @@ function allmodels_selector(inlet, outlet, opp) {
     if ($truthy(apply496)) {
       model_selection = "496";
     } else {
-      if ($truthy((($truthy(($t132 = apply046))) ? (apply243) : $t132))) {
+      if ($truthy((($truthy(($t134 = apply046))) ? (apply243) : $t134))) {
         if ($truthy(($eq(opp, "IRV")))) {
           if ($truthy(($eq($get(match046, "model"), "046-2")))) {
             model_selection = "046";
@@ -3112,7 +3135,7 @@ function allmodels_selector(inlet, outlet, opp) {
           if ($truthy(apply046)) {
             model_selection = "046";
           } else {
-            if ($truthy((($truthy(($t133 = apply121))) ? (apply461) : $t133))) {
+            if ($truthy((($truthy(($t135 = apply121))) ? (apply461) : $t135))) {
               if ($truthy(combust_pref)) {
                 if ($truthy(apply121)) {
                   model_selection = "121";
@@ -3145,47 +3168,47 @@ function allmodels_selector(inlet, outlet, opp) {
   if ($truthy(($eq(model_selection, "496")))) {
     match = match496;
     warning = warning496;
-    $t134 = hsc_pnc496(match496);
-    partnumber = $t134;
-    add_cart = $t134;
+    $t136 = hsc_pnc496(match496);
+    partnumber = $t136;
+    add_cart = $t136;
   } else {
     if ($truthy(($eq(model_selection, "143")))) {
       match = match143;
       warning = warning143;
-      $t135 = hsc_pnc143(match143);
-      partnumber = $t135;
-      add_cart = $t135;
+      $t137 = hsc_pnc143(match143);
+      partnumber = $t137;
+      add_cart = $t137;
     } else {
       if ($truthy(($eq(model_selection, "243")))) {
         match = match243;
         warning = warning243;
-        $t136 = hsc_pnc243(match243);
-        partnumber = $t136;
-        add_cart = $t136;
+        $t138 = hsc_pnc243(match243);
+        partnumber = $t138;
+        add_cart = $t138;
       } else {
         if ($truthy(($eq(model_selection, "046")))) {
           match = match046;
           warning = warning046;
-          $t137 = hsc_pnc046(match046);
-          partnumber = $t137;
-          add_cart = $t137;
+          $t139 = hsc_pnc046(match046);
+          partnumber = $t139;
+          add_cart = $t139;
         } else {
           if ($truthy(($eq(model_selection, "121")))) {
             match = match121;
             warning = warning121;
-            $t138 = hsc_pnc121(match121);
-            partnumber = $t138;
-            add_cart = $t138;
-            if ($truthy((($truthy(($t141 = ($eq($get(match, "model"), "121-8"))))) ? $t141 : ((($truthy(($t140 = ($eq($get(match, "model"), "121-12"))))) ? $t140 : ((($truthy(($t139 = ($eq($get(match, "model"), "121-16"))))) ? $t139 : (($eq($get(match, "model"), "121-8-HP")))))))))) {
+            $t140 = hsc_pnc121(match121);
+            partnumber = $t140;
+            add_cart = $t140;
+            if ($truthy((($truthy(($t143 = ($eq($get(match, "model"), "121-8"))))) ? $t143 : ((($truthy(($t142 = ($eq($get(match, "model"), "121-12"))))) ? $t142 : ((($truthy(($t141 = ($eq($get(match, "model"), "121-16"))))) ? $t141 : (($eq($get(match, "model"), "121-8-HP")))))))))) {
               pipe_requirement = `Note: Model 121 regulators have outlet pipe sizing requirements, regulator was sized for use with ${$str(body_size_min121(inlet_input, $get(match, "reg")))} outlet pipe.  For capacities with smaller outlet piping, see regulator brochure.`;
             }
           } else {
             if ($truthy(($eq(model_selection, "461")))) {
               match = match461;
               warning = warning461;
-              $t142 = hsc_pnc461(match461);
-              partnumber = $t142;
-              add_cart = $t142;
+              $t144 = hsc_pnc461(match461);
+              partnumber = $t144;
+              add_cart = $t144;
             }
           }
         }
@@ -3603,7 +3626,7 @@ function sizeTool(rawInput) {
   ns.versions = ns.versions || {};
   ns.versions['all-models'] = {
     version: '1.1.0',
-    algorithm: 'sha256:f42a198bd664',
-    sources: 'sha256:454b3affdaec'
+    algorithm: 'sha256:7e146cc79dc6',
+    sources: 'sha256:97f1cc7ea273'
   };
 })(typeof window !== 'undefined' ? window : this);

@@ -18,7 +18,8 @@
     "oversize_percent",
     "gastypemult",
     "pload",
-    "Patm"
+    "Patm",
+    "vp_preference"
   ],
   "skip_functions": [
     "print_regulator_selection",

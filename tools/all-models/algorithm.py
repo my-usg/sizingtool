@@ -2752,6 +2752,13 @@ def spring_121_122(op, reg):
 def will_work_vp(cap, reg, vp):
     if cap == "N/A":
         return "No"
+    # The 122 is not offered where any part of the load feeds a high-efficiency
+    # boiler or a generator. pload is that share of the load as a fraction, and
+    # is 0 when the answer was No, so this fires whenever one was declared.
+    # It sits here rather than in the selection loop so the 122 capacity table
+    # reports "No" for the same reason the body was passed over.
+    elif pload > 0 and reg.startswith('R122'):
+        return "No"
     else:
         if vp:
             min = 40
@@ -3080,7 +3087,14 @@ def run_regulator_selection121(inlet, outlet, opp):
         monitor = False
         warning = None
 
-    vp = False
+    # Which valve type is tried first, from the customer's preference. Whichever
+    # goes first, the other is tried when it produces no match, so the answer
+    # only changes where both could work.
+    if 'vp_preference' in globals() and vp_preference == "vport":
+        vp = True
+    else:
+        vp = False
+
     result121 = interpolate_capacity(data_used121, inlet, outlet, monitor, False)
     result121_VP = interpolate_capacity(data_used121, inlet, outlet, monitor, True)
 
@@ -3093,22 +3107,42 @@ def run_regulator_selection121(inlet, outlet, opp):
         apply = False
         return result121, result121_VP, result122, match, apply, warning
 
-    # 122 can only be used up to 2 psi outlet, 1 psi outlet with monitor
-    result122 = interpolate_capacity(stddata122, inlet, outlet, monitor, vp)
-        
-    match = gen_match121(result121, result122, vp, opp)
+    # 122 can only be used up to 2 psi outlet, 1 psi outlet with monitor.
+    # Always interpolated at standard capacity: the 122 has no V-Port variant,
+    # and gen_match121 ignores result122 entirely on a V-Port pass. Passing vp
+    # here would quietly cut every 122 capacity by 20% on the standard pass
+    # that follows a failed V-Port one.
+    result122 = interpolate_capacity(stddata122, inlet, outlet, monitor, False)
 
-    if match:
-        apply = True
-    else:
-        # Try V-Port
-        vp = True
-        match = gen_match121(result121_VP, result122, vp, opp)
+    if vp:
+        match = gen_match121(result121_VP, result122, True, opp)
 
         if match:
             apply = True
         else:
-            apply = False
+            # Fall back to standard valves - also the only pass that can reach
+            # a 122, since that family has no V-Port variant.
+            vp = False
+            match = gen_match121(result121, result122, False, opp)
+
+            if match:
+                apply = True
+            else:
+                apply = False
+    else:
+        match = gen_match121(result121, result122, False, opp)
+
+        if match:
+            apply = True
+        else:
+            # Try V-Port
+            vp = True
+            match = gen_match121(result121_VP, result122, True, opp)
+
+            if match:
+                apply = True
+            else:
+                apply = False
 
     return result121, result121_VP, result122, match, apply, warning
 

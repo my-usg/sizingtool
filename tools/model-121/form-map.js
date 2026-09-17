@@ -27,6 +27,8 @@ module.exports = {
     // Monitor protection only - a plain Yes/No, with no preference or IRV psi.
     if (input.opp_required) d.radio('opp', 'Yes');
 
+    if (input.vp_preference === 'vport') d.radio('vp', 'V-Port');
+
     if (input.high_efficiency) {
       d.radio('higheff', 'Yes');
       if (input.high_efficiency_pct !== undefined) d.set('pload', input.high_efficiency_pct);
@@ -82,7 +84,7 @@ module.exports = {
         ['N/A', '3/4"', '1"', '1-1/4"', '1-1/2"', '2"', '2-1/2"', '3"']), pipeOpts);
 
     check('no +/- steppers', doc.querySelectorAll('.usg-step').length === 0);
-    check('7 info tooltips', doc.querySelectorAll('.usg-help').length === 7,
+    check('8 info tooltips', doc.querySelectorAll('.usg-help').length === 8,
       doc.querySelectorAll('.usg-help').length);
   }
 };
