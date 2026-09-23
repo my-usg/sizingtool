@@ -1026,9 +1026,7 @@ def hsc_pnc121(match):
                 'controllineqty': 1,
             }
         else:
-            output = {'worker': f"R.{model}.STD.{body}.{diap}.EXTCON.STD.STD.{spring}.ALU",
-                      'controlline': "CONTROL LINE KIT",
-                      'controllineqty': 1,
+            output = {'worker': f"R.{model}.STD.{body}.{diap}.INTCON.STD.STD.{spring}.ALU",
             }
     else:
         # 121

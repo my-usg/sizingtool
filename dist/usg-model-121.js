@@ -8,8 +8,8 @@
  *
  * tool:      model-121
  * version:   1.1.0
- * algorithm: sha256:670558e9c77d
- * sources:   sha256:44b8a15045fd
+ * algorithm: sha256:1e01c0428b8d
+ * sources:   sha256:15f37f04ef41
  *
  * Adds to the shared namespace:
  *   USGSizing.sizeModel121(input)  -> result object
@@ -928,7 +928,7 @@ function hsc_pnc121(match) {
     if ($truthy(($eq($get(match, "opp"), "Monitor")))) {
       output = new Map([["worker", `R.${$str(model)}.STD.${$str(body)}.${$str(diap)}.INTCON.STD.STD.${$str(spring)}.ALU`], ["monitor", `R.${$str(model)}.STD.${$str(body)}.${$str(diap)}.EXTCON.STD.STD.${$str(monitor_spring)}.ALU`], ["controlline", "CONTROL LINE KIT"], ["controllineqty", 1]]);
     } else {
-      output = new Map([["worker", `R.${$str(model)}.STD.${$str(body)}.${$str(diap)}.EXTCON.STD.STD.${$str(spring)}.ALU`], ["controlline", "CONTROL LINE KIT"], ["controllineqty", 1]]);
+      output = new Map([["worker", `R.${$str(model)}.STD.${$str(body)}.${$str(diap)}.INTCON.STD.STD.${$str(spring)}.ALU`]]);
     }
   } else {
     if ($truthy(($eq($get(match, "opp"), "Monitor")))) {
@@ -1459,7 +1459,7 @@ function sizeTool(rawInput) {
   ns.versions = ns.versions || {};
   ns.versions['model-121'] = {
     version: '1.1.0',
-    algorithm: 'sha256:670558e9c77d',
-    sources: 'sha256:44b8a15045fd'
+    algorithm: 'sha256:1e01c0428b8d',
+    sources: 'sha256:15f37f04ef41'
   };
 })(typeof window !== 'undefined' ? window : this);
