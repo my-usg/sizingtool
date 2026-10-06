@@ -1462,9 +1462,9 @@
  {
   "name": "large monitor selection",
   "input": {
-   "inlet": 750,
+   "inlet": 650,
    "outlet": 100,
-   "flow": 400000,
+   "flow": 250000,
    "opp_required": true,
    "opp_pref": "Monitor"
   },
@@ -1483,7 +1483,7 @@
     },
     {
      "label": "Body Size",
-     "value": "2\" ANSI600"
+     "value": "2\" ANSI300"
     },
     {
      "label": "Orifice Size",
@@ -1502,10 +1502,10 @@
      "value": "Brown (100 - 175 psi)"
     }
    ],
-   "capacity": "535,080",
+   "capacity": "465,080",
    "part_numbers": [
-    "R.461-X57.2FLG600.EXTCON.20D.PT.22.ST",
-    "R.461-X57.2FLG600.EXTCON.20D.PT.22.ST"
+    "R.461-X57.2FLG300.EXTCON.20D.PT.22.ST",
+    "R.461-X57.2FLG300.EXTCON.20D.PT.22.ST"
    ],
    "control_line": "CONTROL LINE KIT",
    "control_line_qty": 2,
@@ -1523,7 +1523,7 @@
    "summary": [
     {
      "label": "Inlet Pressure (psi)",
-     "value": "750.0"
+     "value": "650.0"
     },
     {
      "label": "Outlet Pressure (psi)",
@@ -1531,11 +1531,11 @@
     },
     {
      "label": "Max Flow Rate (CFH)",
-     "value": "400,000"
+     "value": "250,000"
     },
     {
      "label": "Min Flow Rate (CFH)",
-     "value": "400,000"
+     "value": "250,000"
     },
     {
      "label": "Max Allowable Inlet Pressure (psi)",
@@ -1655,7 +1655,7 @@
  {
   "name": "no regulator fits",
   "input": {
-   "inlet": 999,
+   "inlet": 750,
    "outlet": 250,
    "flow": 10000000
   },
@@ -1686,7 +1686,7 @@
  {
   "name": "441 selection: control line kit SKU ends with an inch mark",
   "input": {
-   "inlet": 900,
+   "inlet": 750,
    "outlet": 200,
    "flow": 800000,
    "opp_required": true,
@@ -1726,7 +1726,7 @@
      "value": "Black (150 - 250 psi)"
     }
    ],
-   "capacity": "1,366,571",
+   "capacity": "1,142,396",
    "part_numbers": [
     "R.441-X57.2FLG600.EXTCON.23.PT.14.S",
     "R.441-X57.2FLG600.EXTCON.23.PT.14.S"
@@ -1747,7 +1747,7 @@
    "summary": [
     {
      "label": "Inlet Pressure (psi)",
-     "value": "900.0"
+     "value": "750.0"
     },
     {
      "label": "Outlet Pressure (psi)",
@@ -1923,6 +1923,34 @@
      "label": "Altitude above 3,000 feet or atmospheric pressure below 13 psi",
      "value": "No"
     }
+   ]
+  }
+ },
+ {
+  "name": "differential over 600 psi",
+  "input": {
+   "inlet": 1000,
+   "outlet": 250,
+   "flow": 50000
+  },
+  "expected": {
+   "ok": false,
+   "errors": [
+    "Pressure differential (> 600 psi) too large \u2014 consider two pressure cuts."
+   ]
+  }
+ },
+ {
+  "name": "differential over 600 psi with an outlet under 3 psi: one message, not two",
+  "input": {
+   "inlet": 1000,
+   "outlet": 2,
+   "flow": 50000
+  },
+  "expected": {
+   "ok": false,
+   "errors": [
+    "Pressure differential (> 600 psi) too large \u2014 consider two pressure cuts."
    ]
   }
  }

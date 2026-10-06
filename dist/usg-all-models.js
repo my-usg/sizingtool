@@ -9,7 +9,7 @@
  * tool:      all-models
  * version:   1.1.0
  * algorithm: sha256:4d4de357fd82
- * sources:   sha256:cbcfa1c63249
+ * sources:   sha256:abb9127939e7
  *
  * Adds to the shared namespace:
  *   USGSizing.sizeAllModels(input)  -> result object
@@ -3365,7 +3365,13 @@ function sizeTool(rawInput) {
   }
   if (Math.trunc(maop) !== 0 && maop < inlet_psi) errors.push("MAIP must be >= inlet pressure.");
   if (min_flow > flow_rate) errors.push("Minimum flow must be \u2264 maximum flow rate.");
-  if (inlet_psi > 0 && outlet_psi > 0 && inlet_psi > 175 && outlet_psi < 3) {
+  // Two pressure cuts. Above a 600 psi differential the message names the
+  // figure; otherwise the original rule applies, an outlet under 3 psi with an
+  // inlet over 175 psi. Only one is ever reported - they give the same advice,
+  // and a list showing both would read as two separate problems.
+  if (inlet_psi > 0 && outlet_psi > 0 && inlet_psi - outlet_psi > 600) {
+    errors.push("Pressure differential (> 600 psi) too large \u2014 consider two pressure cuts.");
+  } else if (inlet_psi > 0 && outlet_psi > 0 && inlet_psi > 175 && outlet_psi < 3) {
     errors.push("Pressure differential too large \u2014 consider two pressure cuts.");
   }
 
@@ -3627,6 +3633,6 @@ function sizeTool(rawInput) {
   ns.versions['all-models'] = {
     version: '1.1.0',
     algorithm: 'sha256:4d4de357fd82',
-    sources: 'sha256:cbcfa1c63249'
+    sources: 'sha256:abb9127939e7'
   };
 })(typeof window !== 'undefined' ? window : this);

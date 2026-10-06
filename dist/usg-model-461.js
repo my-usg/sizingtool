@@ -9,7 +9,7 @@
  * tool:      model-461
  * version:   1.1.0
  * algorithm: sha256:88ff4f73f9ed
- * sources:   sha256:ad1d1cfbd7ec
+ * sources:   sha256:c4f0dc4c24bf
  *
  * Adds to the shared namespace:
  *   USGSizing.sizeModel461(input)  -> result object
@@ -1211,6 +1211,10 @@ function sizeTool(rawInput) {
   if (inlet_psi > 0 && outlet_psi > 0 && outlet_psi >= inlet_psi) {
     errors.push("Outlet pressure must be less than inlet pressure.");
   }
+  // Same rule and wording as the general tool.
+  if (inlet_psi > 0 && outlet_psi > 0 && inlet_psi - outlet_psi > 600) {
+    errors.push("Pressure differential (> 600 psi) too large \u2014 consider two pressure cuts.");
+  }
   if (Math.trunc(maop) !== 0 && maop < inlet_psi) errors.push("MAIP must be >= inlet pressure.");
   if (inlet_psi === 0) errors.push("Inlet pressure is required.");
   if (outlet_psi === 0) errors.push("Outlet pressure is required.");
@@ -1479,6 +1483,6 @@ function sizeTool(rawInput) {
   ns.versions['model-461'] = {
     version: '1.1.0',
     algorithm: 'sha256:88ff4f73f9ed',
-    sources: 'sha256:ad1d1cfbd7ec'
+    sources: 'sha256:c4f0dc4c24bf'
   };
 })(typeof window !== 'undefined' ? window : this);

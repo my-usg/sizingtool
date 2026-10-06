@@ -4300,5 +4300,19 @@
     }
    ]
   }
+ },
+ {
+  "name": "differential over 600 psi",
+  "input": {
+   "inlet": 1000,
+   "outlet": 150,
+   "flow": 2000
+  },
+  "expected": {
+   "ok": false,
+   "errors": [
+    "Pressure differential (> 600 psi) too large \u2014 consider two pressure cuts."
+   ]
+  }
  }
 ]

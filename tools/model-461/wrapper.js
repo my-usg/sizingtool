@@ -158,6 +158,10 @@ function sizeTool(rawInput) {
   if (inlet_psi > 0 && outlet_psi > 0 && outlet_psi >= inlet_psi) {
     errors.push("Outlet pressure must be less than inlet pressure.");
   }
+  // Same rule and wording as the general tool.
+  if (inlet_psi > 0 && outlet_psi > 0 && inlet_psi - outlet_psi > 600) {
+    errors.push("Pressure differential (> 600 psi) too large \u2014 consider two pressure cuts.");
+  }
   if (Math.trunc(maop) !== 0 && maop < inlet_psi) errors.push("MAIP must be >= inlet pressure.");
   if (inlet_psi === 0) errors.push("Inlet pressure is required.");
   if (outlet_psi === 0) errors.push("Outlet pressure is required.");
