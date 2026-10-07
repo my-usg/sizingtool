@@ -41,7 +41,7 @@ module.exports = {
       d.radio('override', 'Yes');
       if (input.oversize_pct !== undefined) d.set('oversize', input.oversize_pct);
     }
-    if (input.prefer_combustion) d.radio('combust', 'Yes');
+    if (input.prefer_combustion) d.radio('combust', '121/122');
     // The input carries the algorithm's value ("vport"); the control shows the
     // label ("V-Port").
     if (input.vp_preference === 'vport') d.radio('vp', 'V-Port');

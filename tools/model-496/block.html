@@ -402,6 +402,19 @@
 #usg-sizing-tool .usg-avail.is-stock { border-left-color: #1e7d3a; }
 #usg-sizing-tool .usg-avail.is-stock strong { color: #1e7d3a !important; }
 /* Same size as the line prices above it - it is one of them, summed. */
+/* Include-the-kit checkbox: the browser's own control, sized up and in the
+   part-number blue so it reads as part of the kit rather than the form. */
+#usg-sizing-tool .usg-kit-toggle {
+  display: inline-flex; align-items: center; gap: 8px; margin: 0 0 4px;
+  font-size: 16px !important; color: rgb(49, 51, 63); cursor: pointer;
+}
+#usg-sizing-tool .usg-kit-toggle input {
+  width: 18px; height: 18px; margin: 0; flex: none;
+  accent-color: rgb(49, 65, 122); cursor: pointer;
+}
+/* Left out: still there for reference, plainly not part of the order. */
+#usg-sizing-tool .usg-kit.is-excluded .usg-qty,
+#usg-sizing-tool .usg-kit.is-excluded .usg-pricebox { opacity: 0.45; }
 #usg-sizing-tool .usg-total {
   font-size: 30px !important; font-weight: 700; white-space: nowrap;
 }
@@ -724,15 +737,31 @@ function qtyByLine(root) {
   }
   return qty;
 }
+// Lines the customer has chosen to leave out. Today that can only be the
+// control line kit, through its checkbox.
+function excludedLines(root) {
+  var boxes = root.querySelectorAll('.usg-kit-include'), skip = {};
+  for (var i = 0; i < boxes.length; i++) {
+    if (!boxes[i].checked) skip[Number(boxes[i].getAttribute('data-kit-line'))] = true;
+  }
+  return skip;
+}
 function itemsFromDom(root) {
   var el = root.querySelector('.usg-cart[data-items]');
   if (!el) return [];
   var live = qtyByLine(root);
+  var skip = excludedLines(root);
   var pairs = (el.getAttribute('data-items') || '').split('|'), items = [];
+  var line = -1;
   for (var i = 0; i < pairs.length; i++) {
     if (!pairs[i]) continue;
+    line++;
+    // A line left out goes nowhere - not the cart, the total or a lead time
+    // request. It still counts as a position, so the lines after it keep the
+    // quantity boxes they were rendered with.
+    if (skip[line]) continue;
     var bits = pairs[i].split('~');
-    var qty = (live[items.length] !== undefined) ? live[items.length] : (Number(bits[1]) || 1);
+    var qty = (live[line] !== undefined) ? live[line] : (Number(bits[1]) || 1);
     items.push({ part: bits[0], qty: qty });
   }
   return items;
@@ -745,6 +774,21 @@ function leadKey(part, qty) { return part + '|' + qty; }
 // Quantity changed: the cart URL, the line total and the estimates all follow
 // from it. The URL is rewritten in place so the click handler stays a plain
 // read of data-cart.
+// The kit's checkbox. Left out, the kit dims and its quantity locks; either
+// way the cart and the total are rebuilt through the quantity path, since the
+// effect on them is the same kind of change.
+function onKitToggle(root) {
+  var boxes = root.querySelectorAll('.usg-kit-include');
+  for (var i = 0; i < boxes.length; i++) {
+    var kit = boxes[i].closest ? boxes[i].closest('.usg-kit') : null;
+    if (!kit) continue;
+    var on = boxes[i].checked;
+    kit.className = kit.className.replace(/\s*is-excluded/g, '') + (on ? '' : ' is-excluded');
+    var qty = kit.querySelector('[data-qty-for]');
+    if (qty) qty.disabled = !on;
+  }
+  onQtyChange(root);
+}
 function onQtyChange(root) {
   var items = itemsFromDom(root);
   var wrap = root.querySelector('.usg-cart[data-items]');
@@ -1095,8 +1139,16 @@ function render(body) {
         // The kit name only. Its quantity used to be printed after it, which now
         // duplicates the quantity box below - and that box is the editable one, so
         // printing a second figure beside it could contradict it.
+        // Wrapped so the kit - name, quantity, price - can be dimmed as one
+        // when the customer leaves it out.
+        html += '<div class="usg-kit">';
         html += '<p class="usg-field usg-clkit"><strong>' + esc(body.control_line) + '</strong></p>';
+        // Ticked to begin with: the kit has always gone in the cart, so customers
+        // opt out rather than in. data-kit-line is its position in the cart list.
+        html += '<label class="usg-kit-toggle"><input type="checkbox" class="usg-kit-include" ' +
+          'data-kit-line="' + pns.length + '" checked><span>Include control line kit</span></label>';
         html += infoSlots(body.control_line, body.control_line_qty, pns.length);
+        html += '</div>';
       }
       // One line per part number, each with a quantity of 1. A monitor
       // selection returns two different regulators, so both go in the cart.
@@ -1173,6 +1225,10 @@ function render(body) {
   var qtys = out.querySelectorAll('[data-qty-for]');
   for (var q = 0; q < qtys.length; q++) {
     qtys[q].addEventListener('input', function () { onQtyChange(out); });
+  }
+  var kitBoxes = out.querySelectorAll('.usg-kit-include');
+  for (var kb = 0; kb < kitBoxes.length; kb++) {
+    kitBoxes[kb].addEventListener('change', function () { onKitToggle(out); });
   }
   // Price and lead time come from the customer's browser after the result is
   // on screen, so the selection never waits on the network.

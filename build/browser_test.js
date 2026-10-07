@@ -67,7 +67,7 @@ function driver(dom) {
         await new Promise(r => setTimeout(r, 20));
         if (!out.querySelector('.usg-spinner')) break;
       }
-      return {
+      const got = {
         html: out.innerHTML,
         text: out.textContent,
         // Part numbers render as <pre class="usg-code"> on the model tools and
@@ -94,6 +94,11 @@ function driver(dom) {
         qtys: Array.from(out.querySelectorAll('[data-qty-for]')).map(i => i.value),
         // Static note above Add to Cart, on every result.
         hasAccountNote: !!out.querySelector('.usg-signin'),
+        // The include-kit checkbox: whether it is there and starts ticked.
+        kitBox: (function () {
+          const b = out.querySelector('.usg-kit-include');
+          return b ? { checked: b.checked } : null;
+        })(),
         tables: Array.from(out.querySelectorAll('.usg-dfwrap')).map(w => ({
           title: w.previousElementSibling && w.previousElementSibling.classList.contains('usg-df-title')
             ? w.previousElementSibling.textContent.trim() : null,
@@ -109,6 +114,24 @@ function driver(dom) {
         hasInfo: !!out.querySelector('.usg-info'),
         hasPdfBtn: !!doc.getElementById('usg-pdf-btn')
       };
+      // Untick the kit, read the cart, tick it again. Done after every other
+      // field so none of them sees a toggled page.
+      const box = out.querySelector('.usg-kit-include');
+      if (box) {
+        const Ev = doc.defaultView.Event;
+        const btn = out.querySelector('button.usg-btn-cart');
+        box.checked = false;
+        box.dispatchEvent(new Ev('change', { bubbles: true }));
+        got.cartWithoutKit = btn ? btn.getAttribute('data-cart') : null;
+        got.kitDimmed = !!out.querySelector('.usg-kit.is-excluded');
+        const kq = out.querySelector('.usg-kit [data-qty-for]');
+        got.kitQtyLocked = kq ? kq.disabled : null;
+        box.checked = true;
+        box.dispatchEvent(new Ev('change', { bubbles: true }));
+        got.cartAfterRetick = btn ? btn.getAttribute('data-cart') : null;
+        got.kitStillDimmed = !!out.querySelector('.usg-kit.is-excluded');
+      }
+      return got;
     }
   };
 }
@@ -257,6 +280,31 @@ async function testTool(slug) {
       }
     } else if (want.control_line === null && /CONTROL LINE KIT/.test(got.text)) {
       problems.push('control line shown when the algorithm returned none');
+    }
+
+    // The include-kit checkbox: there exactly when a kit is, and ticked to
+    // begin with. Unticking it takes the kit - and only the kit - out of the
+    // cart, dims it and locks its quantity; ticking it again puts all of that
+    // back exactly as it was.
+    if (want.control_line) {
+      if (!got.kitBox) {
+        problems.push('no include-kit checkbox on a result with a kit');
+      } else {
+        if (!got.kitBox.checked) problems.push('include-kit checkbox does not start ticked');
+        const offParts = (got.cartWithoutKit || '').split('?').pop().split('&')
+          .filter(x => x.indexOf('part[]=') === 0)
+          .map(x => decodeURIComponent(x.slice('part[]='.length)));
+        const regs = want.part_numbers || [];
+        if (JSON.stringify(offParts) !== JSON.stringify(regs)) {
+          problems.push('cart with the kit unticked ' + JSON.stringify(offParts) + ' vs ' + JSON.stringify(regs));
+        }
+        if (!got.kitDimmed) problems.push('unticked kit is not dimmed');
+        if (got.kitQtyLocked !== true) problems.push('unticked kit quantity is still editable');
+        if (got.cartAfterRetick !== got.cartHref) problems.push('re-ticking the kit did not restore the cart');
+        if (got.kitStillDimmed) problems.push('re-ticked kit is still dimmed');
+      }
+    } else if (got.kitBox) {
+      problems.push('include-kit checkbox shown with no kit');
     }
 
     // A quantity box for the control line kit only, defaulting to its own
