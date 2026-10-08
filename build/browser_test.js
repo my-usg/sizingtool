@@ -143,8 +143,10 @@ function driver(dom) {
 
 // Tools whose result shows an "Items Needed" section with titled items, and
 // the customer-facing seat names, rather than "Part Number:" fields and the
-// algorithm's seat codes. Add a slug here when its block is converted.
-const ITEMS_LAYOUT = new Set(['all-models']);
+// algorithm's seat codes. Every tool has been converted; a new tool copied from
+// an existing block inherits the layout, so add its slug here too.
+const ITEMS_LAYOUT = new Set(['all-models', 'model-046', 'model-121', 'model-143',
+                              'model-243', 'model-461', 'model-496', 'model-rpc']);
 const SEAT_NAMES = { 'BUNA': 'Buna-N', 'Poly-Tan': 'Poly-U Tan', 'Poly-Red': 'Poly-U Red' };
 
 async function testTool(slug) {

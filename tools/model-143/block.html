@@ -104,20 +104,13 @@
         </select>
       </div>
 
+      <p class="usg-group-label usg-group-next"><strong>Overpressure Protection</strong></p>
+
       <div class="usg-widget">
         <label class="usg-label">Overpressure protection required?</label>
         <div class="usg-radio-group">
           <label class="usg-radio"><input type="radio" name="usg-opp" value="No" checked><span>No</span></label>
           <label class="usg-radio"><input type="radio" name="usg-opp" value="Yes"><span>Yes</span></label>
-        </div>
-      </div>
-
-      <div id="usg-opp-yes-block" style="display:none">
-        <div class="usg-widget">
-          <label class="usg-label">Internal relief valve should limit downstream pressure buildup to (psi)</label>
-          <div class="usg-numwrap">
-            <input type="number" id="usg-irv" min="0" max="500" step="0.1" value="2.0">
-          </div>
         </div>
       </div>
 
@@ -130,10 +123,19 @@
           </div>
         </div>
       </div>
+
+      <div id="usg-opp-yes-block" style="display:none">
+        <div class="usg-widget">
+          <label class="usg-label">Internal relief valve should limit downstream pressure buildup to (psi)</label>
+          <div class="usg-numwrap">
+            <input type="number" id="usg-irv" min="0" max="500" step="0.1" value="2.0">
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="usg-col">
-      <p class="usg-group-label"><strong>Load Type &amp; Gas</strong></p>
+      <p class="usg-group-label"><strong>Load Type</strong></p>
 
       <div class="usg-widget">
         <label class="usg-label">Feeding a generator or high-efficiency boiler? <span class="usg-help" tabindex="0" role="button" aria-label="More information" data-tip="Program will select a regulator that has capacity for double the load feeding high-efficiency equipment">i</span></label>
@@ -167,7 +169,7 @@
         </div>
       </div>
 
-      
+      <p class="usg-group-label usg-group-next"><strong>Gas Type &amp; Altitude</strong></p>
 
       <div class="usg-widget usg-halfwidth">
         <label class="usg-label">Gas type</label>
@@ -259,6 +261,8 @@
 #usg-sizing-tool .hsg-lede a { color: var(--hsc-accent) !important; }
 #usg-sizing-tool .hsg-lede-last { margin-bottom: 26px !important; }
 #usg-sizing-tool .usg-group-label { font-size: 17px !important; color: rgb(49, 51, 63) !important; margin: 0 0 10px !important; }
+/* A second section heading within the same column. */
+#usg-sizing-tool .usg-group-label.usg-group-next { margin-top: 22px !important; }
 #usg-sizing-tool .usg-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
 #usg-sizing-tool .usg-cols-4 > .usg-widget { flex: 1 1 0; min-width: 190px; }
 #usg-sizing-tool .usg-cols-2 > .usg-col { flex: 1 1 0; min-width: 320px; }
@@ -326,19 +330,28 @@
 #usg-sizing-tool .usg-btn:hover { border-color: rgb(255, 75, 75); color: rgb(255, 75, 75) !important; background: #fff; }
 #usg-sizing-tool .usg-btn-primary { background: rgb(255, 75, 75) !important; border-color: rgb(255, 75, 75) !important; color: #fff !important; }
 #usg-sizing-tool .usg-btn-primary:hover { background: rgb(255, 51, 51) !important; border-color: rgb(255, 51, 51) !important; color: #fff !important; }
-/* Part numbers read like the product-page title: the site's own blue, the
-   body font, and on their own line under the label. The monospace green chip
-   this replaced belonged to the Streamlit build. The colour is sampled from a
-   product page, so it matches by value rather than by inheriting - nothing in
-   the theme exposes it as a variable. */
-#usg-sizing-tool code.usg-pn {
-  display: block; margin-top: 2px;
+/* Items Needed. Each item is titled in the product-page blue - the colour
+   is sampled from a product page, so it matches by value rather than by
+   inheriting, since nothing in the theme exposes it as a variable - with its
+   part number underneath in regular weight, then its price and lead time. */
+#usg-sizing-tool .usg-item { margin: 0 0 18px; }
+#usg-sizing-tool .usg-item-title {
   font-family: inherit !important;
-  font-size: 24px !important; font-weight: 600 !important;
+  font-size: 24px !important; font-weight: 400 !important;
   color: rgb(49, 65, 122) !important;
+  margin: 0 0 2px !important; line-height: 1.3 !important;
+}
+#usg-sizing-tool .usg-item-pn { margin: 0 0 10px !important; overflow-wrap: break-word; }
+#usg-sizing-tool code.usg-pn {
+  font-family: inherit !important;
+  font-size: 16px !important; font-weight: 400 !important;
+  color: rgb(49, 51, 63) !important;
   background: none !important; border: 0 !important;
   padding: 0 !important; border-radius: 0;
-  overflow-wrap: break-word;
+}
+/* The kit's part number sits a size below a regulator's. */
+#usg-sizing-tool .usg-kit-pn {
+  font-size: 14px !important; font-weight: 400 !important; color: rgb(49, 51, 63) !important;
 }
 /* ---- Add to Cart ----
    Deliberately UNSTYLED, the same way the 441 configurator does it: the cart
@@ -435,19 +448,6 @@
 #usg-sizing-tool .usg-info { background: rgba(28, 131, 225, 0.1); color: rgb(0, 66, 128) !important; }
 #usg-sizing-tool .usg-field { font-size: 16px !important; color: rgb(49, 51, 63) !important; margin: 0 0 12px !important; }
 #usg-sizing-tool .usg-field strong { color: rgb(49, 51, 63) !important; font-weight: 600; }
-/* The control line kit is a part number too - a SKU that goes in the cart with
-   its own quantity - so the whole line reads like one, quantity included. It
-   carries no separate label, which is why this covers the paragraph and not
-   just the name inside it. It sits directly after the .usg-field rules it has
-   to beat: it is more specific, but keeping it later as well means no cascade
-   argument decides the colour. */
-#usg-sizing-tool .usg-field.usg-clkit,
-#usg-sizing-tool .usg-field.usg-clkit strong {
-  font-family: inherit !important;
-  font-size: 24px !important; font-weight: 600 !important;
-  color: rgb(49, 65, 122) !important;
-  overflow-wrap: break-word;
-}
 #usg-sizing-tool .usg-code {
   background: rgb(240, 242, 246); border-radius: 8px; padding: 12px 16px;
   font-family: "Source Code Pro", Menlo, Consolas, monospace !important; font-size: 15px !important;
@@ -1061,6 +1061,25 @@ function matchNeed(need, key) {
   return null;
 }
 
+// Seat materials as customers know them. The algorithm and the part numbers
+// keep the short codes; only what is displayed changes. Used for the page and
+// both PDF routes, so they can never disagree. Not every tool emits every
+// one of these; the table is the same in every block.
+var SEAT_NAMES = { 'BUNA': 'Buna-N', 'Poly-Tan': 'Poly-U Tan', 'Poly-Red': 'Poly-U Red' };
+function displayValue(label, value) {
+  if (label === 'Seat' && Object.prototype.hasOwnProperty.call(SEAT_NAMES, value)) {
+    return SEAT_NAMES[value];
+  }
+  return value;
+}
+function displaySelection(fields) {
+  var out = [];
+  for (var i = 0; i < fields.length; i++) {
+    out.push({ label: fields[i].label, value: displayValue(fields[i].label, fields[i].value) });
+  }
+  return out;
+}
+
 var lastRun = null; // stored for the PDF download
 
 // ---- main run handler ----
@@ -1111,7 +1130,8 @@ function render(body) {
     html += '<h3 class="usg-h3">Regulator Selection</h3>';
     var sel = body.selection || [];
     for (var i = 0; i < sel.length; i++) {
-      html += '<p class="usg-field"><strong>' + esc(sel[i].label) + ':</strong> ' + esc(sel[i].value) + '</p>';
+      html += '<p class="usg-field"><strong>' + esc(sel[i].label) + ':</strong> ' +
+      esc(displayValue(sel[i].label, sel[i].value)) + '</p>';
     }
     if (body.capacity) {
       html += '<p class="usg-field"><strong>Calculated Capacity (CFH):</strong> ' + esc(body.capacity) + '</p>';
@@ -1119,31 +1139,35 @@ function render(body) {
 
     var pns = body.part_numbers || [];
     if (pns.length) {
-      // Part numbers read as fields of the selection, directly under the
-      // capacity. A monitor selection returns two: the worker regulator
-      // first, then the monitor. The PDF keeps its own separate
-      // "Part Number(s)" section.
+      // Items Needed: what goes in the cart, one block per item - a blue title,
+      // the part number underneath in regular weight, then its price and lead
+      // time. The first regulator is the operating regulator, which is the only
+      // one when no monitor was sized; a second is the monitor. The PDF keeps
+      // its own separate "Part Number(s)" section.
+      html += '<h3 class="usg-h3">Items Needed</h3>';
       for (var p = 0; p < pns.length; p++) {
-        var pnLabel = (p === 0) ? 'Part Number'
-                    : (p === 1) ? 'Monitor Part Number'
-                    : 'Part Number ' + (p + 1);
-        html += '<p class="usg-field"><strong>' + pnLabel + ':</strong> ' +
-          '<code class="usg-pn">' + esc(pns[p]) + '</code></p>';
+        var itemTitle = (p === 0) ? 'Operating Regulator'
+                      : (p === 1) ? 'Monitor Regulator'
+                      : 'Regulator ' + (p + 1);
+        html += '<div class="usg-item">';
+        html += '<p class="usg-item-title">' + itemTitle + '</p>';
+        html += '<p class="usg-item-pn"><code class="usg-pn">' + esc(pns[p]) + '</code></p>';
         html += infoSlots(pns[p], false, p);
+        html += '</div>';
       }
 
-      // Control line kit, below the part numbers. It is a real SKU, so it goes
-      // in the cart with its own quantity, but it stays out of the PDF.
+      // Control line kit, after the regulators. It is a real SKU, so it goes
+      // in the cart with its own quantity, but it stays out of the PDF. Its
+      // part number is not in a code.usg-pn element on purpose: those are the
+      // regulator part numbers, and the browser test reads them as such.
       if (body.control_line) {
-        // The kit name only. Its quantity used to be printed after it, which now
-        // duplicates the quantity box below - and that box is the editable one, so
-        // printing a second figure beside it could contradict it.
-        // Wrapped so the kit - name, quantity, price - can be dimmed as one
-        // when the customer leaves it out.
-        html += '<div class="usg-kit">';
-        html += '<p class="usg-field usg-clkit"><strong>' + esc(body.control_line) + '</strong></p>';
-        // Ticked to begin with: the kit has always gone in the cart, so customers
-        // opt out rather than in. data-kit-line is its position in the cart list.
+        // usg-kit lets the whole kit dim as one when the customer leaves it out.
+        html += '<div class="usg-item usg-kit">';
+        html += '<p class="usg-item-title">Control Line Kit</p>';
+        html += '<p class="usg-item-pn usg-kit-pn">' + esc(body.control_line) + '</p>';
+        // Ticked to begin with: the kit has always gone in the cart, so
+        // customers opt out rather than in. data-kit-line is its position in
+        // the cart list.
         html += '<label class="usg-kit-toggle"><input type="checkbox" class="usg-kit-include" ' +
           'data-kit-line="' + pns.length + '" checked><span>Include control line kit</span></label>';
         html += infoSlots(body.control_line, body.control_line_qty, pns.length);
@@ -1339,7 +1363,7 @@ function downloadPdf() {
     kvRows(lastRun.summary);
 
     section('Regulator Selection');
-    var sel = lastRun.selection.slice();
+    var sel = displaySelection(lastRun.selection);
     if (lastRun.capacity) sel.push({ label: "Calculated Capacity (CFH)", value: lastRun.capacity });
     if (sel.length) kvRows(sel); else noneText('No regulator selected.');
 
@@ -1366,7 +1390,7 @@ function printFallback() {
   h += '<h1>USG Sizing Tool</h1><div>Model 143 Sizing Tool</div><div class="gen">Generated ' + new Date().toLocaleString() + '</div>';
   var kv = function (pairs) { var t = '<table>'; for (var i = 0; i < pairs.length; i++) t += '<tr><td>' + esc(pairs[i].label) + '</td><td>' + esc(pairs[i].value) + '</td></tr>'; return t + '</table>'; };
   var li = function (items) { var t = '<table>'; for (var i = 0; i < items.length; i++) t += '<tr><td style="font-weight:normal;width:auto">' + esc(items[i]) + '</td></tr>'; return t + '</table>'; };
-  var sel = lastRun.selection.slice();
+  var sel = displaySelection(lastRun.selection);
   if (lastRun.capacity) sel.push({ label: "Calculated Capacity (CFH)", value: lastRun.capacity });
   h += '<h2>Inputs</h2>' + kv(lastRun.summary);
   h += '<h2>Regulator Selection</h2>' + (sel.length ? kv(sel) : 'No regulator selected.');
