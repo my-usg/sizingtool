@@ -331,25 +331,25 @@
 /* Items Needed. Each item is titled in the product-page blue - the colour
    is sampled from a product page, so it matches by value rather than by
    inheriting, since nothing in the theme exposes it as a variable - with its
-   part number underneath in plain bold, then its price and lead time. */
+   part number underneath in regular weight, then its price and lead time. */
 #usg-sizing-tool .usg-item { margin: 0 0 18px; }
 #usg-sizing-tool .usg-item-title {
   font-family: inherit !important;
-  font-size: 24px !important; font-weight: 600 !important;
+  font-size: 24px !important; font-weight: 400 !important;
   color: rgb(49, 65, 122) !important;
   margin: 0 0 2px !important; line-height: 1.3 !important;
 }
 #usg-sizing-tool .usg-item-pn { margin: 0 0 10px !important; overflow-wrap: break-word; }
 #usg-sizing-tool code.usg-pn {
   font-family: inherit !important;
-  font-size: 16px !important; font-weight: 700 !important;
+  font-size: 16px !important; font-weight: 400 !important;
   color: rgb(49, 51, 63) !important;
   background: none !important; border: 0 !important;
   padding: 0 !important; border-radius: 0;
 }
 /* The kit's part number sits a size below a regulator's. */
 #usg-sizing-tool .usg-kit-pn {
-  font-size: 14px !important; font-weight: 700 !important; color: rgb(49, 51, 63) !important;
+  font-size: 14px !important; font-weight: 400 !important; color: rgb(49, 51, 63) !important;
 }
 /* ---- Add to Cart ----
    Deliberately UNSTYLED, the same way the 441 configurator does it: the cart
@@ -1134,7 +1134,7 @@ function render(body) {
   }
 
   // Items Needed: what goes in the cart, one block per item - a blue title,
-  // the part number in plain bold underneath, then its price and lead time.
+  // the part number underneath in regular weight, then its price and lead time.
   // The first regulator is the operating regulator, which is the only one when
   // no monitor was sized; a second is the monitor. The PDF keeps its own
   // separate "Part Number(s)" section.
