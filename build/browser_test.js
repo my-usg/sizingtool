@@ -73,6 +73,11 @@ function driver(dom) {
         // Part numbers render as <pre class="usg-code"> on the model tools and
         // as inline <code class="usg-pn"> fields on the general tool.
         codes: Array.from(out.querySelectorAll('.usg-code, code.usg-pn')).map(c => c.textContent.trim()),
+        // Items Needed (general tool): each item's blue title and part number.
+        items: Array.from(out.querySelectorAll('.usg-item')).map(el => ({
+          title: ((el.querySelector('.usg-item-title') || {}).textContent || '').trim(),
+          pn: ((el.querySelector('.usg-item-pn') || {}).textContent || '').trim()
+        })),
         pnLabels: Array.from(out.querySelectorAll('.usg-field'))
           .map(p => p.textContent.trim())
           .filter(t => /Part Number/.test(t)),
@@ -135,6 +140,12 @@ function driver(dom) {
     }
   };
 }
+
+// Tools whose result shows an "Items Needed" section with titled items, and
+// the customer-facing seat names, rather than "Part Number:" fields and the
+// algorithm's seat codes. Add a slug here when its block is converted.
+const ITEMS_LAYOUT = new Set(['all-models']);
+const SEAT_NAMES = { 'BUNA': 'Buna-N', 'Poly-Tan': 'Poly-U Tan', 'Poly-Red': 'Poly-U Red' };
 
 async function testTool(slug) {
   const toolDir = path.join(TOOLS_DIR, slug);
@@ -240,7 +251,14 @@ async function testTool(slug) {
     const problems = [];
     if (!got.hasSuccess) problems.push('no success box');
     for (const f of (want.selection || [])) {
-      if (got.text.indexOf(f.label + ': ' + f.value) === -1) problems.push('missing ' + f.label + '=' + f.value);
+      // Converted tools show the seat by its customer-facing name; the
+      // algorithm's code must not appear in its place.
+      const shown = (ITEMS_LAYOUT.has(slug) && f.label === 'Seat' && SEAT_NAMES[f.value])
+        ? SEAT_NAMES[f.value] : f.value;
+      if (got.text.indexOf(f.label + ': ' + shown) === -1) problems.push('missing ' + f.label + '=' + shown);
+      if (shown !== f.value && got.text.indexOf(f.label + ': ' + f.value) !== -1) {
+        problems.push('seat still shown as ' + f.value);
+      }
     }
     if (want.capacity && got.text.indexOf('Calculated Capacity (CFH): ' + want.capacity) === -1) {
       problems.push('capacity ' + want.capacity);
@@ -249,9 +267,29 @@ async function testTool(slug) {
       problems.push('part numbers ' + JSON.stringify(got.codes) + ' vs ' + JSON.stringify(want.part_numbers));
     }
 
-    // Part numbers are fields of the selection on every tool: the first is
-    // "Part Number" and a second (monitor) one is "Monitor Part Number".
-    if ((want.part_numbers || []).length) {
+    // Items Needed on converted tools: an Operating Regulator, a Monitor
+    // Regulator when one was sized, then the Control Line Kit, each with its
+    // part number underneath - in that order, and nothing else.
+    if (ITEMS_LAYOUT.has(slug) && (want.part_numbers || []).length) {
+      const wantItems = want.part_numbers.map((pn, i) => ({
+        title: i === 0 ? 'Operating Regulator' : i === 1 ? 'Monitor Regulator' : 'Regulator ' + (i + 1),
+        pn: pn
+      }));
+      if (want.control_line) wantItems.push({ title: 'Control Line Kit', pn: want.control_line });
+      if (JSON.stringify(got.items) !== JSON.stringify(wantItems)) {
+        problems.push('items ' + JSON.stringify(got.items) + ' vs ' + JSON.stringify(wantItems));
+      }
+      const iSel = got.html.indexOf('Regulator Selection</h3>');
+      const iItems = got.html.indexOf('Items Needed</h3>');
+      const iCart = got.html.indexOf('usg-btn-cart');
+      if (iItems === -1) problems.push('no Items Needed heading');
+      else if (!(iSel < iItems && iItems < iCart)) problems.push('Items Needed is not between the selection and Add to Cart');
+      if (got.pnLabels.length) problems.push('still shows "Part Number:" fields ' + JSON.stringify(got.pnLabels));
+    }
+
+    // Part numbers as fields of the selection, on every tool not yet converted:
+    // the first is "Part Number" and a second (monitor) is "Monitor Part Number".
+    if (!ITEMS_LAYOUT.has(slug) && (want.part_numbers || []).length) {
       const want0 = 'Part Number: ' + want.part_numbers[0];
       if (!got.pnLabels.some(t => t === want0)) {
         problems.push('missing "' + want0 + '" (saw ' + JSON.stringify(got.pnLabels) + ')');
