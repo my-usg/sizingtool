@@ -18,7 +18,7 @@
 <!-- Sizing algorithm, generated from the Python source. Pin a release tag
      (@v1.0.0) for strict change control, or track @main to pick up pushes
      automatically. -->
-<script src="https://cdn.jsdelivr.net/gh/my-usg/sizingtool@4d26872/dist/usg-model-461.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/my-usg/sizingtool@a822d31/dist/usg-model-461.js"></script>
 
 <div id="usg-sizing-tool">
   <p class="hsg-crumb">
@@ -88,45 +88,6 @@
           <label class="usg-radio"><input type="radio" name="usg-opp" value="Yes"><span>Yes</span></label>
         </div>
       </div>
-    </div>
-
-    <div class="usg-col">
-      <p class="usg-group-label"><strong>Load Type</strong></p>
-
-      <div class="usg-widget">
-        <label class="usg-label">Feeding a generator or high-efficiency boiler? <span class="usg-help" tabindex="0" role="button" aria-label="More information" data-tip="Program will select a regulator that has capacity for double the load feeding high-efficiency equipment">i</span></label>
-        <div class="usg-radio-group">
-          <label class="usg-radio"><input type="radio" name="usg-higheff" value="No" checked><span>No</span></label>
-          <label class="usg-radio"><input type="radio" name="usg-higheff" value="Yes"><span>Yes</span></label>
-        </div>
-      </div>
-
-      <div class="usg-widget" id="usg-pload-block" style="display:none">
-        <label class="usg-label">% of total load feeding high-efficiency appliances <span class="usg-help" tabindex="0" role="button" aria-label="More information" data-tip="Program will select a regulator that has capacity for double the load feeding high-efficiency equipment">i</span></label>
-        <div class="usg-sliderwrap">
-          <input type="range" id="usg-pload" min="0" max="100" step="1" value="100">
-          <span class="usg-slider-val" id="usg-pload-val">100</span>
-        </div>
-      </div>
-
-      <p class="usg-group-label usg-group-next"><strong>Gas Type</strong></p>
-
-      <div class="usg-widget usg-halfwidth">
-        <label class="usg-label">Gas type</label>
-        <select id="usg-gastype">
-          <option>Natural Gas</option><option>Propane</option><option>Other</option>
-        </select>
-      </div>
-
-      <div id="usg-sg-block" style="display:none">
-        <div class="usg-widget usg-halfwidth">
-          <label class="usg-label">Specific gravity</label>
-          <div class="usg-numwrap">
-            <input type="number" id="usg-sg" min="0.01" max="10" step="0.01" value="0.60">
-          </div>
-        </div>
-        <div class="usg-alert usg-info">Contact USG for regulator compatibility with gases other than methane or propane.</div>
-      </div>
 
       <!-- Advanced Settings: closed to begin with. Everything in it still has
            its default and is sent with every run, opened or not. -->
@@ -174,6 +135,46 @@
       </div>
         </div>
       </details>
+    </div>
+
+    <div class="usg-col">
+      <p class="usg-group-label"><strong>Load Type</strong></p>
+
+      <div class="usg-widget">
+        <label class="usg-label">Feeding a generator or high-efficiency boiler? <span class="usg-help" tabindex="0" role="button" aria-label="More information" data-tip="Program will select a regulator that has capacity for double the load feeding high-efficiency equipment">i</span></label>
+        <div class="usg-radio-group">
+          <label class="usg-radio"><input type="radio" name="usg-higheff" value="No" checked><span>No</span></label>
+          <label class="usg-radio"><input type="radio" name="usg-higheff" value="Yes"><span>Yes</span></label>
+        </div>
+      </div>
+
+      <div class="usg-widget" id="usg-pload-block" style="display:none">
+        <label class="usg-label">% of total load feeding high-efficiency appliances <span class="usg-help" tabindex="0" role="button" aria-label="More information" data-tip="Program will select a regulator that has capacity for double the load feeding high-efficiency equipment">i</span></label>
+        <div class="usg-sliderwrap">
+          <input type="range" id="usg-pload" min="0" max="100" step="1" value="100">
+          <span class="usg-slider-val" id="usg-pload-val">100</span>
+        </div>
+      </div>
+
+      <p class="usg-group-label usg-group-next"><strong>Gas Type</strong></p>
+
+      <div class="usg-widget usg-halfwidth">
+        <label class="usg-label">Gas type</label>
+        <select id="usg-gastype">
+          <option>Natural Gas</option><option>Propane</option><option>Other</option>
+        </select>
+      </div>
+
+      <div id="usg-sg-block" style="display:none">
+        <div class="usg-widget usg-halfwidth">
+          <label class="usg-label">Specific gravity</label>
+          <div class="usg-numwrap">
+            <input type="number" id="usg-sg" min="0.01" max="10" step="0.01" value="0.60">
+          </div>
+        </div>
+        <div class="usg-alert usg-info">Contact USG for regulator compatibility with gases other than methane or propane.</div>
+      </div>
+
     </div>
   </div>
 
@@ -273,11 +274,6 @@
      column, and there is always room beside them in the half */
   #usg-sizing-tool .usg-pf .usg-label { grid-column: 1 / -1; margin-top: 6px !important; white-space: nowrap; }
 }
-/* A line a tool does not have - only the general, 121 and 441/461 tools ask
-   for a min gas load - is left blank, so the lines after it, and the
-   sections below, sit in the same place in every tool. */
-#usg-sizing-tool .usg-pf-blank { grid-column: 1 / -1; height: 44px; }
-@media (max-width: 1060px) { #usg-sizing-tool .usg-pf-blank { height: 80px; } }
 #usg-sizing-tool .usg-cols-2 > .usg-col { flex: 1 1 0; min-width: 320px; }
 #usg-sizing-tool .usg-top-gap { margin-top: 8px; }
 #usg-sizing-tool .usg-widget { margin-bottom: 16px; }

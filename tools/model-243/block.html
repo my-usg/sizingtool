@@ -18,7 +18,7 @@
 <!-- Sizing algorithm, generated from the Python source. Pin a release tag
      (@v1.0.0) for strict change control, or track @main to pick up pushes
      automatically. -->
-<script src="https://cdn.jsdelivr.net/gh/my-usg/sizingtool@4d26872/dist/usg-model-243.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/my-usg/sizingtool@a822d31/dist/usg-model-243.js"></script>
 
 <div id="usg-sizing-tool">
   <p class="hsg-crumb">
@@ -67,7 +67,6 @@
     <div class="usg-pf-side usg-pf-load">
       <label class="usg-label" id="usg-label-flow" for="usg-flow">Max Gas Load/Flow Rate:</label>
       <div class="usg-numwrap"><input type="number" id="usg-flow" min="0" max="10000000000" step="50" value="0"></div>
-      <span class="usg-pf-blank" aria-hidden="true"></span>
       <label class="usg-label" for="usg-flow-units">Gas Load/Flow Rate Units:</label>
       <select id="usg-flow-units">
         <option>CFH</option><option>CMH</option><option>BTUH</option>
@@ -303,11 +302,6 @@
      column, and there is always room beside them in the half */
   #usg-sizing-tool .usg-pf .usg-label { grid-column: 1 / -1; margin-top: 6px !important; white-space: nowrap; }
 }
-/* A line a tool does not have - only the general, 121 and 441/461 tools ask
-   for a min gas load - is left blank, so the lines after it, and the
-   sections below, sit in the same place in every tool. */
-#usg-sizing-tool .usg-pf-blank { grid-column: 1 / -1; height: 44px; }
-@media (max-width: 1060px) { #usg-sizing-tool .usg-pf-blank { height: 80px; } }
 #usg-sizing-tool .usg-cols-2 > .usg-col { flex: 1 1 0; min-width: 320px; }
 #usg-sizing-tool .usg-top-gap { margin-top: 8px; }
 #usg-sizing-tool .usg-widget { margin-bottom: 16px; }
