@@ -202,7 +202,10 @@ def run(payload) -> Dict[str, Any]:
     if min_flow > flow_rate:
         errors.append("Minimum flow must be \u2264 maximum flow rate.")
     # Two pressure cuts - see wrapper.js. Only one of the two is ever reported.
-    if inlet_psi > 0 and outlet_psi > 0 and inlet_psi - outlet_psi > 600:
+    # Two pressure cuts above a 600 psi differential, from the inlet or from
+    # the MAIP when one was entered - see wrapper.js.
+    if inlet_psi > 0 and outlet_psi > 0 and (
+            inlet_psi - outlet_psi > 600 or (maop > 0 and maop - outlet_psi > 600)):
         errors.append("Pressure differential (> 600 psi) too large \u2014 consider two pressure cuts.")
     elif inlet_psi > 0 and outlet_psi > 0 and inlet_psi > 175 and outlet_psi < 3:
         errors.append("Pressure differential too large \u2014 consider two pressure cuts.")

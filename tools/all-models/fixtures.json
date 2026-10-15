@@ -2074,5 +2074,20 @@
     }
    ]
   }
+ },
+ {
+  "name": "MAIP more than 600 psi above the outlet",
+  "input": {
+   "inlet": 500,
+   "outlet": 100,
+   "flow": 2000,
+   "maop": 750
+  },
+  "expected": {
+   "ok": false,
+   "errors": [
+    "Pressure differential (> 600 psi) too large \u2014 consider two pressure cuts."
+   ]
+  }
  }
 ]

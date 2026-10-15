@@ -580,6 +580,15 @@
         "outlet": 250,
         "flow": 50000
       }
+    },
+    {
+      "name": "MAIP more than 600 psi above the outlet",
+      "input": {
+        "inlet": 500,
+        "outlet": 100,
+        "flow": 2000,
+        "maop": 750
+      }
     }
   ],
   "random": {

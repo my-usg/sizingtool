@@ -486,6 +486,15 @@
         "opp_pref": "IRV",
         "irv_pressure": 0
       }
+    },
+    {
+      "name": "MAIP more than 600 psi above the outlet",
+      "input": {
+        "inlet": 500,
+        "outlet": 100,
+        "flow": 2000,
+        "maop": 750
+      }
     }
   ],
   "random": {

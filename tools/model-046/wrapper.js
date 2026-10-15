@@ -168,7 +168,12 @@ function sizeTool(rawInput) {
     errors.push("Outlet pressure must be less than inlet pressure.");
   }
   // Same rule and wording as the general tool.
-  if (inlet_psi > 0 && outlet_psi > 0 && inlet_psi - outlet_psi > 600) {
+  // Two pressure cuts above a 600 psi differential, measured from the inlet
+  // pressure or from the MAIP when one was entered (0 means it was not):
+  // the regulator has to be rated for the larger pressure, so the larger
+  // differential is the one that counts.
+  if (inlet_psi > 0 && outlet_psi > 0 &&
+      (inlet_psi - outlet_psi > 600 || (maop > 0 && maop - outlet_psi > 600))) {
     errors.push("Pressure differential (> 600 psi) too large \u2014 consider two pressure cuts.");
   }
   if (Math.trunc(maop) !== 0 && maop < inlet_psi) errors.push("MAIP must be >= inlet pressure.");

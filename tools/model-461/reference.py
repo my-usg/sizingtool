@@ -136,7 +136,10 @@ def run(payload) -> Dict[str, Any]:
     if inlet_psi > 0 and outlet_psi > 0 and outlet_psi >= inlet_psi:
         errors.append("Outlet pressure must be less than inlet pressure.")
     # Same rule and wording as the general tool.
-    if inlet_psi > 0 and outlet_psi > 0 and inlet_psi - outlet_psi > 600:
+    # Two pressure cuts above a 600 psi differential, from the inlet or from
+    # the MAIP when one was entered - see wrapper.js.
+    if inlet_psi > 0 and outlet_psi > 0 and (
+            inlet_psi - outlet_psi > 600 or (maop > 0 and maop - outlet_psi > 600)):
         errors.append("Pressure differential (> 600 psi) too large \u2014 consider two pressure cuts.")
     if int(maop) != 0 and maop < inlet_psi:
         errors.append("MAIP must be >= inlet pressure.")

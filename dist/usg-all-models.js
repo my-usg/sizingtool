@@ -9,7 +9,7 @@
  * tool:      all-models
  * version:   1.1.0
  * algorithm: sha256:5044addece3f
- * sources:   sha256:55124357989c
+ * sources:   sha256:3df5dc205d7d
  *
  * Adds to the shared namespace:
  *   USGSizing.sizeAllModels(input)  -> result object
@@ -3394,7 +3394,12 @@ function sizeTool(rawInput) {
   // figure; otherwise the original rule applies, an outlet under 3 psi with an
   // inlet over 175 psi. Only one is ever reported - they give the same advice,
   // and a list showing both would read as two separate problems.
-  if (inlet_psi > 0 && outlet_psi > 0 && inlet_psi - outlet_psi > 600) {
+  // Two pressure cuts above a 600 psi differential, measured from the inlet
+  // pressure or from the MAIP when one was entered (0 means it was not):
+  // the regulator has to be rated for the larger pressure, so the larger
+  // differential is the one that counts.
+  if (inlet_psi > 0 && outlet_psi > 0 &&
+      (inlet_psi - outlet_psi > 600 || (maop > 0 && maop - outlet_psi > 600))) {
     errors.push("Pressure differential (> 600 psi) too large \u2014 consider two pressure cuts.");
   } else if (inlet_psi > 0 && outlet_psi > 0 && inlet_psi > 175 && outlet_psi < 3) {
     errors.push("Pressure differential too large \u2014 consider two pressure cuts.");
@@ -3675,6 +3680,6 @@ function sizeTool(rawInput) {
   ns.versions['all-models'] = {
     version: '1.1.0',
     algorithm: 'sha256:5044addece3f',
-    sources: 'sha256:55124357989c'
+    sources: 'sha256:3df5dc205d7d'
   };
 })(typeof window !== 'undefined' ? window : this);
