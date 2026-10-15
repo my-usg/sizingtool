@@ -36,7 +36,7 @@ DEFAULTS = {
     "inlet": 0, "inlet_units": "psi",
     "outlet": 0, "outlet_units": "psi",
     "flow": 0, "min_flow": 0, "flow_units": "CFH",
-    "maop": 0,
+    "maop": 0, "maop_units": "psi",
     "opp_required": False, "vp_preference": "standard",
     "high_efficiency": False, "high_efficiency_pct": 100,
     "override_oversize": False, "oversize_pct": 25,
@@ -92,7 +92,10 @@ def run(payload) -> Dict[str, Any]:
     outlet_input = float(payload.outlet)
     flow_rate = int(payload.flow)
     min_flow_raw = int(payload.min_flow)
-    maop = int(payload.maop)
+    # MAIP in psi, bar or kPa - see wrapper.js for why psi alone is truncated.
+    maop_units = payload.maop_units or "psi"
+    maop_entered = float(payload.maop)
+    maop = int(maop_entered) if maop_units == "psi" else to_psi(maop_entered, maop_units)
 
     # ---- overpressure protection ----
     # The 441/461 offers monitor protection only - there is no IRV option.
@@ -141,7 +144,7 @@ def run(payload) -> Dict[str, Any]:
     if inlet_psi > 0 and outlet_psi > 0 and (
             inlet_psi - outlet_psi > 600 or (maop > 0 and maop - outlet_psi > 600)):
         errors.append("Pressure differential (> 600 psi) too large \u2014 consider two pressure cuts.")
-    if int(maop) != 0 and maop < inlet_psi:
+    if maop != 0 and maop < inlet_psi:
         errors.append("MAIP must be >= inlet pressure.")
     if inlet_psi == 0:
         errors.append("Inlet pressure is required.")
@@ -360,7 +363,8 @@ def run(payload) -> Dict[str, Any]:
         _kv(f"Max Flow Rate ({payload.flow_units})", f"{flow_rate:,}"),
         # Whole numbers only - see the note in wrapper.js.
         _kv(f"Min Flow Rate ({payload.flow_units})", f"{round(min_flow):,}"),
-        _kv("Max Allowable Inlet Pressure (psi)", f"{int(maop)}"),
+        _kv(f"Max Allowable Inlet Pressure ({maop_units})",
+            f"{int(maop)}" if maop_units == "psi" else repr(maop_entered)),
         _kv("Overpressure Protection Required", "Yes" if payload.opp_required else "No"),
         _kv("Orifice Preference", "V-Port" if vp_preference == "vport" else "Standard"),
     ]

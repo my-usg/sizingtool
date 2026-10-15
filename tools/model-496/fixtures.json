@@ -4423,5 +4423,260 @@
     }
    ]
   }
+ },
+ {
+  "name": "MAIP in bar",
+  "input": {
+   "inlet": 25,
+   "outlet": 0.5,
+   "flow": 500,
+   "maop": 2.07,
+   "maop_units": "bar"
+  },
+  "expected": {
+   "ok": true,
+   "selected": true,
+   "errors": [],
+   "warnings": [],
+   "message": "Regulator selected!",
+   "selection": [
+    {
+     "label": "Model",
+     "value": "496"
+    },
+    {
+     "label": "Body Size",
+     "value": "3/4\""
+    },
+    {
+     "label": "Orifice Size",
+     "value": "5/16\""
+    },
+    {
+     "label": "Spring",
+     "value": "Red (12\" - 28\" wc)"
+    }
+   ],
+   "capacity": "1,325",
+   "part_numbers": [
+    "R.496-20.3/4.13.10"
+   ],
+   "control_line": null,
+   "control_line_qty": null,
+   "tables": [
+    {
+     "title": "Model 496, 3/8\" Body",
+     "headers": [
+      "Orifice Size",
+      "Calculated Capacity (CFH)",
+      "Will Reg Work"
+     ],
+     "rows": [
+      [
+       "1/2\"",
+       "N/A",
+       "No"
+      ],
+      [
+       "3/8\"",
+       "N/A",
+       "No"
+      ],
+      [
+       "5/16\"",
+       "333",
+       "No"
+      ],
+      [
+       "1/4\"",
+       "320",
+       "No"
+      ],
+      [
+       "3/16\"",
+       "289",
+       "No"
+      ],
+      [
+       "1/8\"",
+       "251",
+       "No"
+      ]
+     ]
+    },
+    {
+     "title": "Model 496, 1/2\" Body",
+     "headers": [
+      "Orifice Size",
+      "Calculated Capacity (CFH)",
+      "Will Reg Work"
+     ],
+     "rows": [
+      [
+       "1/2\"",
+       "N/A",
+       "No"
+      ],
+      [
+       "3/8\"",
+       "N/A",
+       "No"
+      ],
+      [
+       "5/16\"",
+       "597",
+       "No"
+      ],
+      [
+       "1/4\"",
+       "566",
+       "No"
+      ],
+      [
+       "3/16\"",
+       "507",
+       "No"
+      ],
+      [
+       "1/8\"",
+       "424",
+       "No"
+      ]
+     ]
+    },
+    {
+     "title": "Model 496, 3/4\" Body",
+     "headers": [
+      "Orifice Size",
+      "Calculated Capacity (CFH)",
+      "Will Reg Work"
+     ],
+     "rows": [
+      [
+       "1/2\"",
+       "N/A",
+       "No"
+      ],
+      [
+       "3/8\"",
+       "N/A",
+       "No"
+      ],
+      [
+       "5/16\"",
+       "1,325",
+       "Yes"
+      ],
+      [
+       "1/4\"",
+       "1,193",
+       "Yes"
+      ],
+      [
+       "3/16\"",
+       "1,064",
+       "Yes"
+      ],
+      [
+       "1/8\"",
+       "661",
+       "Yes"
+      ]
+     ]
+    },
+    {
+     "title": "Model 496, 1\" Body",
+     "headers": [
+      "Orifice Size",
+      "Calculated Capacity (CFH)",
+      "Will Reg Work"
+     ],
+     "rows": [
+      [
+       "1/2\"",
+       "N/A",
+       "No"
+      ],
+      [
+       "3/8\"",
+       "1,614",
+       "No"
+      ],
+      [
+       "5/16\"",
+       "1,600",
+       "Yes"
+      ],
+      [
+       "1/4\"",
+       "1,514",
+       "Yes"
+      ],
+      [
+       "3/16\"",
+       "1,257",
+       "Yes"
+      ],
+      [
+       "1/8\"",
+       "657",
+       "Yes"
+      ]
+     ]
+    }
+   ],
+   "adjustments": [
+    {
+     "label": "Oversized By",
+     "value": "25%"
+    }
+   ],
+   "summary": [
+    {
+     "label": "Inlet Pressure (psi)",
+     "value": "25.0"
+    },
+    {
+     "label": "Outlet Pressure (psi)",
+     "value": "0.5"
+    },
+    {
+     "label": "Max Flow Rate (CFH)",
+     "value": "500"
+    },
+    {
+     "label": "Max Allowable Inlet Pressure (bar)",
+     "value": "2.07"
+    },
+    {
+     "label": "Requested Pipe Size",
+     "value": "N/A"
+    },
+    {
+     "label": "Overpressure Protection Required",
+     "value": "No"
+    },
+    {
+     "label": "Select Regulator with IRV",
+     "value": "No"
+    },
+    {
+     "label": "Percent Load Feeding High-Efficiency Appliance",
+     "value": "0"
+    },
+    {
+     "label": "Override percentage regulator is oversized by",
+     "value": "No"
+    },
+    {
+     "label": "Gas Type",
+     "value": "Natural Gas"
+    },
+    {
+     "label": "Altitude above 3,000 feet or atmospheric pressure below 13 psi",
+     "value": "No"
+    }
+   ]
+  }
  }
 ]

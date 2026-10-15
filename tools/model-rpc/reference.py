@@ -44,7 +44,7 @@ DEFAULTS = {
     "inlet": 0, "inlet_units": "psi",
     "outlet": 0, "outlet_units": "psi",
     "flow": 0, "flow_units": "CFH",
-    "maop": 0,
+    "maop": 0, "maop_units": "psi",
     "pipe_size": "N/A",
     "model": "N/A (any)",
     "opp_required": False,
@@ -101,7 +101,10 @@ def run(payload) -> Dict[str, Any]:
     inlet_input = float(payload.inlet)
     outlet_input = float(payload.outlet)
     flow_rate = int(payload.flow)
-    maop = int(payload.maop)
+    # MAIP in psi, bar or kPa - see wrapper.js for why psi alone is truncated.
+    maop_units = payload.maop_units or "psi"
+    maop_entered = float(payload.maop)
+    maop = int(maop_entered) if maop_units == "psi" else to_psi(maop_entered, maop_units)
 
     pipesize_raw = payload.pipe_size
     pipesize_input = 0 if pipesize_raw == "N/A" else pipesize_raw
@@ -145,7 +148,7 @@ def run(payload) -> Dict[str, Any]:
         errors.append('Outlet pressure must be between 3.5" wc and 35 psi.')
     if inlet_psi > 0 and outlet_psi > 0 and outlet_psi >= inlet_psi:
         errors.append("Outlet pressure must be less than inlet pressure.")
-    if int(maop) != 0 and maop < inlet_psi:
+    if maop != 0 and maop < inlet_psi:
         errors.append("MAIP must be >= inlet pressure.")
     if inlet_psi == 0:
         errors.append("Inlet pressure is required.")
@@ -356,7 +359,8 @@ def run(payload) -> Dict[str, Any]:
         _kv(f"Inlet Pressure ({payload.inlet_units})", repr(inlet_input)),
         _kv(f"Outlet Pressure ({payload.outlet_units})", repr(outlet_input)),
         _kv(f"Max Flow Rate ({payload.flow_units})", f"{flow_rate:,}"),
-        _kv("Max Allowable Inlet Pressure (psi)", f"{int(maop)}"),
+        _kv(f"Max Allowable Inlet Pressure ({maop_units})",
+            f"{int(maop)}" if maop_units == "psi" else repr(maop_entered)),
         # Always shown, including "N/A (any)", so the summary records whether a
         # model was pinned.
         _kv("Desired RPC Model", model_raw),

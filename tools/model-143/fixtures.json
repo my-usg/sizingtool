@@ -4563,5 +4563,265 @@
     }
    ]
   }
+ },
+ {
+  "name": "MAIP in bar",
+  "input": {
+   "inlet": 25,
+   "outlet": 0.25,
+   "flow": 500,
+   "maop": 2.07,
+   "maop_units": "bar"
+  },
+  "expected": {
+   "ok": true,
+   "selected": true,
+   "errors": [],
+   "warnings": [],
+   "message": "Regulator selected!",
+   "selection": [
+    {
+     "label": "Model",
+     "value": "143-1"
+    },
+    {
+     "label": "Body Size",
+     "value": "3/4\""
+    },
+    {
+     "label": "Orifice Size",
+     "value": "3/8\""
+    },
+    {
+     "label": "Spring",
+     "value": "Blue (5\" - 8.5\" wc)"
+    }
+   ],
+   "capacity": "1,525",
+   "part_numbers": [
+    "R.143-1.3/4.14.11"
+   ],
+   "control_line": null,
+   "control_line_qty": null,
+   "tables": [
+    {
+     "title": "Model 143, 3/4\" Body",
+     "headers": [
+      "Orifice Size",
+      "Calculated Capacity (CFH)",
+      "Will Reg Work"
+     ],
+     "rows": [
+      [
+       "5/8\"",
+       "N/A",
+       "No"
+      ],
+      [
+       "1/2\"",
+       "N/A",
+       "No"
+      ],
+      [
+       "3/8\"",
+       "1,525",
+       "Yes"
+      ],
+      [
+       "5/16\"",
+       "1,600",
+       "Yes"
+      ],
+      [
+       "1/4\"",
+       "1,308",
+       "Yes"
+      ],
+      [
+       "3/16\"",
+       "1,255",
+       "Yes"
+      ],
+      [
+       "5/32\"",
+       "745",
+       "Yes"
+      ],
+      [
+       "9/64\"",
+       "698",
+       "Yes"
+      ],
+      [
+       "1/8\"",
+       "612",
+       "No"
+      ]
+     ]
+    },
+    {
+     "title": "Model 143, 1\" Body",
+     "headers": [
+      "Orifice Size",
+      "Calculated Capacity (CFH)",
+      "Will Reg Work"
+     ],
+     "rows": [
+      [
+       "5/8\"",
+       "N/A",
+       "No"
+      ],
+      [
+       "1/2\"",
+       "N/A",
+       "No"
+      ],
+      [
+       "3/8\"",
+       "1,850",
+       "Yes"
+      ],
+      [
+       "5/16\"",
+       "2,050",
+       "Yes"
+      ],
+      [
+       "1/4\"",
+       "2,000",
+       "Yes"
+      ],
+      [
+       "3/16\"",
+       "1,375",
+       "Yes"
+      ],
+      [
+       "5/32\"",
+       "942",
+       "Yes"
+      ],
+      [
+       "9/64\"",
+       "729",
+       "Yes"
+      ],
+      [
+       "1/8\"",
+       "612",
+       "No"
+      ]
+     ]
+    },
+    {
+     "title": "Model 143, 1-1/4\" Body",
+     "headers": [
+      "Orifice Size",
+      "Calculated Capacity (CFH)",
+      "Will Reg Work"
+     ],
+     "rows": [
+      [
+       "5/8\"",
+       "N/A",
+       "No"
+      ],
+      [
+       "1/2\"",
+       "N/A",
+       "No"
+      ],
+      [
+       "3/8\"",
+       "2,400",
+       "Yes"
+      ],
+      [
+       "5/16\"",
+       "2,400",
+       "Yes"
+      ],
+      [
+       "1/4\"",
+       "2,250",
+       "Yes"
+      ],
+      [
+       "3/16\"",
+       "1,375",
+       "Yes"
+      ],
+      [
+       "5/32\"",
+       "1,018",
+       "Yes"
+      ],
+      [
+       "9/64\"",
+       "750",
+       "Yes"
+      ],
+      [
+       "1/8\"",
+       "678",
+       "Yes"
+      ]
+     ]
+    }
+   ],
+   "adjustments": [
+    {
+     "label": "Oversized By",
+     "value": "25%"
+    }
+   ],
+   "summary": [
+    {
+     "label": "Inlet Pressure (psi)",
+     "value": "25.0"
+    },
+    {
+     "label": "Outlet Pressure (psi)",
+     "value": "0.25"
+    },
+    {
+     "label": "Max Flow Rate (CFH)",
+     "value": "500"
+    },
+    {
+     "label": "Max Allowable Inlet Pressure (bar)",
+     "value": "2.07"
+    },
+    {
+     "label": "Requested Pipe Size",
+     "value": "N/A"
+    },
+    {
+     "label": "Overpressure Protection Required",
+     "value": "No"
+    },
+    {
+     "label": "Select Regulator with IRV",
+     "value": "No"
+    },
+    {
+     "label": "Percent Load Feeding High-Efficiency Appliance",
+     "value": "0"
+    },
+    {
+     "label": "Override percentage regulator is oversized by",
+     "value": "No"
+    },
+    {
+     "label": "Gas Type",
+     "value": "Natural Gas"
+    },
+    {
+     "label": "Altitude above 3,000 feet or atmospheric pressure below 13 psi",
+     "value": "No"
+    }
+   ]
+  }
  }
 ]

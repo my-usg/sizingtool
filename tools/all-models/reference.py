@@ -96,7 +96,7 @@ def _kv(label: str, value: Any) -> Dict[str, str]:
 
 DEFAULTS = {
     "inlet": 0, "inlet_units": "psi", "outlet": 0, "outlet_units": "psi",
-    "flow": 0, "min_flow": 0, "flow_units": "CFH", "maop": 0,
+    "flow": 0, "min_flow": 0, "flow_units": "CFH", "maop": 0, "maop_units": "psi",
     "pipe_size": "N/A", "opp_required": False, "opp_pref": "IRV",
     "irv_pressure": 0.0, "partial_irv": False,
     "high_efficiency": False, "high_efficiency_pct": 100,
@@ -129,7 +129,10 @@ def run(payload) -> Dict[str, Any]:
     outlet_input = float(payload.outlet)
     flow_rate = int(payload.flow)
     min_flow_raw = int(payload.min_flow)
-    maop = int(payload.maop)
+    # MAIP in psi, bar or kPa - see wrapper.js for why psi alone is truncated.
+    maop_units = payload.maop_units or "psi"
+    maop_entered = float(payload.maop)
+    maop = int(maop_entered) if maop_units == "psi" else to_psi(maop_entered, maop_units)
 
     min_flow = flow_rate if min_flow_raw == 0 else min_flow_raw
 
@@ -197,7 +200,7 @@ def run(payload) -> Dict[str, Any]:
         errors.append('Outlet pressure must be between 1.5" wc and 250 psi.')
     if inlet_psi > 0 and outlet_psi > 0 and outlet_psi >= inlet_psi:
         errors.append("Outlet pressure must be less than inlet pressure.")
-    if int(maop) != 0 and maop < inlet_psi:
+    if maop != 0 and maop < inlet_psi:
         errors.append("MAIP must be >= inlet pressure.")
     if min_flow > flow_rate:
         errors.append("Minimum flow must be \u2264 maximum flow rate.")
@@ -381,7 +384,8 @@ def run(payload) -> Dict[str, Any]:
         _kv(f"Outlet Pressure ({payload.outlet_units})", repr(outlet_input)),
         _kv(f"Max Flow Rate ({payload.flow_units})", f"{flow_rate:,}"),
         _kv(f"Min Flow Rate ({payload.flow_units})", f"{min_flow:,}"),
-        _kv("Max Allowable Inlet Pressure (psi)", f"{int(maop)}"),
+        _kv(f"Max Allowable Inlet Pressure ({maop_units})",
+            f"{int(maop)}" if maop_units == "psi" else repr(maop_entered)),
         _kv("Requested Pipe Size", pipesize_raw),
         _kv("Overpressure Protection Required", "Yes" if payload.opp_required else "No"),
     ]

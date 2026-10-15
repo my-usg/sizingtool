@@ -20,6 +20,7 @@ module.exports = {
     if (input.inlet_units) d.set('inlet-units', input.inlet_units);
     if (input.outlet_units) d.set('outlet-units', input.outlet_units);
     if (input.flow_units) d.set('flow-units', input.flow_units);
+    if (input.maop_units) d.set('maop-units', input.maop_units);
 
 
     // Monitor protection only - a plain Yes/No, with no preference or IRV psi.

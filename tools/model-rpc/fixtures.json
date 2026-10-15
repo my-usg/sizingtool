@@ -3610,5 +3610,182 @@
     }
    ]
   }
+ },
+ {
+  "name": "MAIP in bar",
+  "input": {
+   "inlet": 25,
+   "outlet": 1,
+   "flow": 10000,
+   "maop": 2.07,
+   "maop_units": "bar"
+  },
+  "expected": {
+   "ok": true,
+   "selected": true,
+   "errors": [],
+   "warnings": [],
+   "message": "Regulator selected!",
+   "selection": [
+    {
+     "label": "Model",
+     "value": "243-RPC"
+    },
+    {
+     "label": "Body Size",
+     "value": "2\""
+    },
+    {
+     "label": "Orifice Size",
+     "value": "3/4\""
+    },
+    {
+     "label": "Spring",
+     "value": "Black (1 - 2 psi)"
+    }
+   ],
+   "capacity": "21,800",
+   "pipe_note": "Model 243-RPC regulators have outlet pipe sizing requirements. This regulator was sized for use with 2\" outlet pipe. For capacities with smaller outlet piping, see regulator brochure.",
+   "part_numbers": [
+    "R.243-RPC.2SCD.EXT.18.STD.14.ALU"
+   ],
+   "control_line": "CONTROL LINE KIT",
+   "control_line_qty": 1,
+   "tables": [
+    {
+     "title": "243-RPC or 243-RPC-A",
+     "headers": [
+      "Orifice Size",
+      "Calculated Capacity (CFH)",
+      "Will Reg Work"
+     ],
+     "rows": [
+      [
+       "1-1/4\"",
+       "41,600",
+       "No"
+      ],
+      [
+       "1\"",
+       "35,700",
+       "Yes"
+      ],
+      [
+       "3/4\"",
+       "21,800",
+       "Yes"
+      ],
+      [
+       "1/2\"",
+       "10,300",
+       "No"
+      ],
+      [
+       "3/8\"",
+       "5,800",
+       "No"
+      ],
+      [
+       "1/4\"",
+       "2,600",
+       "No"
+      ]
+     ]
+    },
+    {
+     "title": "243-RPC-B",
+     "headers": [
+      "Orifice Size",
+      "Calculated Capacity (CFH)",
+      "Will Reg Work"
+     ],
+     "rows": [
+      [
+       "1-1/4\"",
+       "35,000",
+       "No"
+      ],
+      [
+       "1\"",
+       "28,500",
+       "Yes"
+      ],
+      [
+       "3/4\"",
+       "21,800",
+       "Yes"
+      ],
+      [
+       "1/2\"",
+       "10,300",
+       "No"
+      ],
+      [
+       "3/8\"",
+       "5,800",
+       "No"
+      ],
+      [
+       "1/4\"",
+       "2,600",
+       "No"
+      ]
+     ]
+    }
+   ],
+   "tables_caption": null,
+   "adjustments": [
+    {
+     "label": "Oversized By",
+     "value": "25%"
+    }
+   ],
+   "summary": [
+    {
+     "label": "Inlet Pressure (psi)",
+     "value": "25.0"
+    },
+    {
+     "label": "Outlet Pressure (psi)",
+     "value": "1.0"
+    },
+    {
+     "label": "Max Flow Rate (CFH)",
+     "value": "10,000"
+    },
+    {
+     "label": "Max Allowable Inlet Pressure (bar)",
+     "value": "2.07"
+    },
+    {
+     "label": "Desired RPC Model",
+     "value": "N/A (any)"
+    },
+    {
+     "label": "Requested Pipe Size",
+     "value": "N/A"
+    },
+    {
+     "label": "Overpressure Protection Required",
+     "value": "No"
+    },
+    {
+     "label": "Percent Load Feeding High-Efficiency Appliance",
+     "value": "0"
+    },
+    {
+     "label": "Override percentage regulator is oversized by",
+     "value": "No"
+    },
+    {
+     "label": "Gas Type",
+     "value": "Natural Gas"
+    },
+    {
+     "label": "Altitude above 3,000 feet or atmospheric pressure below 13 psi",
+     "value": "No"
+    }
+   ]
+  }
  }
 ]

@@ -62,7 +62,7 @@ function defaulted(input) {
     inlet: 0, inlet_units: "psi",
     outlet: 0, outlet_units: "psi",
     flow: 0, flow_units: "CFH",
-    maop: 0,
+    maop: 0, maop_units: "psi",
     model: "N/A (any)",
     pipe_size: "N/A",
     opp_required: false,
@@ -88,7 +88,13 @@ function sizeTool(rawInput) {
   var inlet_input = Number(p.inlet);
   var outlet_input = Number(p.outlet);
   var flow_rate = Math.trunc(Number(p.flow));
-  var maop = Math.trunc(Number(p.maop));
+  // MAIP may be entered in psi, bar or kPa and is converted like the inlet. In
+  // psi it stays a whole number, as it always has. A converted figure keeps
+  // its decimals: truncating 8.62 bar (124.99 psi) to 124 would put it below
+  // an inlet of the same 8.62 bar and fail the MAIP >= inlet check.
+  var maop_units = p.maop_units || "psi";
+  var maop_entered = Number(p.maop);
+  var maop = (maop_units === "psi") ? Math.trunc(maop_entered) : toPsi(maop_entered, maop_units);
 
   var pipesize_raw = p.pipe_size;
   var pipesize_input = (pipesize_raw === "N/A") ? 0 : pipesize_raw;
@@ -138,7 +144,7 @@ function sizeTool(rawInput) {
   if (inlet_psi > 0 && outlet_psi > 0 && outlet_psi >= inlet_psi) {
     errors.push("Outlet pressure must be less than inlet pressure.");
   }
-  if (Math.trunc(maop) !== 0 && maop < inlet_psi) errors.push("MAIP must be >= inlet pressure.");
+  if (maop !== 0 && maop < inlet_psi) errors.push("MAIP must be >= inlet pressure.");
   if (inlet_psi === 0) errors.push("Inlet pressure is required.");
   if (outlet_psi === 0) errors.push("Outlet pressure is required.");
   if (flow_rate === 0) errors.push("Please enter a gas load / flow rate.");
@@ -362,7 +368,8 @@ function sizeTool(rawInput) {
     kv("Inlet Pressure (" + p.inlet_units + ")", pyFloatStr(inlet_input)),
     kv("Outlet Pressure (" + p.outlet_units + ")", pyFloatStr(outlet_input)),
     kv("Max Flow Rate (" + p.flow_units + ")", $format(flow_rate, ',')),
-    kv("Max Allowable Inlet Pressure (psi)", String(Math.trunc(maop))),
+    kv("Max Allowable Inlet Pressure (" + maop_units + ")",
+       maop_units === "psi" ? String(Math.trunc(maop)) : pyFloatStr(maop_entered)),
     // Always shown, including "N/A (any)", so the summary records whether a
     // model was pinned.
     kv("Desired RPC Model", model_raw),

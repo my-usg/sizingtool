@@ -549,6 +549,16 @@
         "outlet": 0.5,
         "flow": 900000
       }
+    },
+    {
+      "name": "MAIP in bar",
+      "input": {
+        "inlet": 10,
+        "outlet": 0.5,
+        "flow": 5000,
+        "maop": 0.83,
+        "maop_units": "bar"
+      }
     }
   ],
   "random": {
@@ -727,6 +737,14 @@
         "standard",
         "standard",
         "vport"
+      ]
+    },
+    "maop_units": {
+      "choices": [
+        "psi",
+        "psi",
+        "bar",
+        "kPa"
       ]
     }
   }

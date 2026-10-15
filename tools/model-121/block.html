@@ -43,57 +43,39 @@
   <h2 class="usg-h2">&#128203; Inputs</h2>
 
   <p class="usg-group-label"><strong>Pressures &amp; Flow</strong></p>
-  <div class="usg-row usg-cols-4">
-    <div class="usg-widget">
-      <label class="usg-label" id="usg-label-inlet">Inlet pressure</label>
-      <div class="usg-numwrap">
-        <input type="number" id="usg-inlet" min="0" max="1000" step="0.1" value="0.0">
-      </div>
-    </div>
-    <div class="usg-widget">
-      <label class="usg-label" id="usg-label-outlet">Outlet pressure</label>
-      <div class="usg-numwrap">
-        <input type="number" id="usg-outlet" min="0" max="1000" step="0.1" value="0.0">
-      </div>
-    </div>
-    <div class="usg-widget">
-      <label class="usg-label" id="usg-label-flow">Max gas load / flow rate</label>
-      <div class="usg-numwrap">
-        <input type="number" id="usg-flow" min="0" max="10000000000" step="50" value="0">
-      </div>
-    </div>
-    <div class="usg-widget">
-      <label class="usg-label">Min gas load / flow rate <span class="usg-help" tabindex="0" role="button" aria-label="More information" data-tip="Not required: default 0 (enter 0 to use max flow)">i</span></label>
-      <div class="usg-numwrap">
-        <input type="number" id="usg-minflow" min="0" max="10000000000" step="50" value="0">
-      </div>
-    </div>
-  </div>
-
-  <div class="usg-row usg-cols-4">
-    <div class="usg-widget">
-      <label class="usg-label">Inlet pressure units</label>
+  <!-- Each line reads: label, value, units. Pressures on the left, gas load
+       on the right. On narrower screens each label moves above its fields. -->
+  <div class="usg-row usg-cols-2 usg-pf">
+    <div class="usg-col">
+    <div class="usg-pf-side usg-pf-pressures">
+      <label class="usg-label" id="usg-label-inlet" for="usg-inlet">Inlet Pressure:</label>
+      <div class="usg-numwrap"><input type="number" id="usg-inlet" min="0" max="1000" step="0.1" value="0.0"></div>
       <select id="usg-inlet-units">
         <option>psi</option><option>bar</option><option>kPa</option>
       </select>
-    </div>
-    <div class="usg-widget">
-      <label class="usg-label">Outlet pressure units</label>
+      <label class="usg-label" id="usg-label-outlet" for="usg-outlet">Outlet Pressure:</label>
+      <div class="usg-numwrap"><input type="number" id="usg-outlet" min="0" max="1000" step="0.1" value="0.0"></div>
       <select id="usg-outlet-units">
         <option>psi</option><option>in wc</option><option>oz</option><option>bar</option><option>kPa</option>
       </select>
+      <label class="usg-label" for="usg-maop">Max Allowable Inlet Pressure: <span class="usg-help" tabindex="0" role="button" aria-label="More information" data-tip="Not required: default 0.  Regulator sized based on inlet pressure, however program will ensure configuration can handle this max inlet pressure.">i</span></label>
+      <div class="usg-numwrap"><input type="number" id="usg-maop" min="0" max="1000" step="any" value="0"></div>
+      <select id="usg-maop-units">
+        <option>psi</option><option>bar</option><option>kPa</option>
+      </select>
     </div>
-    <div class="usg-widget">
-      <label class="usg-label">Gas load / flow rate units</label>
+    </div>
+    <div class="usg-col">
+    <div class="usg-pf-side usg-pf-load">
+      <label class="usg-label" id="usg-label-flow" for="usg-flow">Max Gas Load/Flow Rate:</label>
+      <div class="usg-numwrap"><input type="number" id="usg-flow" min="0" max="10000000000" step="50" value="0"></div>
+      <label class="usg-label" for="usg-minflow">Min Gas Load/Flow Rate: <span class="usg-help" tabindex="0" role="button" aria-label="More information" data-tip="Not required: default 0 (enter 0 to use max flow)">i</span></label>
+      <div class="usg-numwrap"><input type="number" id="usg-minflow" min="0" max="10000000000" step="50" value="0"></div>
+      <label class="usg-label" for="usg-flow-units">Gas Load/Flow Rate Units:</label>
       <select id="usg-flow-units">
         <option>CFH</option><option>CMH</option><option>BTUH</option>
       </select>
     </div>
-    <div class="usg-widget">
-      <label class="usg-label">Max Allowable Inlet Pressure (psi) <span class="usg-help" tabindex="0" role="button" aria-label="More information" data-tip="Not required: default 0.  Regulator sized based on inlet pressure, however program will ensure configuration can handle this max inlet pressure.">i</span></label>
-      <div class="usg-numwrap">
-        <input type="number" id="usg-maop" min="0" max="1000" step="1" value="0">
-      </div>
     </div>
   </div>
 
@@ -284,6 +266,36 @@
 #usg-sizing-tool .usg-adv-body { padding-top: 6px; }
 #usg-sizing-tool .usg-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
 #usg-sizing-tool .usg-cols-4 > .usg-widget { flex: 1 1 0; min-width: 190px; }
+/* Pressures & Flow: two sides, each a grid of label | value | units, so the
+   fields line up down each side. The sides sit in the same two columns as the
+   sections below, so the gas load lines up with Load Type at any width. The
+   label column takes the longest label, and wraps if the half is too narrow. */
+#usg-sizing-tool .usg-pf { margin-bottom: 20px; }
+#usg-sizing-tool .usg-pf-side {
+  display: grid; column-gap: 10px; row-gap: 12px; align-items: center; min-width: 0;
+  justify-content: start;  /* pack to the left: auto columns would otherwise stretch to fill the half */
+}
+#usg-sizing-tool .usg-pf-pressures { grid-template-columns: auto 120px 110px; }
+#usg-sizing-tool .usg-pf-load { grid-template-columns: auto 140px; }
+#usg-sizing-tool .usg-pf .usg-label { margin: 0 !important; min-height: 0; }
+#usg-sizing-tool .usg-pf .usg-numwrap { width: 100%; }
+#usg-sizing-tool .usg-pf-load select { width: 110px; }
+/* Narrower screens: each label moves above its value and units. Below about
+   1,060px the pressures half is too narrow for its longest label on one line
+   (about 470px with the fields), so this switches before labels start to wrap, with
+   some room spare for a wider site font. */
+@media (max-width: 1060px) {
+  #usg-sizing-tool .usg-pf-pressures { grid-template-columns: 120px 110px; row-gap: 6px; }
+  #usg-sizing-tool .usg-pf-load { grid-template-columns: 140px; row-gap: 6px; }
+  /* one line: above a 140px field the gas load labels are wider than their
+     column, and there is always room beside them in the half */
+  #usg-sizing-tool .usg-pf .usg-label { grid-column: 1 / -1; margin-top: 6px !important; white-space: nowrap; }
+}
+/* A line a tool does not have - only the general, 121 and 441/461 tools ask
+   for a min gas load - is left blank, so the lines after it, and the
+   sections below, sit in the same place in every tool. */
+#usg-sizing-tool .usg-pf-blank { grid-column: 1 / -1; height: 44px; }
+@media (max-width: 1060px) { #usg-sizing-tool .usg-pf-blank { height: 80px; } }
 #usg-sizing-tool .usg-cols-2 > .usg-col { flex: 1 1 0; min-width: 320px; }
 #usg-sizing-tool .usg-top-gap { margin-top: 8px; }
 #usg-sizing-tool .usg-widget { margin-bottom: 16px; }
@@ -598,7 +610,8 @@ function buildInput() {
     flow: intVal('flow'),
     min_flow: intVal('minflow'),
     flow_units: $('flow-units').value,
-    maop: intVal('maop'),
+    maop: numVal('maop'),
+    maop_units: $('maop-units').value,
     pipe_size: PIPE_OPTIONS[parseInt($('pipesize').value, 10)],
     // The 121/122 offers monitor protection only - a plain Yes/No.
     opp_required: radioVal('opp') === "Yes",

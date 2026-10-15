@@ -9,7 +9,7 @@
  * tool:      all-models
  * version:   1.1.0
  * algorithm: sha256:5044addece3f
- * sources:   sha256:3df5dc205d7d
+ * sources:   sha256:e975e0379483
  *
  * Adds to the shared namespace:
  *   USGSizing.sizeAllModels(input)  -> result object
@@ -3290,7 +3290,7 @@ function defaulted(input) {
     inlet: 0, inlet_units: "psi",
     outlet: 0, outlet_units: "psi",
     flow: 0, min_flow: 0, flow_units: "CFH",
-    maop: 0,
+    maop: 0, maop_units: "psi",
     pipe_size: "N/A",
     opp_required: false, opp_pref: "IRV", irv_pressure: 0, partial_irv: false,
     high_efficiency: false, high_efficiency_pct: 100,
@@ -3318,7 +3318,13 @@ function sizeTool(rawInput) {
   var outlet_input = Number(p.outlet);
   var flow_rate = Math.trunc(Number(p.flow));
   var min_flow_raw = Math.trunc(Number(p.min_flow));
-  var maop = Math.trunc(Number(p.maop));
+  // MAIP may be entered in psi, bar or kPa and is converted like the inlet. In
+  // psi it stays a whole number, as it always has. A converted figure keeps
+  // its decimals: truncating 8.62 bar (124.99 psi) to 124 would put it below
+  // an inlet of the same 8.62 bar and fail the MAIP >= inlet check.
+  var maop_units = p.maop_units || "psi";
+  var maop_entered = Number(p.maop);
+  var maop = (maop_units === "psi") ? Math.trunc(maop_entered) : toPsi(maop_entered, maop_units);
 
   var min_flow = (min_flow_raw === 0) ? flow_rate : min_flow_raw;
 
@@ -3388,7 +3394,7 @@ function sizeTool(rawInput) {
   if (inlet_psi > 0 && outlet_psi > 0 && outlet_psi >= inlet_psi) {
     errors.push("Outlet pressure must be less than inlet pressure.");
   }
-  if (Math.trunc(maop) !== 0 && maop < inlet_psi) errors.push("MAIP must be >= inlet pressure.");
+  if (maop !== 0 && maop < inlet_psi) errors.push("MAIP must be >= inlet pressure.");
   if (min_flow > flow_rate) errors.push("Minimum flow must be \u2264 maximum flow rate.");
   // Two pressure cuts. Above a 600 psi differential the message names the
   // figure; otherwise the original rule applies, an outlet under 3 psi with an
@@ -3582,7 +3588,8 @@ function sizeTool(rawInput) {
     kv("Outlet Pressure (" + p.outlet_units + ")", pyFloatStr(outlet_input)),
     kv("Max Flow Rate (" + p.flow_units + ")", $format(flow_rate, ',')),
     kv("Min Flow Rate (" + p.flow_units + ")", $format(min_flow, ',')),
-    kv("Max Allowable Inlet Pressure (psi)", String(Math.trunc(maop))),
+    kv("Max Allowable Inlet Pressure (" + maop_units + ")",
+       maop_units === "psi" ? String(Math.trunc(maop)) : pyFloatStr(maop_entered)),
     kv("Requested Pipe Size", pipesize_raw),
     kv("Overpressure Protection Required", p.opp_required ? "Yes" : "No")
   ];
@@ -3680,6 +3687,6 @@ function sizeTool(rawInput) {
   ns.versions['all-models'] = {
     version: '1.1.0',
     algorithm: 'sha256:5044addece3f',
-    sources: 'sha256:3df5dc205d7d'
+    sources: 'sha256:e975e0379483'
   };
 })(typeof window !== 'undefined' ? window : this);

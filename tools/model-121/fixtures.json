@@ -4698,5 +4698,288 @@
    ],
    "can_download": false
   }
+ },
+ {
+  "name": "MAIP in bar",
+  "input": {
+   "inlet": 10,
+   "outlet": 0.5,
+   "flow": 5000,
+   "maop": 0.83,
+   "maop_units": "bar"
+  },
+  "expected": {
+   "ok": true,
+   "selected": true,
+   "errors": [],
+   "warnings": [],
+   "message": "Regulator selected!",
+   "selection": [
+    {
+     "label": "Model",
+     "value": "121-8"
+    },
+    {
+     "label": "Body Size",
+     "value": "3/4\" or 1\""
+    },
+    {
+     "label": "Spring",
+     "value": "Green (12\" - 28\" wc)"
+    }
+   ],
+   "capacity": "13,392",
+   "pipe_note": "Model 121 regulators have outlet pipe sizing requirements. This regulator was sized for use with 2\" outlet pipe. For capacities with smaller outlet piping, see regulator brochure.",
+   "part_numbers": [
+    "R.121-8.STD.1SCD.8.EXTCON.STD.STD.STD.12.ALU"
+   ],
+   "control_line": "CONTROL LINE KIT",
+   "control_line_qty": 1,
+   "sections": [
+    {
+     "label": "Standard Valves",
+     "tables": [
+      {
+       "title": "Model 121-8",
+       "headers": [
+        "Body Size",
+        "Calculated Capacity (CFH)",
+        "Will Reg Work"
+       ],
+       "rows": [
+        [
+         "3/4\" or 1\"",
+         "13,392",
+         "Yes"
+        ],
+        [
+         "1-1/4\"",
+         "16,560",
+         "Yes"
+        ],
+        [
+         "1-1/2\"",
+         "N/A",
+         "No"
+        ],
+        [
+         "2\"",
+         "N/A",
+         "No"
+        ],
+        [
+         "2-1/2\"",
+         "N/A",
+         "No"
+        ]
+       ]
+      },
+      {
+       "title": "Model 121-12",
+       "headers": [
+        "Body Size",
+        "Calculated Capacity (CFH)",
+        "Will Reg Work"
+       ],
+       "rows": [
+        [
+         "1-1/2\"",
+         "27,560",
+         "Yes"
+        ],
+        [
+         "2\"",
+         "50,384",
+         "Yes"
+        ],
+        [
+         "2-1/2\"",
+         "56,032",
+         "Yes"
+        ],
+        [
+         "3\"",
+         "N/A",
+         "No"
+        ]
+       ]
+      },
+      {
+       "title": "Model 121-16",
+       "headers": [
+        "Body Size",
+        "Calculated Capacity (CFH)",
+        "Will Reg Work"
+       ],
+       "rows": [
+        [
+         "3\"",
+         "120,000",
+         "No"
+        ]
+       ]
+      },
+      {
+       "title": "Model 122-8",
+       "headers": [
+        "Body Size",
+        "Calculated Capacity (CFH)",
+        "Will Reg Work"
+       ],
+       "rows": [
+        [
+         "1\"",
+         "9,780",
+         "Yes"
+        ],
+        [
+         "1-1/4\"",
+         "14,892",
+         "Yes"
+        ]
+       ]
+      },
+      {
+       "title": "Model 122-12",
+       "headers": [
+        "Body Size",
+        "Calculated Capacity (CFH)",
+        "Will Reg Work"
+       ],
+       "rows": [
+        [
+         "1-1/2\"",
+         "14,340",
+         "Yes"
+        ],
+        [
+         "2\"",
+         "33,768",
+         "Yes"
+        ],
+        [
+         "2-1/2\"",
+         "37,680",
+         "Yes"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "label": "V-Port Valves",
+     "tables": [
+      {
+       "title": "Model 121-8",
+       "headers": [
+        "Body Size",
+        "Calculated Capacity (CFH)",
+        "Will Reg Work"
+       ],
+       "rows": [
+        [
+         "1-1/2\"",
+         "N/A",
+         "No"
+        ],
+        [
+         "2\"",
+         "N/A",
+         "No"
+        ],
+        [
+         "2-1/2\"",
+         "N/A",
+         "No"
+        ]
+       ]
+      },
+      {
+       "title": "Model 121-12",
+       "headers": [
+        "Body Size",
+        "Calculated Capacity (CFH)",
+        "Will Reg Work"
+       ],
+       "rows": [
+        [
+         "1-1/2\"",
+         "22,048",
+         "Yes"
+        ],
+        [
+         "2\"",
+         "40,307",
+         "Yes"
+        ],
+        [
+         "2-1/2\"",
+         "44,826",
+         "Yes"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "tables_caption": null,
+   "adjustments": [
+    {
+     "label": "Oversized By",
+     "value": "25%"
+    }
+   ],
+   "summary": [
+    {
+     "label": "Inlet Pressure (psi)",
+     "value": "10.0"
+    },
+    {
+     "label": "Outlet Pressure (psi)",
+     "value": "0.5"
+    },
+    {
+     "label": "Max Flow Rate (CFH)",
+     "value": "5,000"
+    },
+    {
+     "label": "Min Flow Rate (CFH)",
+     "value": "5,000"
+    },
+    {
+     "label": "Max Allowable Inlet Pressure (bar)",
+     "value": "0.83"
+    },
+    {
+     "label": "Requested Pipe Size",
+     "value": "N/A"
+    },
+    {
+     "label": "Overpressure Protection Required",
+     "value": "No"
+    },
+    {
+     "label": "Orifice Preference",
+     "value": "Standard"
+    },
+    {
+     "label": "Percent Load Feeding High-Efficiency Appliance",
+     "value": "0"
+    },
+    {
+     "label": "Override percentage regulator is oversized by",
+     "value": "No"
+    },
+    {
+     "label": "Gas Type",
+     "value": "Natural Gas"
+    },
+    {
+     "label": "Altitude above 3,000 feet or atmospheric pressure below 13 psi",
+     "value": "No"
+    }
+   ],
+   "can_download": true
+  }
  }
 ]

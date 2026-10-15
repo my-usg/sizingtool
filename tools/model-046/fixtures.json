@@ -4692,5 +4692,229 @@
     "Pressure differential (> 600 psi) too large \u2014 consider two pressure cuts."
    ]
   }
+ },
+ {
+  "name": "MAIP in bar",
+  "input": {
+   "inlet": 100,
+   "outlet": 20,
+   "flow": 12000,
+   "maop": 8.28,
+   "maop_units": "bar"
+  },
+  "expected": {
+   "ok": true,
+   "selected": true,
+   "errors": [],
+   "warnings": [],
+   "message": "Regulator selected!",
+   "selection": [
+    {
+     "label": "Model",
+     "value": "046"
+    },
+    {
+     "label": "Body Size",
+     "value": "1\""
+    },
+    {
+     "label": "Orifice Size",
+     "value": "3/8\""
+    },
+    {
+     "label": "Seat",
+     "value": "Poly-Tan"
+    },
+    {
+     "label": "Spring",
+     "value": "White (15 \u2013 52 psi)"
+    }
+   ],
+   "capacity": "15,000",
+   "part_numbers": [
+    "R.046-1.STD.1.14.TAN.25.ALU"
+   ],
+   "control_line": null,
+   "control_line_qty": null,
+   "sections": [
+    {
+     "label": null,
+     "tables": [
+      {
+       "title": "Model 046, 046-M or 046-2M, 3/4\" Body",
+       "headers": [
+        "Orifice Size",
+        "Calculated Capacity (CFH)",
+        "Will Reg Work"
+       ],
+       "rows": [
+        [
+         "1/8\"",
+         "1,800",
+         "No"
+        ],
+        [
+         "3/16\"",
+         "3,800",
+         "No"
+        ],
+        [
+         "1/4\"",
+         "6,700",
+         "No"
+        ],
+        [
+         "5/16\"",
+         "8,150",
+         "No"
+        ],
+        [
+         "3/8\"",
+         "10,350",
+         "No"
+        ],
+        [
+         "1/2\"",
+         "12,100",
+         "No"
+        ]
+       ]
+      },
+      {
+       "title": "Model 046, 046-M or 046-2M, 1\" Body",
+       "headers": [
+        "Orifice Size",
+        "Calculated Capacity (CFH)",
+        "Will Reg Work"
+       ],
+       "rows": [
+        [
+         "1/8\"",
+         "1,800",
+         "No"
+        ],
+        [
+         "3/16\"",
+         "3,800",
+         "No"
+        ],
+        [
+         "1/4\"",
+         "6,900",
+         "No"
+        ],
+        [
+         "5/16\"",
+         "10,600",
+         "No"
+        ],
+        [
+         "3/8\"",
+         "15,000",
+         "Yes"
+        ],
+        [
+         "1/2\"",
+         "19,900",
+         "No"
+        ]
+       ]
+      },
+      {
+       "title": "Model 046, 046-M or 046-2M, 1-1/4\" Body",
+       "headers": [
+        "Orifice Size",
+        "Calculated Capacity (CFH)",
+        "Will Reg Work"
+       ],
+       "rows": [
+        [
+         "1/8\"",
+         "1,800",
+         "No"
+        ],
+        [
+         "3/16\"",
+         "3,800",
+         "No"
+        ],
+        [
+         "1/4\"",
+         "6,900",
+         "No"
+        ],
+        [
+         "5/16\"",
+         "10,600",
+         "No"
+        ],
+        [
+         "3/8\"",
+         "15,000",
+         "Yes"
+        ],
+        [
+         "1/2\"",
+         "23,000",
+         "No"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "adjustments": [
+    {
+     "label": "Oversized By",
+     "value": "25%"
+    }
+   ],
+   "summary": [
+    {
+     "label": "Inlet Pressure (psi)",
+     "value": "100.0"
+    },
+    {
+     "label": "Outlet Pressure (psi)",
+     "value": "20.0"
+    },
+    {
+     "label": "Max Flow Rate (CFH)",
+     "value": "12,000"
+    },
+    {
+     "label": "Max Allowable Inlet Pressure (bar)",
+     "value": "8.28"
+    },
+    {
+     "label": "Requested Pipe Size",
+     "value": "N/A"
+    },
+    {
+     "label": "Overpressure Protection Required",
+     "value": "No"
+    },
+    {
+     "label": "Select Regulator with IRV",
+     "value": "No"
+    },
+    {
+     "label": "Percent Load Feeding High-Efficiency Appliance",
+     "value": "0"
+    },
+    {
+     "label": "Override percentage regulator is oversized by",
+     "value": "No"
+    },
+    {
+     "label": "Gas Type",
+     "value": "Natural Gas"
+    },
+    {
+     "label": "Altitude above 3,000 feet or atmospheric pressure below 13 psi",
+     "value": "No"
+    }
+   ]
+  }
  }
 ]

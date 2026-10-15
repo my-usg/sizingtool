@@ -20,6 +20,7 @@ module.exports = {
     if (input.inlet_units) d.set('inlet-units', input.inlet_units);
     if (input.outlet_units) d.set('outlet-units', input.outlet_units);
     if (input.flow_units) d.set('flow-units', input.flow_units);
+    if (input.maop_units) d.set('maop-units', input.maop_units);
 
     if (input.pipe_size) d.set('pipesize', PIPE_OPTIONS.indexOf(input.pipe_size));
 
@@ -64,9 +65,10 @@ module.exports = {
     check('pipe options are the 496 set',
       JSON.stringify(pipeOpts) === JSON.stringify(['N/A', '3/8"', '1/2"', '3/4"', '1"']), pipeOpts);
 
-    check('flow label has no "Max"',
-      doc.getElementById('usg-label-flow').textContent.trim() === 'Gas load / flow rate',
-      doc.getElementById('usg-label-flow').textContent);
+    // Every tool now labels it the same way, min gas load or not.
+    check('flow label reads "Max Gas Load/Flow Rate:"',
+      doc.getElementById('usg-label-flow').textContent.trim().indexOf('Max Gas Load/Flow Rate:') === 0,
+      doc.getElementById('usg-label-flow').textContent.trim());
 
     check('IRV block hidden initially', doc.getElementById('usg-opp-yes-block').style.display === 'none');
     check('partial-IRV question shown initially', doc.getElementById('usg-opp-no-block').style.display === '');

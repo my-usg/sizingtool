@@ -447,6 +447,16 @@
         "opp_required": true,
         "irv_pressure": 0
       }
+    },
+    {
+      "name": "MAIP in bar",
+      "input": {
+        "inlet": 25,
+        "outlet": 0.25,
+        "flow": 500,
+        "maop": 2.07,
+        "maop_units": "bar"
+      }
     }
   ],
   "random": {
@@ -616,6 +626,14 @@
       ],
       "decimals": [
         2
+      ]
+    },
+    "maop_units": {
+      "choices": [
+        "psi",
+        "psi",
+        "bar",
+        "kPa"
       ]
     }
   }

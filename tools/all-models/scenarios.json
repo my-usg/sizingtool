@@ -505,6 +505,40 @@
         "flow": 2000,
         "maop": 750
       }
+    },
+    {
+      "name": "MAIP in bar",
+      "input": {
+        "inlet": 4,
+        "inlet_units": "bar",
+        "outlet": 7,
+        "outlet_units": "in wc",
+        "flow": 800,
+        "maop": 8.5,
+        "maop_units": "bar"
+      }
+    },
+    {
+      "name": "MAIP in bar equal to a bar inlet (no false MAIP < inlet error)",
+      "input": {
+        "inlet": 8.62,
+        "inlet_units": "bar",
+        "outlet": 2,
+        "flow": 3000,
+        "maop": 8.62,
+        "maop_units": "bar"
+      }
+    },
+    {
+      "name": "MAIP in kPa",
+      "input": {
+        "inlet": 30,
+        "outlet": 7,
+        "outlet_units": "in wc",
+        "flow": 800,
+        "maop": 850,
+        "maop_units": "kPa"
+      }
     }
   ],
   "random": {
@@ -705,6 +739,14 @@
         "standard",
         "standard",
         "vport"
+      ]
+    },
+    "maop_units": {
+      "choices": [
+        "psi",
+        "psi",
+        "bar",
+        "kPa"
       ]
     }
   }
