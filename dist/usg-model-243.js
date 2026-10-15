@@ -8,8 +8,8 @@
  *
  * tool:      model-243
  * version:   1.1.0
- * algorithm: sha256:caffb09e8169
- * sources:   sha256:409b5ac57ddc
+ * algorithm: sha256:f82dfa029475
+ * sources:   sha256:1781a03f6053
  *
  * Adds to the shared namespace:
  *   USGSizing.sizeModel243(input)  -> result object
@@ -470,9 +470,18 @@ function spring_243hp(op) {
   return new Map([["color", null], ["range", null]]);
 }
 function will_irv_work243(reg, opp) {
-  let inlet_keys, irv12data243, irv8data243, irv_table, orif, orifice_key, out_pressure_build, p_high, p_low, pre, suf, t, v_high, v_low, $t11, $t12, $t13, $t14, $t15;
+  let inlet_keys, irv12data243, irv8data243, irv_adjusted, irv_table, orif, orifice_key, out_pressure_build, p_high, p_low, pre, suf, t, v_high, v_low, $t11, $t12, $t13, $t14, $t15;
   if ($truthy(($eq(opp, "Partial")))) {
     return "Partial";
+  }
+  if ($truthy(($eq(irv_input, 0)))) {
+    if ($truthy(((outlet_input < 2)))) {
+      irv_adjusted = 2;
+    } else {
+      irv_adjusted = 5;
+    }
+  } else {
+    irv_adjusted = irv_input;
   }
   if ($truthy(((outlet_input >= 2)))) {
     return "No";
@@ -535,10 +544,10 @@ function will_irv_work243(reg, opp) {
       }
     }
   }
-  if ($truthy((($truthy(($t15 = ($eq(out_pressure_build, null))))) ? $t15 : (($eq(irv_input, null)))))) {
+  if ($truthy((($truthy(($t15 = ($eq(out_pressure_build, null))))) ? $t15 : (($eq(irv_adjusted, null)))))) {
     return "No";
   } else {
-    if ($truthy((($add(out_pressure_build, outlet_input) <= irv_input)))) {
+    if ($truthy((($add(out_pressure_build, outlet_input) <= irv_adjusted)))) {
       return "Yes";
     } else {
       return "No";
@@ -888,7 +897,7 @@ function defaulted(input) {
     flow: 0, flow_units: "CFH",
     maop: 0,
     pipe_size: "N/A",
-    opp_required: false, opp_pref: "IRV", irv_pressure: 2.0, partial_irv: false,
+    opp_required: false, opp_pref: "IRV", irv_pressure: 0, partial_irv: false,
     high_efficiency: false, high_efficiency_pct: 100,
     override_oversize: false, oversize_pct: 25,
     gas_type: "Natural Gas", specific_gravity: 0.6,
@@ -1209,8 +1218,23 @@ function sizeTool(rawInput) {
   }
   out.sections = sections;
 
+  // ---- IRV limit actually applied ----
+  // A typed IRV pressure is used as entered. Left at 0, the algorithm's
+  // will_irv_work*() functions apply a default instead: 2 psi below a 2 psi outlet, 5 psi from 2 psi up.
+  // This repeats that rule so the summary and adjustments can say what was
+  // used - change the two together. "Sized with IRV" means IRV was asked for
+  // and the selection carries it; a partial-IRV body has an IRV but no limit
+  // was checked, so it does not count.
+  var irvSized = $truthy(apply) && opp_type === "IRV" && mget('opp') === "IRV";
+  var irvDefaulted = !(irv_input > 0);
+  var irvLimit = irvDefaulted ? (outlet_psi < 2 ? 2 : 5) : irv_input;
+  var irvTag = irvDefaulted ? " (default)" : "";
+
   // ---- sizing adjustments ----
   var adjustments = [kv("Oversized By", $format(oversize_percent, ".0f") + "%")];
+  if (irvSized) {
+    adjustments.push(kv("IRV Protect Downstream Pressure To", $format(irvLimit, ".1f") + " psi" + irvTag));
+  }
   if ($truthy(apply) && mget('opp') === "Monitor") adjustments.push(kv("Monitor Capacity Reduction", "30%"));
   if (gastypemult !== 1) adjustments.push(kv("Gas Type Factor", $format(gastypemult, ".4f")));
   if (Patm < 14.4) adjustments.push(kv("Elevation capacity reduction", $format(elevation_reduction, ".0f") + "%"));
@@ -1230,7 +1254,8 @@ function sizeTool(rawInput) {
   } else {
     summary.push(kv("Protection Type", opp_pref === "IRV" ? "IRV" : "Monitor"));
     if (opp_pref === "IRV") {
-      summary.push(kv("IRV Protect Downstream Pressure To (psi)", $format(irv_input, ".1f")));
+      summary.push(kv("IRV Protect Downstream Pressure To (psi)",
+        (irvDefaulted && !irvSized) ? "Default (not used)" : $format(irvLimit, ".1f") + irvTag));
     }
   }
   summary.push(kv("Percent Load Feeding High-Efficiency Appliance", p.high_efficiency ? (pload_pct + "%") : "0"));
@@ -1298,7 +1323,7 @@ function sizeTool(rawInput) {
   ns.versions = ns.versions || {};
   ns.versions['model-243'] = {
     version: '1.1.0',
-    algorithm: 'sha256:caffb09e8169',
-    sources: 'sha256:409b5ac57ddc'
+    algorithm: 'sha256:f82dfa029475',
+    sources: 'sha256:1781a03f6053'
   };
 })(typeof window !== 'undefined' ? window : this);

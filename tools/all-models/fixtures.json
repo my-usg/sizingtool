@@ -281,6 +281,10 @@
     {
      "label": "Oversized By",
      "value": "25%"
+    },
+    {
+     "label": "IRV Protect Downstream Pressure To",
+     "value": "2.0 psi"
     }
    ],
    "summary": [
@@ -1951,6 +1955,123 @@
    "ok": false,
    "errors": [
     "Pressure differential (> 600 psi) too large \u2014 consider two pressure cuts."
+   ]
+  }
+ },
+ {
+  "name": "IRV pressure left at 0 above 2 psi outlet: 143 defaults to 5 psi",
+  "input": {
+   "inlet": 60,
+   "outlet": 2.5,
+   "flow": 1500,
+   "opp_required": true,
+   "opp_pref": "IRV",
+   "irv_pressure": 0
+  },
+  "expected": {
+   "ok": true,
+   "selected": true,
+   "errors": [],
+   "warnings": [
+    "Sized for IRV"
+   ],
+   "message": "Regulator selected!",
+   "selection": [
+    {
+     "label": "Model",
+     "value": "143-2HP"
+    },
+    {
+     "label": "Body Size",
+     "value": "1\""
+    },
+    {
+     "label": "Orifice Size",
+     "value": "3/16\""
+    },
+    {
+     "label": "Spring",
+     "value": "Cadmium (0.5 - 3 psi)"
+    }
+   ],
+   "capacity": "2,050",
+   "part_numbers": [
+    "R.143-2HP.1.11.15"
+   ],
+   "control_line": null,
+   "control_line_qty": null,
+   "pipe_note": null,
+   "adjustments": [
+    {
+     "label": "Oversized By",
+     "value": "25%"
+    },
+    {
+     "label": "IRV Protect Downstream Pressure To",
+     "value": "5.0 psi (default)"
+    }
+   ],
+   "summary": [
+    {
+     "label": "Inlet Pressure (psi)",
+     "value": "60.0"
+    },
+    {
+     "label": "Outlet Pressure (psi)",
+     "value": "2.5"
+    },
+    {
+     "label": "Max Flow Rate (CFH)",
+     "value": "1,500"
+    },
+    {
+     "label": "Min Flow Rate (CFH)",
+     "value": "1,500"
+    },
+    {
+     "label": "Max Allowable Inlet Pressure (psi)",
+     "value": "0"
+    },
+    {
+     "label": "Requested Pipe Size",
+     "value": "N/A"
+    },
+    {
+     "label": "Overpressure Protection Required",
+     "value": "Yes"
+    },
+    {
+     "label": "Protection Type",
+     "value": "IRV"
+    },
+    {
+     "label": "IRV Protect Downstream Pressure To (psi)",
+     "value": "5.0 (default)"
+    },
+    {
+     "label": "Percent Load Feeding High-Efficiency Appliance",
+     "value": "0"
+    },
+    {
+     "label": "Override percentage regulator is oversized by",
+     "value": "No"
+    },
+    {
+     "label": "Combustion Regulator Preferred",
+     "value": "No"
+    },
+    {
+     "label": "Orifice Preference",
+     "value": "Standard"
+    },
+    {
+     "label": "Gas Type",
+     "value": "Natural Gas"
+    },
+    {
+     "label": "Altitude above 3,000 feet or atmospheric pressure below 13 psi",
+     "value": "No"
+    }
    ]
   }
  }

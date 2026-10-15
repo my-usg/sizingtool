@@ -46,7 +46,7 @@ function defaulted(input) {
     flow: 0, min_flow: 0, flow_units: "CFH",
     maop: 0,
     pipe_size: "N/A",
-    opp_required: false, opp_pref: "IRV", irv_pressure: 2.0, partial_irv: false,
+    opp_required: false, opp_pref: "IRV", irv_pressure: 0, partial_irv: false,
     high_efficiency: false, high_efficiency_pct: 100,
     override_oversize: false, oversize_pct: 25,
     prefer_combustion: false,
@@ -303,8 +303,24 @@ function sizeTool(rawInput) {
   var controlLineQty = pnField('controllineqty');
   if (controlLineQty === undefined) controlLineQty = null;
 
+  // ---- IRV limit actually applied ----
+  // A typed IRV pressure is used as entered. Left at 0, the algorithm's
+  // will_irv_work*() functions apply a default instead: outlet + 10 psi when the 046 was selected, otherwise 2 psi below
+  // a 2 psi outlet and 5 psi from 2 psi up.
+  // This repeats that rule so the summary and adjustments can say what was
+  // used - change the two together. "Sized with IRV" means IRV was asked for
+  // and the selection carries it; a partial-IRV body has an IRV but no limit
+  // was checked, so it does not count.
+  var irvSized = opp_type === "IRV" && mget('opp') === "IRV";
+  var irvDefaulted = !(irv_input > 0);
+  var irvLimit = irvDefaulted ? (String(mget('model') || '').indexOf('046') === 0) ? outlet_psi + 10 : (outlet_psi < 2 ? 2 : 5) : irv_input;
+  var irvTag = irvDefaulted ? " (default)" : "";
+
   // ---- sizing adjustments ----
   var adjustments = [kv("Oversized By", $format(oversize_percent, ".0f") + "%")];
+  if (irvSized) {
+    adjustments.push(kv("IRV Protect Downstream Pressure To", $format(irvLimit, ".1f") + " psi" + irvTag));
+  }
   if (mget('opp') === "Monitor") adjustments.push(kv("Monitor Capacity Reduction", "30%"));
   if (gastypemult !== 1) adjustments.push(kv("Gas Type Factor", $format(gastypemult, ".4f")));
   if (Patm < 14.4) adjustments.push(kv("Elevation capacity reduction", $format(elevation_reduction, ".0f") + "%"));
@@ -324,7 +340,8 @@ function sizeTool(rawInput) {
   } else {
     summary.push(kv("Protection Type", opp_pref));
     if (opp_pref === "IRV") {
-      summary.push(kv("IRV Protect Downstream Pressure To (psi)", $format(irv_input, ".1f")));
+      summary.push(kv("IRV Protect Downstream Pressure To (psi)",
+        (irvDefaulted && !irvSized) ? "Default (not used)" : $format(irvLimit, ".1f") + irvTag));
     }
   }
   summary.push(kv("Percent Load Feeding High-Efficiency Appliance", p.high_efficiency ? (pload_pct + "%") : "0"));

@@ -255,6 +255,14 @@ def will_irv_work143(reg, opp):
     # Partial IRV
     if opp == "Partial":
         return "Partial"
+
+    if irv_input == 0:
+        if outlet_input < 2:
+            irv_adjusted = 2
+        else:
+            irv_adjusted = 5
+    else:
+        irv_adjusted = irv_input
      
     irvstddata143 = {
         0: {'18': 0, '96': 0, '53': 0, '36': 0, '14': 0, '56': 0, '38': 0, '12': 0, '58': 0},
@@ -329,9 +337,9 @@ def will_irv_work143(reg, opp):
                 t = (inlet_input - p_low) / (p_high - p_low)
                 out_pressure_build = (1 - t) * v_low + t * v_high
 
-    if out_pressure_build == None or irv_input == None:
+    if out_pressure_build == None or irv_adjusted == None:
         return "No"
-    elif (out_pressure_build + outlet_input) <= irv_input:
+    elif (out_pressure_build + outlet_input) <= irv_adjusted:
         return "Yes"
     else:
         return "No"
@@ -424,13 +432,14 @@ def run_regulator_selection143(inlet, outlet, opp):
 
     opp = "IRV" if opp == "Monitor" else opp
     
+    # not using this fail currently- allowing IRV for outlet pressures > 2 psi
     # if opp = IRV, fail if outlet > 2 psi (for 143-2HP)
-    if opp == "IRV" and outlet_input > 2:
-        warning = "Cannot size IRV for outlet pressures > 2 psi"
-        result = None
-        match = None
-        apply = False
-        return result, match, apply, warning
+    # if opp == "IRV" and outlet_input > 2:
+    #     warning = "Cannot size IRV for outlet pressures > 2 psi"
+    #     result = None
+    #     match = None
+    #     apply = False
+    #     return result, match, apply, warning
     
     result = interpolate_capacity(data143, inlet, outlet, False, False)
 

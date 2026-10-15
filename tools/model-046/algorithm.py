@@ -392,6 +392,11 @@ def will_irv_work046(reg, opp):
     if opp == "Partial":
         return "Partial"
 
+    if irv_input == 0:
+        irv_adjusted = outlet_input + 10
+    else:
+        irv_adjusted = irv_input
+
     yellow_curves = {
         15: {'1/2"': 0, '3/8"': 0, '5/16"': 0, '1/4"': 0, '3/16"': 0, '1/8"': 0},
         25: {'1/2"': 5, '3/8"': 3, '5/16"': 0, '1/4"': 0, '3/16"': 1, '1/8"': 0},
@@ -507,9 +512,9 @@ def will_irv_work046(reg, opp):
                 t = (inlet_input - p_low) / (p_high - p_low)
                 out_pressure_build = (1 - t) * v_low + t * v_high
 
-    if out_pressure_build == None or irv_input == None:
+    if out_pressure_build == None or irv_adjusted == None:
         return "No"
-    elif (out_pressure_build + outlet_input) <= irv_input:
+    elif (out_pressure_build + outlet_input) <= irv_adjusted:
         return "Yes"
     else:
         return "No"

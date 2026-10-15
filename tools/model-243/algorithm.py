@@ -435,6 +435,14 @@ def will_irv_work243(reg, opp):
     if opp == "Partial":
         return "Partial"
 
+    if irv_input == 0:
+        if outlet_input < 2:
+            irv_adjusted = 2
+        else:
+            irv_adjusted = 5
+    else:
+        irv_adjusted = irv_input
+
     # Not using IRV for >= 2 psi
     if outlet_input >= 2:
         return "No"
@@ -523,9 +531,9 @@ def will_irv_work243(reg, opp):
                 t = (inlet_input - p_low) / (p_high - p_low)
                 out_pressure_build = (1 - t) * v_low + t * v_high
 
-    if out_pressure_build == None or irv_input == None:
+    if out_pressure_build == None or irv_adjusted == None:
         return "No"
-    elif (out_pressure_build + outlet_input) <= irv_input:
+    elif (out_pressure_build + outlet_input) <= irv_adjusted:
         return "Yes"
     else:
         return "No"

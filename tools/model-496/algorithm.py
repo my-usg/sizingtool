@@ -239,6 +239,14 @@ def will_irv_work496(reg, opp):
     # Partial IRV
     if opp == "Partial":
         return "Partial"
+
+    if irv_input == 0:
+        if outlet_input < 2:
+            irv_adjusted = 2
+        else:
+            irv_adjusted = 5
+    else:
+        irv_adjusted = irv_input
   
     irvdata496 = {
         0: {'18': 0.25, '36': 0.25, '14': 0.25, '56': 0.25, '38': 0.25, '12': 0.25},
@@ -278,9 +286,9 @@ def will_irv_work496(reg, opp):
                 t = (inlet_input - p_low) / (p_high - p_low)
                 out_pressure_build = (1 - t) * v_low + t * v_high
 
-    if out_pressure_build == None or irv_input == None:
+    if out_pressure_build == None or irv_adjusted == None:
         return "No"
-    elif (out_pressure_build + outlet_input) <= irv_input:
+    elif (out_pressure_build + outlet_input) <= irv_adjusted:
         return "Yes"
     else:
         return "No"

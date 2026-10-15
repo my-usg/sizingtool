@@ -4314,5 +4314,368 @@
     "Pressure differential (> 600 psi) too large \u2014 consider two pressure cuts."
    ]
   }
+ },
+ {
+  "name": "IRV pressure left at 0: defaults to outlet + 10 psi",
+  "input": {
+   "inlet": 60,
+   "outlet": 5,
+   "flow": 1500,
+   "opp_required": true,
+   "opp_pref": "IRV",
+   "irv_pressure": 0
+  },
+  "expected": {
+   "ok": true,
+   "selected": true,
+   "errors": [],
+   "warnings": [
+    "Sized with IRV"
+   ],
+   "message": "Regulator selected!",
+   "selection": [
+    {
+     "label": "Model",
+     "value": "046-2"
+    },
+    {
+     "label": "Body Size",
+     "value": "3/4\""
+    },
+    {
+     "label": "Orifice Size",
+     "value": "5/16\""
+    },
+    {
+     "label": "Seat",
+     "value": "Poly-Tan"
+    },
+    {
+     "label": "Spring",
+     "value": "Yellow (3 \u2013 10 psi)"
+    }
+   ],
+   "capacity": "2,835",
+   "part_numbers": [
+    "R.046-2.IRV.3/4.IRV.13.TAN.23.ALU"
+   ],
+   "control_line": null,
+   "control_line_qty": null,
+   "sections": [
+    {
+     "label": "With IRV",
+     "tables": [
+      {
+       "title": "Model 046-2, 3/4\" Body",
+       "headers": [
+        "Orifice Size",
+        "Calculated Capacity (CFH)",
+        "Will Reg Work",
+        "Will IRV Work"
+       ],
+       "rows": [
+        [
+         "1/8\"",
+         "986",
+         "No",
+         "Yes"
+        ],
+        [
+         "3/16\"",
+         "1,956",
+         "Yes",
+         "Yes"
+        ],
+        [
+         "1/4\"",
+         "2,505",
+         "Yes",
+         "Yes"
+        ],
+        [
+         "5/16\"",
+         "2,835",
+         "Yes",
+         "Yes"
+        ],
+        [
+         "3/8\"",
+         "1,530",
+         "No",
+         "No"
+        ],
+        [
+         "1/2\"",
+         "3,653",
+         "Yes",
+         "No"
+        ]
+       ]
+      },
+      {
+       "title": "Model 046-2, 1\" Body",
+       "headers": [
+        "Orifice Size",
+        "Calculated Capacity (CFH)",
+        "Will Reg Work",
+        "Will IRV Work"
+       ],
+       "rows": [
+        [
+         "1/8\"",
+         "986",
+         "No",
+         "Yes"
+        ],
+        [
+         "3/16\"",
+         "1,956",
+         "Yes",
+         "Yes"
+        ],
+        [
+         "1/4\"",
+         "3,300",
+         "Yes",
+         "Yes"
+        ],
+        [
+         "5/16\"",
+         "5,340",
+         "Yes",
+         "Yes"
+        ],
+        [
+         "3/8\"",
+         "6,750",
+         "Yes",
+         "No"
+        ],
+        [
+         "1/2\"",
+         "6,862",
+         "Yes",
+         "No"
+        ]
+       ]
+      },
+      {
+       "title": "Model 046-2, 1-1/4\" Body",
+       "headers": [
+        "Orifice Size",
+        "Calculated Capacity (CFH)",
+        "Will Reg Work",
+        "Will IRV Work"
+       ],
+       "rows": [
+        [
+         "1/8\"",
+         "986",
+         "No",
+         "Yes"
+        ],
+        [
+         "3/16\"",
+         "1,956",
+         "Yes",
+         "Yes"
+        ],
+        [
+         "1/4\"",
+         "3,300",
+         "Yes",
+         "Yes"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "label": "With Monitor",
+     "tables": [
+      {
+       "title": "Model 046, 046-M or 046-2M, 3/4\" Body",
+       "headers": [
+        "Orifice Size",
+        "Calculated Capacity (CFH)",
+        "Will Reg Work"
+       ],
+       "rows": [
+        [
+         "1/8\"",
+         "812",
+         "No"
+        ],
+        [
+         "3/16\"",
+         "1,708",
+         "No"
+        ],
+        [
+         "1/4\"",
+         "2,338",
+         "Yes"
+        ],
+        [
+         "5/16\"",
+         "2,646",
+         "Yes"
+        ],
+        [
+         "3/8\"",
+         "2,940",
+         "Yes"
+        ],
+        [
+         "1/2\"",
+         "3,409",
+         "Yes"
+        ]
+       ]
+      },
+      {
+       "title": "Model 046, 046-M or 046-2M, 1\" Body",
+       "headers": [
+        "Orifice Size",
+        "Calculated Capacity (CFH)",
+        "Will Reg Work"
+       ],
+       "rows": [
+        [
+         "1/8\"",
+         "812",
+         "No"
+        ],
+        [
+         "3/16\"",
+         "1,708",
+         "No"
+        ],
+        [
+         "1/4\"",
+         "3,080",
+         "Yes"
+        ],
+        [
+         "5/16\"",
+         "4,984",
+         "Yes"
+        ],
+        [
+         "3/8\"",
+         "5,089",
+         "Yes"
+        ],
+        [
+         "1/2\"",
+         "7,805",
+         "Yes"
+        ]
+       ]
+      },
+      {
+       "title": "Model 046, 046-M or 046-2M, 1-1/4\" Body",
+       "headers": [
+        "Orifice Size",
+        "Calculated Capacity (CFH)",
+        "Will Reg Work"
+       ],
+       "rows": [
+        [
+         "1/8\"",
+         "812",
+         "No"
+        ],
+        [
+         "3/16\"",
+         "1,708",
+         "No"
+        ],
+        [
+         "1/4\"",
+         "3,080",
+         "Yes"
+        ],
+        [
+         "5/16\"",
+         "4,984",
+         "Yes"
+        ],
+        [
+         "3/8\"",
+         "6,182",
+         "Yes"
+        ],
+        [
+         "1/2\"",
+         "8,257",
+         "Yes"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "adjustments": [
+    {
+     "label": "Oversized By",
+     "value": "25%"
+    },
+    {
+     "label": "IRV Protect Downstream Pressure To",
+     "value": "15.0 psi (default)"
+    }
+   ],
+   "summary": [
+    {
+     "label": "Inlet Pressure (psi)",
+     "value": "60.0"
+    },
+    {
+     "label": "Outlet Pressure (psi)",
+     "value": "5.0"
+    },
+    {
+     "label": "Max Flow Rate (CFH)",
+     "value": "1,500"
+    },
+    {
+     "label": "Max Allowable Inlet Pressure (psi)",
+     "value": "0"
+    },
+    {
+     "label": "Requested Pipe Size",
+     "value": "N/A"
+    },
+    {
+     "label": "Overpressure Protection Required",
+     "value": "Yes"
+    },
+    {
+     "label": "Protection Type",
+     "value": "IRV"
+    },
+    {
+     "label": "IRV Protect Downstream Pressure To (psi)",
+     "value": "15.0 (default)"
+    },
+    {
+     "label": "Percent Load Feeding High-Efficiency Appliance",
+     "value": "0"
+    },
+    {
+     "label": "Override percentage regulator is oversized by",
+     "value": "No"
+    },
+    {
+     "label": "Gas Type",
+     "value": "Natural Gas"
+    },
+    {
+     "label": "Altitude above 3,000 feet or atmospheric pressure below 13 psi",
+     "value": "No"
+    }
+   ]
+  }
  }
 ]

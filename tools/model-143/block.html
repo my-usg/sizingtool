@@ -124,14 +124,6 @@
         </div>
       </div>
 
-      <div id="usg-opp-yes-block" style="display:none">
-        <div class="usg-widget">
-          <label class="usg-label">Internal relief valve should limit downstream pressure buildup to (psi)</label>
-          <div class="usg-numwrap">
-            <input type="number" id="usg-irv" min="0" max="500" step="0.1" value="2.0">
-          </div>
-        </div>
-      </div>
     </div>
 
     <div class="usg-col">
@@ -153,23 +145,7 @@
         </div>
       </div>
 
-      <div class="usg-widget">
-        <label class="usg-label">Override percentage regulator is oversized by? <span class="usg-help" tabindex="0" role="button" aria-label="More information" data-tip="Default is set to 25% or 100% for high-efficiency appliances">i</span></label>
-        <div class="usg-radio-group">
-          <label class="usg-radio"><input type="radio" name="usg-override" value="No" checked><span>No</span></label>
-          <label class="usg-radio"><input type="radio" name="usg-override" value="Yes"><span>Yes</span></label>
-        </div>
-      </div>
-
-      <div class="usg-widget" id="usg-oversize-block" style="display:none">
-        <label class="usg-label">Oversize regulator by: <span class="usg-help" tabindex="0" role="button" aria-label="More information" data-tip="Recommended to oversize regulator by 20-30%">i</span></label>
-        <div class="usg-sliderwrap">
-          <input type="range" id="usg-oversize" min="0" max="100" step="1" value="25">
-          <span class="usg-slider-val" id="usg-oversize-val">25</span>
-        </div>
-      </div>
-
-      <p class="usg-group-label usg-group-next"><strong>Gas Type &amp; Altitude</strong></p>
+      <p class="usg-group-label usg-group-next"><strong>Gas Type</strong></p>
 
       <div class="usg-widget usg-halfwidth">
         <label class="usg-label">Gas type</label>
@@ -188,6 +164,37 @@
         <div class="usg-alert usg-info">Contact USG for regulator compatibility with gases other than methane or propane.</div>
       </div>
 
+      <!-- Advanced Settings: closed to begin with. Everything in it still has
+           its default and is sent with every run, opened or not. -->
+      <details class="usg-advanced">
+        <summary class="usg-group-label usg-group-next usg-adv-summary"><span class="usg-adv-chevron" aria-hidden="true">&#8250;</span><strong>⚙️ Advanced Settings</strong></summary>
+        <div class="usg-adv-body">
+
+      <div id="usg-opp-yes-block" style="display:none">
+        <div class="usg-widget">
+          <label class="usg-label">Internal relief valve should limit downstream pressure buildup to (psi)</label>
+          <div class="usg-numwrap">
+            <input type="number" id="usg-irv" min="0" max="500" step="0.1" value="0">
+          </div>
+        </div>
+      </div>
+
+      <div class="usg-widget">
+        <label class="usg-label">Override percentage regulator is oversized by? <span class="usg-help" tabindex="0" role="button" aria-label="More information" data-tip="Default is set to 25% or 100% for high-efficiency appliances">i</span></label>
+        <div class="usg-radio-group">
+          <label class="usg-radio"><input type="radio" name="usg-override" value="No" checked><span>No</span></label>
+          <label class="usg-radio"><input type="radio" name="usg-override" value="Yes"><span>Yes</span></label>
+        </div>
+      </div>
+
+      <div class="usg-widget" id="usg-oversize-block" style="display:none">
+        <label class="usg-label">Oversize regulator by: <span class="usg-help" tabindex="0" role="button" aria-label="More information" data-tip="Recommended to oversize regulator by 20-30%">i</span></label>
+        <div class="usg-sliderwrap">
+          <input type="range" id="usg-oversize" min="0" max="100" step="1" value="25">
+          <span class="usg-slider-val" id="usg-oversize-val">25</span>
+        </div>
+      </div>
+
       <div class="usg-widget">
         <label class="usg-label">Altitude above 3,000 feet or atmospheric pressure below 13 psi</label>
         <div class="usg-radio-group">
@@ -202,6 +209,8 @@
           <input type="number" id="usg-patm" min="8.80" max="14.73" step="0.01" value="14.40">
         </div>
       </div>
+        </div>
+      </details>
     </div>
   </div>
 
@@ -263,6 +272,17 @@
 #usg-sizing-tool .usg-group-label { font-size: 17px !important; color: rgb(49, 51, 63) !important; margin: 0 0 10px !important; }
 /* A second section heading within the same column. */
 #usg-sizing-tool .usg-group-label.usg-group-next { margin-top: 22px !important; }
+/* Advanced Settings: a native <details>, so it opens from the keyboard and to
+   screen readers with no script. The browser's own marker is replaced with a
+   chevron that turns when the section opens. */
+#usg-sizing-tool .usg-advanced > summary { list-style: none; cursor: pointer; user-select: none; }
+#usg-sizing-tool .usg-advanced > summary::-webkit-details-marker { display: none; }
+#usg-sizing-tool .usg-adv-chevron {
+  display: inline-block; width: 1em; margin-right: 4px; font-weight: 700;
+  transition: transform 0.15s ease;
+}
+#usg-sizing-tool .usg-advanced[open] .usg-adv-chevron { transform: rotate(90deg); }
+#usg-sizing-tool .usg-adv-body { padding-top: 6px; }
 #usg-sizing-tool .usg-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
 #usg-sizing-tool .usg-cols-4 > .usg-widget { flex: 1 1 0; min-width: 190px; }
 #usg-sizing-tool .usg-cols-2 > .usg-col { flex: 1 1 0; min-width: 320px; }

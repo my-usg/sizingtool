@@ -8,8 +8,8 @@
  *
  * tool:      model-143
  * version:   1.1.0
- * algorithm: sha256:9a870f9e2006
- * sources:   sha256:2b4fed908916
+ * algorithm: sha256:44b42e7b8685
+ * sources:   sha256:609d0c98cc1d
  *
  * Adds to the shared namespace:
  *   USGSizing.sizeModel143(input)  -> result object
@@ -403,9 +403,18 @@ function spring_143(op) {
   }
 }
 function will_irv_work143(reg, opp) {
-  let inlet_keys, irv_table, irvhpdata143, irvstddata143, orifice_key, out_pressure_build, p_high, p_low, t, v_high, v_low, $t10, $t9;
+  let inlet_keys, irv_adjusted, irv_table, irvhpdata143, irvstddata143, orifice_key, out_pressure_build, p_high, p_low, t, v_high, v_low, $t10, $t9;
   if ($truthy(($eq(opp, "Partial")))) {
     return "Partial";
+  }
+  if ($truthy(($eq(irv_input, 0)))) {
+    if ($truthy(((outlet_input < 2)))) {
+      irv_adjusted = 2;
+    } else {
+      irv_adjusted = 5;
+    }
+  } else {
+    irv_adjusted = irv_input;
   }
   irvstddata143 = new Map([[0, new Map([["18", 0], ["96", 0], ["53", 0], ["36", 0], ["14", 0], ["56", 0], ["38", 0], ["12", 0], ["58", 0]])], [2, new Map([["18", 0.24], ["96", 0.27], ["53", 0.28], ["36", 0.29], ["14", 0.31], ["56", 0.19], ["38", 0.32], ["12", 0.43], ["58", 0.56]])], [3, new Map([["18", 0.27], ["96", 0.29], ["53", 0.32], ["36", 0.32], ["14", 0.35], ["56", 0.3], ["38", 0.4], ["12", 0.66], ["58", 0.83]])], [5, new Map([["18", 0.31], ["96", 0.3], ["53", 0.35], ["36", 0.36], ["14", 0.43], ["56", 0.49], ["38", 0.62], ["12", 1.06], ["58", 1.36]])], [9.3, new Map([["18", 0.34], ["96", 0.32], ["53", 0.39], ["36", 0.4], ["14", 0.58], ["56", 0.84], ["38", 1.07], ["12", 1.95], ["58", 2.63]])], [10, new Map([["18", 0.35], ["96", 0.33], ["53", 0.39], ["36", 0.41], ["14", 0.61], ["56", 0.89], ["38", 1.15], ["12", 2.13], ["58", null]])], [12.4, new Map([["18", 0.37], ["96", 0.34], ["53", 0.41], ["36", 0.44], ["14", 0.68], ["56", 1.06], ["38", 1.41], ["12", 2.63], ["58", null]])], [20, new Map([["18", 0.41], ["96", 0.39], ["53", 0.47], ["36", 0.58], ["14", 0.91], ["56", 1.62], ["38", 2.34], ["12", null], ["58", null]])], [22.5, new Map([["18", 0.42], ["96", 0.4], ["53", 0.49], ["36", 0.61], ["14", 1], ["56", 1.8], ["38", 2.63], ["12", null], ["58", null]])], [30, new Map([["18", 0.47], ["96", 0.45], ["53", 0.56], ["36", 0.72], ["14", 1.3], ["56", 2.41], ["38", null], ["12", null], ["58", null]])], [32.7, new Map([["18", 0.48], ["96", 0.47], ["53", 0.58], ["36", 0.77], ["14", 1.42], ["56", 2.63], ["38", null], ["12", null], ["58", null]])], [40, new Map([["18", 0.53], ["96", 0.51], ["53", 0.63], ["36", 0.88], ["14", 1.72], ["56", null], ["38", null], ["12", null], ["58", null]])], [50, new Map([["18", 0.59], ["96", 0.58], ["53", 0.7], ["36", 1.08], ["14", 2.21], ["56", null], ["38", null], ["12", null], ["58", null]])], [58.1, new Map([["18", 0.63], ["96", 0.65], ["53", 0.79], ["36", 1.23], ["14", 2.63], ["56", null], ["38", null], ["12", null], ["58", null]])], [60, new Map([["18", 0.63], ["96", 0.66], ["53", 0.81], ["36", 1.27], ["14", null], ["56", null], ["38", null], ["12", null], ["58", null]])], [70, new Map([["18", 0.69], ["96", 0.75], ["53", 0.94], ["36", 1.5], ["14", null], ["56", null], ["38", null], ["12", null], ["58", null]])], [80, new Map([["18", 0.76], ["96", 0.85], ["53", 1.08], ["36", 1.73], ["14", null], ["56", null], ["38", null], ["12", null], ["58", null]])], [90, new Map([["18", 0.83], ["96", 0.96], ["53", 1.23], ["36", 1.99], ["14", null], ["56", null], ["38", null], ["12", null], ["58", null]])], [100, new Map([["18", 0.89], ["96", 1.07], ["53", 1.38], ["36", 2.24], ["14", null], ["56", null], ["38", null], ["12", null], ["58", null]])], [110, new Map([["18", 0.96], ["96", 1.18], ["53", 1.55], ["36", 2.52], ["14", null], ["56", null], ["38", null], ["12", null], ["58", null]])], [114.1, new Map([["18", 1], ["96", 1.23], ["53", 1.62], ["36", 2.63], ["14", null], ["56", null], ["38", null], ["12", null], ["58", null]])], [120, new Map([["18", 1.05], ["96", 1.3], ["53", 1.73], ["36", null], ["14", null], ["56", null], ["38", null], ["12", null], ["58", null]])], [125, new Map([["18", 1.1], ["96", 1.37], ["53", 1.83], ["36", null], ["14", null], ["56", null], ["38", null], ["12", null], ["58", null]])]]);
   irvhpdata143 = new Map([[0, new Map([["18", 0], ["96", 0], ["53", 0], ["36", 0], ["14", 0], ["56", 0], ["38", 0], ["12", 0], ["58", 0]])], [4, new Map([["18", 0.34], ["96", 0.76], ["53", 0.63], ["36", 0.8], ["14", 0.83], ["56", 0.86], ["38", 0.92], ["12", 0.95], ["58", 1.05]])], [5, new Map([["18", 0.68], ["96", 0.82], ["53", 0.79], ["36", 0.82], ["14", 0.85], ["56", 0.9], ["38", 1.05], ["12", 1.14], ["58", 1.31]])], [7.5, new Map([["18", 0.81], ["96", 0.83], ["53", 0.86], ["36", 0.85], ["14", 0.93], ["56", 1.06], ["38", 1.34], ["12", 1.57], ["58", 1.98]])], [10, new Map([["18", 0.83], ["96", 0.87], ["53", 0.9], ["36", 0.89], ["14", 1.02], ["56", 1.24], ["38", 1.58], ["12", 2.08], ["58", 2.79]])], [12.5, new Map([["18", 0.85], ["96", 0.89], ["53", 0.92], ["36", 0.92], ["14", 1.1], ["56", 1.39], ["38", 1.85], ["12", 2.62], ["58", 3.51]])], [16.3, new Map([["18", 0.87], ["96", 0.92], ["53", 0.96], ["36", 0.98], ["14", 1.21], ["56", 1.63], ["38", 2.28], ["12", 3.49], ["58", null]])], [20, new Map([["18", 0.89], ["96", 0.95], ["53", 0.99], ["36", 1.02], ["14", 1.33], ["56", 1.9], ["38", 2.72], ["12", null], ["58", null]])], [26.6, new Map([["18", 0.92], ["96", 1], ["53", 1.05], ["36", 1.11], ["14", 1.52], ["56", 2.35], ["38", 3.5], ["12", null], ["58", null]])], [30, new Map([["18", 0.94], ["96", 1.03], ["53", 1.07], ["36", 1.17], ["14", 1.66], ["56", 2.61], ["38", null], ["12", null], ["58", null]])], [40, new Map([["18", 0.99], ["96", 1.1], ["53", 1.15], ["36", 1.32], ["14", 2.05], ["56", 3.43], ["38", null], ["12", null], ["58", null]])], [41.1, new Map([["18", 0.99], ["96", 1.1], ["53", 1.16], ["36", 1.33], ["14", 2.09], ["56", 3.52], ["38", null], ["12", null], ["58", null]])], [50, new Map([["18", 1.04], ["96", 1.17], ["53", 1.23], ["36", 1.43], ["14", 2.49], ["56", null], ["38", null], ["12", null], ["58", null]])], [60, new Map([["18", 1.09], ["96", 1.23], ["53", 1.33], ["36", 1.64], ["14", 2.99], ["56", null], ["38", null], ["12", null], ["58", null]])], [70, new Map([["18", 1.14], ["96", 1.31], ["53", 1.45], ["36", 1.87], ["14", 3.5], ["56", null], ["38", null], ["12", null], ["58", null]])], [70.3, new Map([["18", 1.15], ["96", 1.31], ["53", 1.45], ["36", 1.87], ["14", 3.51], ["56", null], ["38", null], ["12", null], ["58", null]])], [80, new Map([["18", 1.2], ["96", 1.39], ["53", 1.57], ["36", 2.1], ["14", null], ["56", null], ["38", null], ["12", null], ["58", null]])], [90, new Map([["18", 1.27], ["96", 1.48], ["53", 1.72], ["36", 2.32], ["14", null], ["56", null], ["38", null], ["12", null], ["58", null]])], [100, new Map([["18", 1.35], ["96", 1.59], ["53", 1.86], ["36", 2.54], ["14", null], ["56", null], ["38", null], ["12", null], ["58", null]])], [110, new Map([["18", 1.43], ["96", 1.7], ["53", 2.02], ["36", 2.78], ["14", null], ["56", null], ["38", null], ["12", null], ["58", null]])], [120, new Map([["18", 1.51], ["96", 1.82], ["53", 2.17], ["36", 3.04], ["14", null], ["56", null], ["38", null], ["12", null], ["58", null]])], [125, new Map([["18", 1.56], ["96", 1.89], ["53", 2.26], ["36", 3.19], ["14", null], ["56", null], ["38", null], ["12", null], ["58", null]])]]);
@@ -434,10 +443,10 @@ function will_irv_work143(reg, opp) {
       }
     }
   }
-  if ($truthy((($truthy(($t10 = ($eq(out_pressure_build, null))))) ? $t10 : (($eq(irv_input, null)))))) {
+  if ($truthy((($truthy(($t10 = ($eq(out_pressure_build, null))))) ? $t10 : (($eq(irv_adjusted, null)))))) {
     return "No";
   } else {
-    if ($truthy((($add(out_pressure_build, outlet_input) <= irv_input)))) {
+    if ($truthy((($add(out_pressure_build, outlet_input) <= irv_adjusted)))) {
       return "Yes";
     } else {
       return "No";
@@ -495,15 +504,8 @@ function gen_match143(result, opp) {
   }
 }
 function run_regulator_selection143(inlet, outlet, opp) {
-  let apply, match, result, warning, $t13;
+  let apply, match, result, warning;
   opp = ($truthy(($eq(opp, "Monitor"))) ? ("IRV") : (opp));
-  if ($truthy((($truthy(($t13 = ($eq(opp, "IRV"))))) ? (((outlet_input > 2))) : $t13))) {
-    warning = "Cannot size IRV for outlet pressures > 2 psi";
-    result = null;
-    match = null;
-    apply = false;
-    return [result, match, apply, warning];
-  }
   result = interpolate_capacity(data143, inlet, outlet, false, false);
   warning = null;
   if ($truthy(((typeof (result) === 'string')))) {
@@ -595,7 +597,7 @@ function defaulted(input) {
     flow: 0, flow_units: "CFH",
     maop: 0,
     pipe_size: "N/A",
-    opp_required: false, irv_pressure: 2.0, partial_irv: false,
+    opp_required: false, irv_pressure: 0, partial_irv: false,
     high_efficiency: false, high_efficiency_pct: 100,
     override_oversize: false, oversize_pct: 25,
     gas_type: "Natural Gas", specific_gravity: 0.6,
@@ -872,8 +874,23 @@ function sizeTool(rawInput) {
     };
   }
 
+  // ---- IRV limit actually applied ----
+  // A typed IRV pressure is used as entered. Left at 0, the algorithm's
+  // will_irv_work*() functions apply a default instead: 2 psi below a 2 psi outlet, 5 psi from 2 psi up.
+  // This repeats that rule so the summary and adjustments can say what was
+  // used - change the two together. "Sized with IRV" means IRV was asked for
+  // and the selection carries it; a partial-IRV body has an IRV but no limit
+  // was checked, so it does not count.
+  var irvSized = $truthy(apply) && opp_type === "IRV" && mget('opp') === "IRV";
+  var irvDefaulted = !(irv_input > 0);
+  var irvLimit = irvDefaulted ? (outlet_psi < 2 ? 2 : 5) : irv_input;
+  var irvTag = irvDefaulted ? " (default)" : "";
+
   // ---- sizing adjustments ----
   var adjustments = [kv("Oversized By", $format(oversize_percent, ".0f") + "%")];
+  if (irvSized) {
+    adjustments.push(kv("IRV Protect Downstream Pressure To", $format(irvLimit, ".1f") + " psi" + irvTag));
+  }
   if ($truthy(apply) && mget('opp') === "Monitor") adjustments.push(kv("Monitor Capacity Reduction", "30%"));
   if (gastypemult !== 1) adjustments.push(kv("Gas Type Factor", $format(gastypemult, ".4f")));
   if (Patm < 14.4) adjustments.push(kv("Elevation capacity reduction", $format(elevation_reduction, ".0f") + "%"));
@@ -889,7 +906,8 @@ function sizeTool(rawInput) {
     kv("Overpressure Protection Required", p.opp_required ? "Yes" : "No")
   ];
   if (p.opp_required) {
-    summary.push(kv("IRV Protect Downstream Pressure To (psi)", $format(irv_input, ".1f")));
+    summary.push(kv("IRV Protect Downstream Pressure To (psi)",
+        (irvDefaulted && !irvSized) ? "Default (not used)" : $format(irvLimit, ".1f") + irvTag));
   } else {
     summary.push(kv("Select Regulator with IRV", opp_type === "Partial" ? "Yes" : "No"));
   }
@@ -960,7 +978,7 @@ function sizeTool(rawInput) {
   ns.versions = ns.versions || {};
   ns.versions['model-143'] = {
     version: '1.1.0',
-    algorithm: 'sha256:9a870f9e2006',
-    sources: 'sha256:2b4fed908916'
+    algorithm: 'sha256:44b42e7b8685',
+    sources: 'sha256:609d0c98cc1d'
   };
 })(typeof window !== 'undefined' ? window : this);

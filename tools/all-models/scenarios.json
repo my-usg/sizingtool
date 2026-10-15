@@ -485,6 +485,17 @@
         "outlet": 2,
         "flow": 50000
       }
+    },
+    {
+      "name": "IRV pressure left at 0 above 2 psi outlet: 143 defaults to 5 psi",
+      "input": {
+        "inlet": 60,
+        "outlet": 2.5,
+        "flow": 1500,
+        "opp_required": true,
+        "opp_pref": "IRV",
+        "irv_pressure": 0
+      }
     }
   ],
   "random": {

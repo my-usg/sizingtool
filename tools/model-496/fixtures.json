@@ -740,6 +740,10 @@
     {
      "label": "Oversized By",
      "value": "25%"
+    },
+    {
+     "label": "IRV Protect Downstream Pressure To",
+     "value": "2.0 psi"
     }
    ],
    "summary": [

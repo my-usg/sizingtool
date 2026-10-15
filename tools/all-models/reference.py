@@ -98,7 +98,7 @@ DEFAULTS = {
     "inlet": 0, "inlet_units": "psi", "outlet": 0, "outlet_units": "psi",
     "flow": 0, "min_flow": 0, "flow_units": "CFH", "maop": 0,
     "pipe_size": "N/A", "opp_required": False, "opp_pref": "IRV",
-    "irv_pressure": 2.0, "partial_irv": False,
+    "irv_pressure": 0.0, "partial_irv": False,
     "high_efficiency": False, "high_efficiency_pct": 100,
     "override_oversize": False, "oversize_pct": 25, "prefer_combustion": False,
     "vp_preference": "standard",
@@ -355,8 +355,16 @@ def run(payload) -> Dict[str, Any]:
     control_line = part_number.get("controlline") or None
     control_line_qty = part_number.get("controllineqty")
 
+    # ---- IRV limit actually applied (mirrors wrapper.js) ----
+    irv_sized = bool(opp_type == "IRV" and match.get("opp") == "IRV")
+    irv_defaulted = not (irv_input > 0)
+    irv_limit = ((outlet_psi + 10) if str(match.get("model") or "").startswith("046") else (2 if outlet_psi < 2 else 5)) if irv_defaulted else irv_input
+    irv_tag = " (default)" if irv_defaulted else ""
+
     # ---- sizing adjustments ----
     adjustments = [_kv("Oversized By", f"{oversize_percent:.0f}%")]
+    if irv_sized:
+        adjustments.append(_kv("IRV Protect Downstream Pressure To", f"{irv_limit:.1f} psi" + irv_tag))
     if match.get("opp") == "Monitor":
         adjustments.append(_kv("Monitor Capacity Reduction", "30%"))
     if gastypemult != 1:
@@ -379,7 +387,8 @@ def run(payload) -> Dict[str, Any]:
     else:
         summary.append(_kv("Protection Type", opp_pref))
         if opp_pref == "IRV":
-            summary.append(_kv("IRV Protect Downstream Pressure To (psi)", f"{irv_input:.1f}"))
+            summary.append(_kv("IRV Protect Downstream Pressure To (psi)",
+                "Default (not used)" if (irv_defaulted and not irv_sized) else f"{irv_limit:.1f}" + irv_tag))
     summary.append(
         _kv(
             "Percent Load Feeding High-Efficiency Appliance",

@@ -500,6 +500,10 @@
     {
      "label": "Oversized By",
      "value": "25%"
+    },
+    {
+     "label": "IRV Protect Downstream Pressure To",
+     "value": "2.0 psi"
     }
    ],
    "summary": [
@@ -3999,7 +4003,7 @@
   }
  },
  {
-  "name": "IRV above 2 psi outlet (stops)",
+  "name": "IRV above 2 psi outlet (attempted, fails a 2 psi limit)",
   "input": {
    "inlet": 25,
    "outlet": 3,
@@ -4011,11 +4015,553 @@
    "ok": true,
    "selected": false,
    "errors": [],
-   "warnings": [
-    "Cannot size IRV for outlet pressures > 2 psi"
-   ],
+   "warnings": [],
    "message": "Model 143 will not work for this application.",
-   "stopped": true
+   "tables": [
+    {
+     "title": "Model 143, 3/4\" Body",
+     "headers": [
+      "Orifice Size",
+      "Calculated Capacity (CFH)",
+      "Will Reg Work",
+      "Will IRV Work"
+     ],
+     "rows": [
+      [
+       "5/8\"",
+       "N/A",
+       "No",
+       "No"
+      ],
+      [
+       "1/2\"",
+       "N/A",
+       "No",
+       "No"
+      ],
+      [
+       "3/8\"",
+       "1,588",
+       "Yes",
+       "No"
+      ],
+      [
+       "5/16\"",
+       "1,475",
+       "Yes",
+       "No"
+      ],
+      [
+       "1/4\"",
+       "1,225",
+       "Yes",
+       "No"
+      ],
+      [
+       "3/16\"",
+       "1,031",
+       "Yes",
+       "No"
+      ],
+      [
+       "5/32\"",
+       "1,075",
+       "Yes",
+       "No"
+      ],
+      [
+       "9/64\"",
+       "800",
+       "Yes",
+       "No"
+      ],
+      [
+       "1/8\"",
+       "638",
+       "Yes",
+       "No"
+      ]
+     ]
+    },
+    {
+     "title": "Model 143, 1\" Body",
+     "headers": [
+      "Orifice Size",
+      "Calculated Capacity (CFH)",
+      "Will Reg Work",
+      "Will IRV Work"
+     ],
+     "rows": [
+      [
+       "5/8\"",
+       "N/A",
+       "No",
+       "No"
+      ],
+      [
+       "1/2\"",
+       "N/A",
+       "No",
+       "No"
+      ],
+      [
+       "3/8\"",
+       "2,162",
+       "Yes",
+       "No"
+      ],
+      [
+       "5/16\"",
+       "1,900",
+       "Yes",
+       "No"
+      ],
+      [
+       "1/4\"",
+       "1,656",
+       "Yes",
+       "No"
+      ],
+      [
+       "3/16\"",
+       "1,200",
+       "Yes",
+       "No"
+      ],
+      [
+       "5/32\"",
+       "1,088",
+       "Yes",
+       "No"
+      ],
+      [
+       "9/64\"",
+       "800",
+       "Yes",
+       "No"
+      ],
+      [
+       "1/8\"",
+       "638",
+       "Yes",
+       "No"
+      ]
+     ]
+    },
+    {
+     "title": "Model 143, 1-1/4\" Body",
+     "headers": [
+      "Orifice Size",
+      "Calculated Capacity (CFH)",
+      "Will Reg Work",
+      "Will IRV Work"
+     ],
+     "rows": [
+      [
+       "5/8\"",
+       "N/A",
+       "No",
+       "No"
+      ],
+      [
+       "1/2\"",
+       "N/A",
+       "No",
+       "No"
+      ],
+      [
+       "3/8\"",
+       "2,300",
+       "Yes",
+       "No"
+      ],
+      [
+       "5/16\"",
+       "2,062",
+       "Yes",
+       "No"
+      ],
+      [
+       "1/4\"",
+       "1,925",
+       "Yes",
+       "No"
+      ],
+      [
+       "3/16\"",
+       "1,312",
+       "Yes",
+       "No"
+      ],
+      [
+       "5/32\"",
+       "1,088",
+       "Yes",
+       "No"
+      ],
+      [
+       "9/64\"",
+       "800",
+       "Yes",
+       "No"
+      ],
+      [
+       "1/8\"",
+       "638",
+       "Yes",
+       "No"
+      ]
+     ]
+    }
+   ],
+   "adjustments": [
+    {
+     "label": "Oversized By",
+     "value": "25%"
+    }
+   ],
+   "summary": [
+    {
+     "label": "Inlet Pressure (psi)",
+     "value": "25.0"
+    },
+    {
+     "label": "Outlet Pressure (psi)",
+     "value": "3.0"
+    },
+    {
+     "label": "Max Flow Rate (CFH)",
+     "value": "500"
+    },
+    {
+     "label": "Max Allowable Inlet Pressure (psi)",
+     "value": "0"
+    },
+    {
+     "label": "Requested Pipe Size",
+     "value": "N/A"
+    },
+    {
+     "label": "Overpressure Protection Required",
+     "value": "Yes"
+    },
+    {
+     "label": "IRV Protect Downstream Pressure To (psi)",
+     "value": "2.0"
+    },
+    {
+     "label": "Percent Load Feeding High-Efficiency Appliance",
+     "value": "0"
+    },
+    {
+     "label": "Override percentage regulator is oversized by",
+     "value": "No"
+    },
+    {
+     "label": "Gas Type",
+     "value": "Natural Gas"
+    },
+    {
+     "label": "Altitude above 3,000 feet or atmospheric pressure below 13 psi",
+     "value": "No"
+    }
+   ]
+  }
+ },
+ {
+  "name": "IRV pressure left at 0 above 2 psi outlet: defaults to 5 psi",
+  "input": {
+   "inlet": 60,
+   "outlet": 2.5,
+   "flow": 1500,
+   "opp_required": true,
+   "irv_pressure": 0
+  },
+  "expected": {
+   "ok": true,
+   "selected": true,
+   "errors": [],
+   "warnings": [
+    "Sized for IRV"
+   ],
+   "message": "Regulator selected!",
+   "selection": [
+    {
+     "label": "Model",
+     "value": "143-2HP"
+    },
+    {
+     "label": "Body Size",
+     "value": "1\""
+    },
+    {
+     "label": "Orifice Size",
+     "value": "3/16\""
+    },
+    {
+     "label": "Spring",
+     "value": "Cadmium (0.5 - 3 psi)"
+    }
+   ],
+   "capacity": "2,050",
+   "part_numbers": [
+    "R.143-2HP.1.11.15"
+   ],
+   "control_line": null,
+   "control_line_qty": null,
+   "tables": [
+    {
+     "title": "Model 143, 3/4\" Body",
+     "headers": [
+      "Orifice Size",
+      "Calculated Capacity (CFH)",
+      "Will Reg Work",
+      "Will IRV Work"
+     ],
+     "rows": [
+      [
+       "5/8\"",
+       "N/A",
+       "No",
+       "No"
+      ],
+      [
+       "1/2\"",
+       "N/A",
+       "No",
+       "No"
+      ],
+      [
+       "3/8\"",
+       "N/A",
+       "No",
+       "No"
+      ],
+      [
+       "5/16\"",
+       "N/A",
+       "No",
+       "No"
+      ],
+      [
+       "1/4\"",
+       "1,825",
+       "No",
+       "No"
+      ],
+      [
+       "3/16\"",
+       "1,650",
+       "No",
+       "Yes"
+      ],
+      [
+       "5/32\"",
+       "1,675",
+       "No",
+       "Yes"
+      ],
+      [
+       "9/64\"",
+       "1,525",
+       "No",
+       "Yes"
+      ],
+      [
+       "1/8\"",
+       "1,100",
+       "No",
+       "Yes"
+      ]
+     ]
+    },
+    {
+     "title": "Model 143, 1\" Body",
+     "headers": [
+      "Orifice Size",
+      "Calculated Capacity (CFH)",
+      "Will Reg Work",
+      "Will IRV Work"
+     ],
+     "rows": [
+      [
+       "5/8\"",
+       "N/A",
+       "No",
+       "No"
+      ],
+      [
+       "1/2\"",
+       "N/A",
+       "No",
+       "No"
+      ],
+      [
+       "3/8\"",
+       "N/A",
+       "No",
+       "No"
+      ],
+      [
+       "5/16\"",
+       "N/A",
+       "No",
+       "No"
+      ],
+      [
+       "1/4\"",
+       "2,500",
+       "Yes",
+       "No"
+      ],
+      [
+       "3/16\"",
+       "2,050",
+       "Yes",
+       "Yes"
+      ],
+      [
+       "5/32\"",
+       "2,050",
+       "Yes",
+       "Yes"
+      ],
+      [
+       "9/64\"",
+       "1,525",
+       "No",
+       "Yes"
+      ],
+      [
+       "1/8\"",
+       "1,125",
+       "No",
+       "Yes"
+      ]
+     ]
+    },
+    {
+     "title": "Model 143, 1-1/4\" Body",
+     "headers": [
+      "Orifice Size",
+      "Calculated Capacity (CFH)",
+      "Will Reg Work",
+      "Will IRV Work"
+     ],
+     "rows": [
+      [
+       "5/8\"",
+       "N/A",
+       "No",
+       "No"
+      ],
+      [
+       "1/2\"",
+       "N/A",
+       "No",
+       "No"
+      ],
+      [
+       "3/8\"",
+       "N/A",
+       "No",
+       "No"
+      ],
+      [
+       "5/16\"",
+       "N/A",
+       "No",
+       "No"
+      ],
+      [
+       "1/4\"",
+       "2,600",
+       "Yes",
+       "No"
+      ],
+      [
+       "3/16\"",
+       "2,600",
+       "Yes",
+       "Yes"
+      ],
+      [
+       "5/32\"",
+       "2,050",
+       "Yes",
+       "Yes"
+      ],
+      [
+       "9/64\"",
+       "1,525",
+       "No",
+       "Yes"
+      ],
+      [
+       "1/8\"",
+       "1,125",
+       "No",
+       "Yes"
+      ]
+     ]
+    }
+   ],
+   "adjustments": [
+    {
+     "label": "Oversized By",
+     "value": "25%"
+    },
+    {
+     "label": "IRV Protect Downstream Pressure To",
+     "value": "5.0 psi (default)"
+    }
+   ],
+   "summary": [
+    {
+     "label": "Inlet Pressure (psi)",
+     "value": "60.0"
+    },
+    {
+     "label": "Outlet Pressure (psi)",
+     "value": "2.5"
+    },
+    {
+     "label": "Max Flow Rate (CFH)",
+     "value": "1,500"
+    },
+    {
+     "label": "Max Allowable Inlet Pressure (psi)",
+     "value": "0"
+    },
+    {
+     "label": "Requested Pipe Size",
+     "value": "N/A"
+    },
+    {
+     "label": "Overpressure Protection Required",
+     "value": "Yes"
+    },
+    {
+     "label": "IRV Protect Downstream Pressure To (psi)",
+     "value": "5.0 (default)"
+    },
+    {
+     "label": "Percent Load Feeding High-Efficiency Appliance",
+     "value": "0"
+    },
+    {
+     "label": "Override percentage regulator is oversized by",
+     "value": "No"
+    },
+    {
+     "label": "Gas Type",
+     "value": "Natural Gas"
+    },
+    {
+     "label": "Altitude above 3,000 feet or atmospheric pressure below 13 psi",
+     "value": "No"
+    }
+   ]
   }
  }
 ]

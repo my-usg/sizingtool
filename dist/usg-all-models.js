@@ -8,8 +8,8 @@
  *
  * tool:      all-models
  * version:   1.1.0
- * algorithm: sha256:4d4de357fd82
- * sources:   sha256:abb9127939e7
+ * algorithm: sha256:5044addece3f
+ * sources:   sha256:55124357989c
  *
  * Adds to the shared namespace:
  *   USGSizing.sizeAllModels(input)  -> result object
@@ -378,9 +378,18 @@ function spring_496(op) {
   }
 }
 function will_irv_work496(reg, opp) {
-  let inlet_keys, irvdata496, orifice_key, out_pressure_build, p_high, p_low, t, v_high, v_low, $t10, $t9;
+  let inlet_keys, irv_adjusted, irvdata496, orifice_key, out_pressure_build, p_high, p_low, t, v_high, v_low, $t10, $t9;
   if ($truthy(($eq(opp, "Partial")))) {
     return "Partial";
+  }
+  if ($truthy(($eq(irv_input, 0)))) {
+    if ($truthy(((outlet_input < 2)))) {
+      irv_adjusted = 2;
+    } else {
+      irv_adjusted = 5;
+    }
+  } else {
+    irv_adjusted = irv_input;
   }
   irvdata496 = new Map([[0, new Map([["18", 0.25], ["36", 0.25], ["14", 0.25], ["56", 0.25], ["38", 0.25], ["12", 0.25]])], [3, new Map([["18", 0.39], ["36", 0.39], ["14", 0.39], ["56", 0.39], ["38", 0.39], ["12", 0.46]])], [10, new Map([["18", 0.39], ["36", 0.39], ["14", 0.39], ["56", 0.64], ["38", 0.79], ["12", 1.18]])], [12, new Map([["18", 0.39], ["36", 0.39], ["14", 0.54], ["56", 0.75], ["38", 1], ["12", 1.54]])], [20, new Map([["18", 0.39], ["36", 0.54], ["14", 0.82], ["56", 1.11], ["38", 1.54], ["12", 2.61]])], [30, new Map([["18", 0.43], ["36", 0.75], ["14", 1.11], ["56", 1.82], ["38", 2.61], ["12", null]])], [40, new Map([["18", 0.46], ["36", 0.89], ["14", 1.54], ["56", 2.61], ["38", null], ["12", null]])], [50, new Map([["18", 0.5], ["36", 1.11], ["14", 1.96], ["56", null], ["38", null], ["12", null]])], [60, new Map([["18", 0.61], ["36", 1.36], ["14", 2.32], ["56", null], ["38", null], ["12", null]])], [70, new Map([["18", 0.64], ["36", 1.54], ["14", null], ["56", null], ["38", null], ["12", null]])], [80, new Map([["18", 0.75], ["36", 1.89], ["14", null], ["56", null], ["38", null], ["12", null]])], [90, new Map([["18", 0.79], ["36", 2.18], ["14", null], ["56", null], ["38", null], ["12", null]])], [100, new Map([["18", 0.82], ["36", 2.43], ["14", null], ["56", null], ["38", null], ["12", null]])], [125, new Map([["18", null], ["36", null], ["14", null], ["56", null], ["38", null], ["12", null]])]]);
   orifice_key = $slice(reg, (-2), null);
@@ -407,10 +416,10 @@ function will_irv_work496(reg, opp) {
       }
     }
   }
-  if ($truthy((($truthy(($t10 = ($eq(out_pressure_build, null))))) ? $t10 : (($eq(irv_input, null)))))) {
+  if ($truthy((($truthy(($t10 = ($eq(out_pressure_build, null))))) ? $t10 : (($eq(irv_adjusted, null)))))) {
     return "No";
   } else {
-    if ($truthy((($add(out_pressure_build, outlet_input) <= irv_input)))) {
+    if ($truthy((($add(out_pressure_build, outlet_input) <= irv_adjusted)))) {
       return "Yes";
     } else {
       return "No";
@@ -608,9 +617,18 @@ function spring_143(op) {
   }
 }
 function will_irv_work143(reg, opp) {
-  let inlet_keys, irv_table, irvhpdata143, irvstddata143, orifice_key, out_pressure_build, p_high, p_low, t, v_high, v_low, $t15, $t16;
+  let inlet_keys, irv_adjusted, irv_table, irvhpdata143, irvstddata143, orifice_key, out_pressure_build, p_high, p_low, t, v_high, v_low, $t15, $t16;
   if ($truthy(($eq(opp, "Partial")))) {
     return "Partial";
+  }
+  if ($truthy(($eq(irv_input, 0)))) {
+    if ($truthy(((outlet_input < 2)))) {
+      irv_adjusted = 2;
+    } else {
+      irv_adjusted = 5;
+    }
+  } else {
+    irv_adjusted = irv_input;
   }
   irvstddata143 = new Map([[0, new Map([["18", 0], ["96", 0], ["53", 0], ["36", 0], ["14", 0], ["56", 0], ["38", 0], ["12", 0], ["58", 0]])], [2, new Map([["18", 0.24], ["96", 0.27], ["53", 0.28], ["36", 0.29], ["14", 0.31], ["56", 0.19], ["38", 0.32], ["12", 0.43], ["58", 0.56]])], [3, new Map([["18", 0.27], ["96", 0.29], ["53", 0.32], ["36", 0.32], ["14", 0.35], ["56", 0.3], ["38", 0.4], ["12", 0.66], ["58", 0.83]])], [5, new Map([["18", 0.31], ["96", 0.3], ["53", 0.35], ["36", 0.36], ["14", 0.43], ["56", 0.49], ["38", 0.62], ["12", 1.06], ["58", 1.36]])], [9.3, new Map([["18", 0.34], ["96", 0.32], ["53", 0.39], ["36", 0.4], ["14", 0.58], ["56", 0.84], ["38", 1.07], ["12", 1.95], ["58", 2.63]])], [10, new Map([["18", 0.35], ["96", 0.33], ["53", 0.39], ["36", 0.41], ["14", 0.61], ["56", 0.89], ["38", 1.15], ["12", 2.13], ["58", null]])], [12.4, new Map([["18", 0.37], ["96", 0.34], ["53", 0.41], ["36", 0.44], ["14", 0.68], ["56", 1.06], ["38", 1.41], ["12", 2.63], ["58", null]])], [20, new Map([["18", 0.41], ["96", 0.39], ["53", 0.47], ["36", 0.58], ["14", 0.91], ["56", 1.62], ["38", 2.34], ["12", null], ["58", null]])], [22.5, new Map([["18", 0.42], ["96", 0.4], ["53", 0.49], ["36", 0.61], ["14", 1], ["56", 1.8], ["38", 2.63], ["12", null], ["58", null]])], [30, new Map([["18", 0.47], ["96", 0.45], ["53", 0.56], ["36", 0.72], ["14", 1.3], ["56", 2.41], ["38", null], ["12", null], ["58", null]])], [32.7, new Map([["18", 0.48], ["96", 0.47], ["53", 0.58], ["36", 0.77], ["14", 1.42], ["56", 2.63], ["38", null], ["12", null], ["58", null]])], [40, new Map([["18", 0.53], ["96", 0.51], ["53", 0.63], ["36", 0.88], ["14", 1.72], ["56", null], ["38", null], ["12", null], ["58", null]])], [50, new Map([["18", 0.59], ["96", 0.58], ["53", 0.7], ["36", 1.08], ["14", 2.21], ["56", null], ["38", null], ["12", null], ["58", null]])], [58.1, new Map([["18", 0.63], ["96", 0.65], ["53", 0.79], ["36", 1.23], ["14", 2.63], ["56", null], ["38", null], ["12", null], ["58", null]])], [60, new Map([["18", 0.63], ["96", 0.66], ["53", 0.81], ["36", 1.27], ["14", null], ["56", null], ["38", null], ["12", null], ["58", null]])], [70, new Map([["18", 0.69], ["96", 0.75], ["53", 0.94], ["36", 1.5], ["14", null], ["56", null], ["38", null], ["12", null], ["58", null]])], [80, new Map([["18", 0.76], ["96", 0.85], ["53", 1.08], ["36", 1.73], ["14", null], ["56", null], ["38", null], ["12", null], ["58", null]])], [90, new Map([["18", 0.83], ["96", 0.96], ["53", 1.23], ["36", 1.99], ["14", null], ["56", null], ["38", null], ["12", null], ["58", null]])], [100, new Map([["18", 0.89], ["96", 1.07], ["53", 1.38], ["36", 2.24], ["14", null], ["56", null], ["38", null], ["12", null], ["58", null]])], [110, new Map([["18", 0.96], ["96", 1.18], ["53", 1.55], ["36", 2.52], ["14", null], ["56", null], ["38", null], ["12", null], ["58", null]])], [114.1, new Map([["18", 1], ["96", 1.23], ["53", 1.62], ["36", 2.63], ["14", null], ["56", null], ["38", null], ["12", null], ["58", null]])], [120, new Map([["18", 1.05], ["96", 1.3], ["53", 1.73], ["36", null], ["14", null], ["56", null], ["38", null], ["12", null], ["58", null]])], [125, new Map([["18", 1.1], ["96", 1.37], ["53", 1.83], ["36", null], ["14", null], ["56", null], ["38", null], ["12", null], ["58", null]])]]);
   irvhpdata143 = new Map([[0, new Map([["18", 0], ["96", 0], ["53", 0], ["36", 0], ["14", 0], ["56", 0], ["38", 0], ["12", 0], ["58", 0]])], [4, new Map([["18", 0.34], ["96", 0.76], ["53", 0.63], ["36", 0.8], ["14", 0.83], ["56", 0.86], ["38", 0.92], ["12", 0.95], ["58", 1.05]])], [5, new Map([["18", 0.68], ["96", 0.82], ["53", 0.79], ["36", 0.82], ["14", 0.85], ["56", 0.9], ["38", 1.05], ["12", 1.14], ["58", 1.31]])], [7.5, new Map([["18", 0.81], ["96", 0.83], ["53", 0.86], ["36", 0.85], ["14", 0.93], ["56", 1.06], ["38", 1.34], ["12", 1.57], ["58", 1.98]])], [10, new Map([["18", 0.83], ["96", 0.87], ["53", 0.9], ["36", 0.89], ["14", 1.02], ["56", 1.24], ["38", 1.58], ["12", 2.08], ["58", 2.79]])], [12.5, new Map([["18", 0.85], ["96", 0.89], ["53", 0.92], ["36", 0.92], ["14", 1.1], ["56", 1.39], ["38", 1.85], ["12", 2.62], ["58", 3.51]])], [16.3, new Map([["18", 0.87], ["96", 0.92], ["53", 0.96], ["36", 0.98], ["14", 1.21], ["56", 1.63], ["38", 2.28], ["12", 3.49], ["58", null]])], [20, new Map([["18", 0.89], ["96", 0.95], ["53", 0.99], ["36", 1.02], ["14", 1.33], ["56", 1.9], ["38", 2.72], ["12", null], ["58", null]])], [26.6, new Map([["18", 0.92], ["96", 1], ["53", 1.05], ["36", 1.11], ["14", 1.52], ["56", 2.35], ["38", 3.5], ["12", null], ["58", null]])], [30, new Map([["18", 0.94], ["96", 1.03], ["53", 1.07], ["36", 1.17], ["14", 1.66], ["56", 2.61], ["38", null], ["12", null], ["58", null]])], [40, new Map([["18", 0.99], ["96", 1.1], ["53", 1.15], ["36", 1.32], ["14", 2.05], ["56", 3.43], ["38", null], ["12", null], ["58", null]])], [41.1, new Map([["18", 0.99], ["96", 1.1], ["53", 1.16], ["36", 1.33], ["14", 2.09], ["56", 3.52], ["38", null], ["12", null], ["58", null]])], [50, new Map([["18", 1.04], ["96", 1.17], ["53", 1.23], ["36", 1.43], ["14", 2.49], ["56", null], ["38", null], ["12", null], ["58", null]])], [60, new Map([["18", 1.09], ["96", 1.23], ["53", 1.33], ["36", 1.64], ["14", 2.99], ["56", null], ["38", null], ["12", null], ["58", null]])], [70, new Map([["18", 1.14], ["96", 1.31], ["53", 1.45], ["36", 1.87], ["14", 3.5], ["56", null], ["38", null], ["12", null], ["58", null]])], [70.3, new Map([["18", 1.15], ["96", 1.31], ["53", 1.45], ["36", 1.87], ["14", 3.51], ["56", null], ["38", null], ["12", null], ["58", null]])], [80, new Map([["18", 1.2], ["96", 1.39], ["53", 1.57], ["36", 2.1], ["14", null], ["56", null], ["38", null], ["12", null], ["58", null]])], [90, new Map([["18", 1.27], ["96", 1.48], ["53", 1.72], ["36", 2.32], ["14", null], ["56", null], ["38", null], ["12", null], ["58", null]])], [100, new Map([["18", 1.35], ["96", 1.59], ["53", 1.86], ["36", 2.54], ["14", null], ["56", null], ["38", null], ["12", null], ["58", null]])], [110, new Map([["18", 1.43], ["96", 1.7], ["53", 2.02], ["36", 2.78], ["14", null], ["56", null], ["38", null], ["12", null], ["58", null]])], [120, new Map([["18", 1.51], ["96", 1.82], ["53", 2.17], ["36", 3.04], ["14", null], ["56", null], ["38", null], ["12", null], ["58", null]])], [125, new Map([["18", 1.56], ["96", 1.89], ["53", 2.26], ["36", 3.19], ["14", null], ["56", null], ["38", null], ["12", null], ["58", null]])]]);
@@ -639,10 +657,10 @@ function will_irv_work143(reg, opp) {
       }
     }
   }
-  if ($truthy((($truthy(($t16 = ($eq(out_pressure_build, null))))) ? $t16 : (($eq(irv_input, null)))))) {
+  if ($truthy((($truthy(($t16 = ($eq(out_pressure_build, null))))) ? $t16 : (($eq(irv_adjusted, null)))))) {
     return "No";
   } else {
-    if ($truthy((($add(out_pressure_build, outlet_input) <= irv_input)))) {
+    if ($truthy((($add(out_pressure_build, outlet_input) <= irv_adjusted)))) {
       return "Yes";
     } else {
       return "No";
@@ -700,15 +718,8 @@ function gen_match143(result, opp) {
   }
 }
 function run_regulator_selection143(inlet, outlet, opp) {
-  let apply, match, result, warning, $t19;
+  let apply, match, result, warning;
   opp = ($truthy(($eq(opp, "Monitor"))) ? ("IRV") : (opp));
-  if ($truthy((($truthy(($t19 = ($eq(opp, "IRV"))))) ? (((outlet_input > 2))) : $t19))) {
-    warning = "IRV could not be sized";
-    result = null;
-    match = null;
-    apply = false;
-    return [result, match, apply, warning];
-  }
   result = interpolate_capacity(data143, inlet, outlet, false, false);
   warning = null;
   if ($truthy(((typeof (result) === 'string')))) {
@@ -841,8 +852,8 @@ function orifice_max243(reg) {
   }
 }
 function spring_243_12(op) {
-  let $t20;
-  if ($truthy((($truthy(($t20 = ((op < (6.5 / 28)))))) ? (((op >= (3.5 / 28)))) : $t20))) {
+  let $t19;
+  if ($truthy((($truthy(($t19 = ((op < (6.5 / 28)))))) ? (((op >= (3.5 / 28)))) : $t19))) {
     return new Map([["color", "Red"], ["range", "(3.5 - 6.5\" wc)"]]);
   } else {
     if ($truthy(((op < (8.5 / 28))))) {
@@ -873,8 +884,8 @@ function spring_243_12(op) {
   }
 }
 function spring_243_8(op) {
-  let $t21;
-  if ($truthy((($truthy(($t21 = ((op < (6.5 / 28)))))) ? (((op >= (3.5 / 28)))) : $t21))) {
+  let $t20;
+  if ($truthy((($truthy(($t20 = ((op < (6.5 / 28)))))) ? (((op >= (3.5 / 28)))) : $t20))) {
     return new Map([["color", "Red-Black"], ["range", "(3.5\" – 6.5\" wc)"]]);
   } else {
     if ($truthy(((op < (8.5 / 28))))) {
@@ -905,8 +916,8 @@ function spring_243_8(op) {
   }
 }
 function spring_243hp(op) {
-  let $t22;
-  if ($truthy((($truthy(($t22 = ((op < 6.5))))) ? (((op >= 3))) : $t22))) {
+  let $t21;
+  if ($truthy((($truthy(($t21 = ((op < 6.5))))) ? (((op >= 3))) : $t21))) {
     return new Map([["color", "Cadmium"], ["range", "(3 – 6.5 psi)"]]);
   } else {
     if ($truthy(((op <= 10)))) {
@@ -916,18 +927,27 @@ function spring_243hp(op) {
   return new Map([["color", null], ["range", null]]);
 }
 function will_irv_work243(reg, opp) {
-  let inlet_keys, irv12data243, irv8data243, irv_table, orif, orifice_key, out_pressure_build, p_high, p_low, pre, suf, t, v_high, v_low, $t23, $t24, $t25, $t26, $t27;
+  let inlet_keys, irv12data243, irv8data243, irv_adjusted, irv_table, orif, orifice_key, out_pressure_build, p_high, p_low, pre, suf, t, v_high, v_low, $t22, $t23, $t24, $t25, $t26;
   if ($truthy(($eq(opp, "Partial")))) {
     return "Partial";
   }
+  if ($truthy(($eq(irv_input, 0)))) {
+    if ($truthy(((outlet_input < 2)))) {
+      irv_adjusted = 2;
+    } else {
+      irv_adjusted = 5;
+    }
+  } else {
+    irv_adjusted = irv_input;
+  }
   suf = $slice(reg, (-4), null);
-  if ($truthy((($truthy(($t23 = ($eq(suf, "1Q30"))))) ? $t23 : (($eq(suf, "1Q10")))))) {
+  if ($truthy((($truthy(($t22 = ($eq(suf, "1Q30"))))) ? $t22 : (($eq(suf, "1Q10")))))) {
     orif = "1-1/4\"";
   } else {
-    if ($truthy((($truthy(($t24 = ($eq(suf, "1030"))))) ? $t24 : (($eq(suf, "1010")))))) {
+    if ($truthy((($truthy(($t23 = ($eq(suf, "1030"))))) ? $t23 : (($eq(suf, "1010")))))) {
       orif = "1\"";
     } else {
-      if ($truthy((($truthy(($t25 = ($eq(suf, "3430"))))) ? $t25 : (($eq(suf, "3410")))))) {
+      if ($truthy((($truthy(($t24 = ($eq(suf, "3430"))))) ? $t24 : (($eq(suf, "3410")))))) {
         orif = "3/4\"";
       } else {
         if ($truthy(($eq(suf, "1210")))) {
@@ -969,7 +989,7 @@ function will_irv_work243(reg, opp) {
       } else {
         v_low = $get($get(irv_table, p_low), orifice_key);
         v_high = $get($get(irv_table, p_high), orifice_key);
-        if ($truthy((($truthy(($t26 = ((v_low === null))))) ? $t26 : (((v_high === null)))))) {
+        if ($truthy((($truthy(($t25 = ((v_low === null))))) ? $t25 : (((v_high === null)))))) {
           out_pressure_build = null;
         } else {
           t = ((inlet_input - p_low) / (p_high - p_low));
@@ -978,10 +998,10 @@ function will_irv_work243(reg, opp) {
       }
     }
   }
-  if ($truthy((($truthy(($t27 = ($eq(out_pressure_build, null))))) ? $t27 : (($eq(irv_input, null)))))) {
+  if ($truthy((($truthy(($t26 = ($eq(out_pressure_build, null))))) ? $t26 : (($eq(irv_adjusted, null)))))) {
     return "No";
   } else {
-    if ($truthy((($add(out_pressure_build, outlet_input) <= irv_input)))) {
+    if ($truthy((($add(out_pressure_build, outlet_input) <= irv_adjusted)))) {
       return "Yes";
     } else {
       return "No";
@@ -989,7 +1009,7 @@ function will_irv_work243(reg, opp) {
   }
 }
 function gen_match243(result, opp) {
-  let all_prefixes, body_labels243, cap, color, hp_pipe_priority, is_hp_data, match, model, model_labels243, mon_color, mon_range, monset, ordered_prefixes, orifice, orifice_order, prefix, prioritized, priority_list, range, reg, std_pipe_priority, $t28, $t29, $t30, $t31, $t32, $t33;
+  let all_prefixes, body_labels243, cap, color, hp_pipe_priority, is_hp_data, match, model, model_labels243, mon_color, mon_range, monset, ordered_prefixes, orifice, orifice_order, prefix, prioritized, priority_list, range, reg, std_pipe_priority, $t27, $t28, $t29, $t30, $t31, $t32;
   match = null;
   is_hp_data = $any((() => { const $r = []; for (const k of $iter(result)) { if (true) $r.push((k).startsWith("R243HP")); } return $r; })());
   if ($truthy(is_hp_data)) {
@@ -1034,17 +1054,17 @@ function gen_match243(result, opp) {
     }
   }
   if ($truthy(($in("irv_input", $GLOBALS)))) {
-    if ($truthy((($truthy(($t28 = ((!$eq(irv_input, 0)))))) ? (((monset > irv_input))) : $t28))) {
+    if ($truthy((($truthy(($t27 = ((!$eq(irv_input, 0)))))) ? (((monset > irv_input))) : $t27))) {
       monset = irv_input;
     }
   }
-  if ($truthy((($truthy(($t29 = ($eq(opp, "IRV"))))) ? $t29 : (($eq(opp, "Partial")))))) {
+  if ($truthy((($truthy(($t28 = ($eq(opp, "IRV"))))) ? $t28 : (($eq(opp, "Partial")))))) {
     for (const prefix of $iter((() => { const $r = []; for (const p of $iter(ordered_prefixes)) { if ($truthy(((!$eq(p, "R24312EX"))))) $r.push(p); } return $r; })())) {
       for (const orifice of $iter(orifice_order)) {
         reg = `${$str(prefix)}_${$str(orifice)}`;
         if ($truthy(($in(reg, result)))) {
           cap = $get(result, reg);
-          if ($truthy((($truthy(($t30 = ($eq(will_work(cap, reg, orifice_max243(reg)), "Yes"))))) ? (((!$eq(will_irv_work243(reg, opp), "No")))) : $t30))) {
+          if ($truthy((($truthy(($t29 = ($eq(will_work(cap, reg, orifice_max243(reg)), "Yes"))))) ? (((!$eq(will_irv_work243(reg, opp), "No")))) : $t29))) {
             if ($truthy((prefix).startsWith("R24308"))) {
               color = $get(spring_243_8(outlet_input), "color");
               range = $get(spring_243_8(outlet_input), "range");
@@ -1080,7 +1100,7 @@ function gen_match243(result, opp) {
               mon_color = ($truthy(((!$eq(monset, 0)))) ? ($get(spring_243_8(monset), "color")) : (null));
               mon_range = ($truthy(((!$eq(monset, 0)))) ? ($get(spring_243_8(monset), "range")) : (null));
             } else {
-              if ($truthy((($truthy(($t31 = (prefix).startsWith("R24312")))) ? ((!$truthy((prefix).startsWith("R24312EX")))) : $t31))) {
+              if ($truthy((($truthy(($t30 = (prefix).startsWith("R24312")))) ? ((!$truthy((prefix).startsWith("R24312EX")))) : $t30))) {
                 color = $get(spring_243_12(outlet_input), "color");
                 range = $get(spring_243_12(outlet_input), "range");
                 model = "243-12-1";
@@ -1102,7 +1122,7 @@ function gen_match243(result, opp) {
                 }
               }
             }
-            if ($truthy((($truthy(($t33 = ((!$eq(opp, "Monitor")))))) ? $t33 : ((($truthy(($t32 = ($eq(opp, "Monitor"))))) ? (((!$eq(mon_color, null)))) : $t32))))) {
+            if ($truthy((($truthy(($t32 = ((!$eq(opp, "Monitor")))))) ? $t32 : ((($truthy(($t31 = ($eq(opp, "Monitor"))))) ? (((!$eq(mon_color, null)))) : $t31))))) {
               match = new Map([["reg", reg], ["model", model], ["diap", null], ["body", $get(body_labels243, prefix)], ["orifice", orifice_type243(reg)], ["seat", null], ["color", color], ["range", range], ["capacity", cap], ["opp", opp], ["mon_color", mon_color], ["mon_range", mon_range]]);
               return match;
             }
@@ -1113,10 +1133,10 @@ function gen_match243(result, opp) {
   }
 }
 function run_regulator_selection243(inlet, outlet, opp) {
-  let apply, data_used243, hp_warning, match, result, warning, $t34;
+  let apply, data_used243, hp_warning, match, result, warning, $t33;
   warning = null;
   hp_warning = null;
-  if ($truthy((($truthy(($t34 = ((outlet_input >= 2))))) ? (($eq(opp, "IRV"))) : $t34))) {
+  if ($truthy((($truthy(($t33 = ((outlet_input >= 2))))) ? (($eq(opp, "IRV"))) : $t33))) {
     hp_warning = "IRV could not be sized, sized for worker/monitor setup";
     opp = "Monitor";
   }
@@ -1206,7 +1226,7 @@ function run_regulator_selection243(inlet, outlet, opp) {
   return [result, match, apply, warning];
 }
 function hsc_pnc243(match) {
-  let body, body_map, model, monitor_spring, opp, orifice, orifice_map, output, spring, spring_map, $t35, $t36, $t37, $t38;
+  let body, body_map, model, monitor_spring, opp, orifice, orifice_map, output, spring, spring_map, $t34, $t35, $t36, $t37;
   body_map = new Map([["1-1/4\"", "1-1/4SCD"], ["1-1/2\"", "1-1/2SCD"], ["2\"", "2SCD"]]);
   orifice_map = new Map([["0.207\"", "207"], ["1/4\"", "12"], ["3/8\"", "14"], ["1/2\"", "15"], ["3/4\", 10°", "18"], ["3/4\", 30°", "19"], ["1\", 10°", "20"], ["1\", 30°", "20"], ["1-1/4\", 10°", "21"], ["1-1/4\", 30°", "21"]]);
   spring_map = new Map([["Red-Black", "01"], ["Blue-Black", "02"], ["Green-Black", "03"], ["Red", "10"], ["Blue", "11"], ["Green", "12"], ["Orange-Black", "13A"], ["Orange", "13"], ["Black", "14"], ["Cadmium", "15"], ["Cadmium + White", "21"]]);
@@ -1219,13 +1239,13 @@ function hsc_pnc243(match) {
   if ($truthy(($eq(model, "243-12-2")))) {
     output = new Map([["worker", `R.243-12-2.IRV.${$str(body)}.12-2.INT.${$str(orifice)}.STD.${$str(spring)}.ALU`]]);
   } else {
-    if ($truthy((($truthy(($t35 = ($eq(model, "243-12-1"))))) ? (($eq(opp, "Monitor"))) : $t35))) {
+    if ($truthy((($truthy(($t34 = ($eq(model, "243-12-1"))))) ? (($eq(opp, "Monitor"))) : $t34))) {
       output = new Map([["worker", `R.243-12-1.STD.${$str(body)}.12-1.INT.${$str(orifice)}.STD.${$str(spring)}.ALU`], ["monitor", `R.243-12-1M.STD.${$str(body)}.12-1.EXT.${$str(orifice)}.STD.${$str(monitor_spring)}.ALU`], ["controlline", "CONTROL LINE KIT - 243-3/8"], ["controllineqty", 1]]);
     } else {
       if ($truthy(($eq(model, "243-12-1")))) {
         output = new Map([["worker", `R.243-12-1.STD.${$str(body)}.12-1.INT.${$str(orifice)}.STD.${$str(spring)}.ALU`]]);
       } else {
-        if ($truthy((($truthy(($t36 = ($eq(model, "243-12-1 with External Control Line"))))) ? (($eq(opp, "Monitor"))) : $t36))) {
+        if ($truthy((($truthy(($t35 = ($eq(model, "243-12-1 with External Control Line"))))) ? (($eq(opp, "Monitor"))) : $t35))) {
           output = new Map([["worker", `R.243-12-1M.STD.${$str(body)}.12-1.EXT.${$str(orifice)}.STD.${$str(spring)}.ALU`], ["monitor", `R.243-12-1M.STD.${$str(body)}.12-1.EXT.${$str(orifice)}.STD.${$str(monitor_spring)}.ALU`], ["controlline", "CONTROL LINE KIT - 243-3/8"], ["controllineqty", 2]]);
         } else {
           if ($truthy(($eq(model, "243-12-1 with External Control Line")))) {
@@ -1234,13 +1254,13 @@ function hsc_pnc243(match) {
             if ($truthy(($eq(model, "243-8-2")))) {
               output = new Map([["worker", `R.243-8-2.${$str(body)}.INT.${$str(orifice)}.STD.${$str(spring)}.ALU`]]);
             } else {
-              if ($truthy((($truthy(($t37 = ($eq(model, "243-8-1"))))) ? (($eq(opp, "Monitor"))) : $t37))) {
+              if ($truthy((($truthy(($t36 = ($eq(model, "243-8-1"))))) ? (($eq(opp, "Monitor"))) : $t36))) {
                 output = new Map([["worker", `R.243-8-1.${$str(body)}.INT.${$str(orifice)}.STD.${$str(spring)}.ALU`], ["monitor", `R.243-8-1M.${$str(body)}.EXT.${$str(orifice)}.STD.${$str(monitor_spring)}.ALU`], ["controlline", "CONTROL LINE KIT - 243-3/8"], ["controllineqty", 1]]);
               } else {
                 if ($truthy(($eq(model, "243-8-1")))) {
                   output = new Map([["worker", `R.243-8-1.${$str(body)}.INT.${$str(orifice)}.STD.${$str(spring)}.ALU`]]);
                 } else {
-                  if ($truthy((($truthy(($t38 = ($eq(model, "243-8HP"))))) ? (($eq(opp, "Monitor"))) : $t38))) {
+                  if ($truthy((($truthy(($t37 = ($eq(model, "243-8HP"))))) ? (($eq(opp, "Monitor"))) : $t37))) {
                     output = new Map([["worker", `R.243.HP.${$str(body)}.8-HP.INT.${$str(orifice)}.STD.${$str(spring)}.ALU`], ["monitor", `R.243.HP-M.${$str(body)}.8-HP.EXT.${$str(orifice)}.STD.${$str(monitor_spring)}.ALU`], ["controlline", "CONTROL LINE KIT - 243-3/8"], ["controllineqty", 1]]);
                   } else {
                     output = new Map([["worker", `R.243.HP.${$str(body)}.8-HP.INT.${$str(orifice)}.STD.${$str(spring)}.ALU`]]);
@@ -1363,8 +1383,8 @@ function orifice_max046(reg) {
   }
 }
 function spring_046(op) {
-  let $t39;
-  if ($truthy((($truthy(($t39 = ((op < 10))))) ? (((op >= 3))) : $t39))) {
+  let $t38;
+  if ($truthy((($truthy(($t38 = ((op < 10))))) ? (((op >= 3))) : $t38))) {
     return new Map([["color", "Yellow"], ["range", "(3 – 10 psi)"]]);
   } else {
     if ($truthy(((op < 20)))) {
@@ -1391,11 +1411,16 @@ function spring_046(op) {
   }
 }
 function will_irv_work046(reg, opp) {
-  let aluminum_curves, green_curves, inlet_keys, irv_table, orif, orifice_key, out_pressure_build, p_high, p_low, spring, spring_map, t, tan_curves, v_high, v_low, white_curves, yellow_curves, $t40, $t41;
+  let aluminum_curves, green_curves, inlet_keys, irv_adjusted, irv_table, orif, orifice_key, out_pressure_build, p_high, p_low, spring, spring_map, t, tan_curves, v_high, v_low, white_curves, yellow_curves, $t39, $t40;
   orif = orifice_type046(reg);
   spring = $get(spring_046(outlet_input), "color");
   if ($truthy(($eq(opp, "Partial")))) {
     return "Partial";
+  }
+  if ($truthy(($eq(irv_input, 0)))) {
+    irv_adjusted = $add(outlet_input, 10);
+  } else {
+    irv_adjusted = irv_input;
   }
   yellow_curves = new Map([[15, new Map([["1/2\"", 0], ["3/8\"", 0], ["5/16\"", 0], ["1/4\"", 0], ["3/16\"", 0], ["1/8\"", 0]])], [25, new Map([["1/2\"", 5], ["3/8\"", 3], ["5/16\"", 0], ["1/4\"", 0], ["3/16\"", 1], ["1/8\"", 0]])], [50, new Map([["1/2\"", 19], ["3/8\"", 10], ["5/16\"", 5], ["1/4\"", 4], ["3/16\"", 1], ["1/8\"", 1]])], [75, new Map([["1/2\"", 30], ["3/8\"", 18], ["5/16\"", 10], ["1/4\"", 5], ["3/16\"", 2], ["1/8\"", 1]])], [100, new Map([["1/2\"", 44], ["3/8\"", 28], ["5/16\"", 15], ["1/4\"", 8], ["3/16\"", 2], ["1/8\"", 1]])], [125, new Map([["1/2\"", 60], ["3/8\"", 40], ["5/16\"", 22], ["1/4\"", 11], ["3/16\"", 3], ["1/8\"", 2]])], [150, new Map([["1/2\"", 74], ["3/8\"", 51], ["5/16\"", 31], ["1/4\"", 15], ["3/16\"", 6], ["1/8\"", 4]])], [175, new Map([["1/2\"", 88], ["3/8\"", 64], ["5/16\"", 40], ["1/4\"", 19], ["3/16\"", 8], ["1/8\"", 4]])], [200, new Map([["1/2\"", 101], ["3/8\"", 74], ["5/16\"", 50], ["1/4\"", 24], ["3/16\"", 10], ["1/8\"", 4]])], [225, new Map([["1/2\"", null], ["3/8\"", 86], ["5/16\"", 58], ["1/4\"", 29], ["3/16\"", 11], ["1/8\"", 5]])], [250, new Map([["1/2\"", null], ["3/8\"", 98], ["5/16\"", 66], ["1/4\"", 34], ["3/16\"", 12], ["1/8\"", 5]])], [275, new Map([["1/2\"", null], ["3/8\"", 108], ["5/16\"", 74], ["1/4\"", 39], ["3/16\"", 15], ["1/8\"", 6]])], [300, new Map([["1/2\"", null], ["3/8\"", 118], ["5/16\"", 80], ["1/4\"", 45], ["3/16\"", 16], ["1/8\"", 6]])]]);
   aluminum_curves = new Map([[25, new Map([["1/2\"", 0], ["3/8\"", 0], ["5/16\"", 0], ["1/4\"", 0], ["3/16\"", 0], ["1/8\"", 0]])], [50, new Map([["1/2\"", 13], ["3/8\"", 10], ["5/16\"", 8], ["1/4\"", 8], ["3/16\"", 4], ["1/8\"", 1]])], [75, new Map([["1/2\"", 24], ["3/8\"", 15], ["5/16\"", 10], ["1/4\"", 8], ["3/16\"", 5], ["1/8\"", 2]])], [100, new Map([["1/2\"", 40], ["3/8\"", 20], ["5/16\"", 13], ["1/4\"", 9], ["3/16\"", 5], ["1/8\"", 2]])], [125, new Map([["1/2\"", null], ["3/8\"", 30], ["5/16\"", 18], ["1/4\"", 10], ["3/16\"", 6], ["1/8\"", 2]])], [150, new Map([["1/2\"", null], ["3/8\"", 41], ["5/16\"", 20], ["1/4\"", 12], ["3/16\"", 6], ["1/8\"", 2]])], [175, new Map([["1/2\"", null], ["3/8\"", 54], ["5/16\"", 30], ["1/4\"", 16], ["3/16\"", 9], ["1/8\"", 3]])], [200, new Map([["1/2\"", null], ["3/8\"", 64], ["5/16\"", 38], ["1/4\"", 18], ["3/16\"", 10], ["1/8\"", 4]])], [225, new Map([["1/2\"", null], ["3/8\"", 75], ["5/16\"", 45], ["1/4\"", 20], ["3/16\"", 11], ["1/8\"", 4]])], [250, new Map([["1/2\"", null], ["3/8\"", 85], ["5/16\"", 54], ["1/4\"", 26], ["3/16\"", 12], ["1/8\"", 5]])], [275, new Map([["1/2\"", null], ["3/8\"", 94], ["5/16\"", 64], ["1/4\"", 29], ["3/16\"", 12], ["1/8\"", 5]])], [300, new Map([["1/2\"", null], ["3/8\"", 106], ["5/16\"", 70], ["1/4\"", 33], ["3/16\"", 15], ["1/8\"", 6]])]]);
@@ -1419,7 +1444,7 @@ function will_irv_work046(reg, opp) {
       } else {
         v_low = $get($get(irv_table, p_low), orifice_key);
         v_high = $get($get(irv_table, p_high), orifice_key);
-        if ($truthy((($truthy(($t40 = ((v_low === null))))) ? $t40 : (((v_high === null)))))) {
+        if ($truthy((($truthy(($t39 = ((v_low === null))))) ? $t39 : (((v_high === null)))))) {
           out_pressure_build = null;
         } else {
           t = ((inlet_input - p_low) / (p_high - p_low));
@@ -1428,10 +1453,10 @@ function will_irv_work046(reg, opp) {
       }
     }
   }
-  if ($truthy((($truthy(($t41 = ($eq(out_pressure_build, null))))) ? $t41 : (($eq(irv_input, null)))))) {
+  if ($truthy((($truthy(($t40 = ($eq(out_pressure_build, null))))) ? $t40 : (($eq(irv_adjusted, null)))))) {
     return "No";
   } else {
-    if ($truthy((($add(out_pressure_build, outlet_input) <= irv_input)))) {
+    if ($truthy((($add(out_pressure_build, outlet_input) <= irv_adjusted)))) {
       return "Yes";
     } else {
       return "No";
@@ -1439,7 +1464,7 @@ function will_irv_work046(reg, opp) {
   }
 }
 function gen_match046(result, opp) {
-  let all_irv_prefixes, all_std_prefixes, cap, diff, irv_body_labels046, irv_pipe_priority, match, monset, ordered_irv_prefixes, ordered_std_prefixes, orifice, orifice_order, prefix, prioritized_irv, prioritized_std, reg, seat, std_body_labels046, std_pipe_priority, $t42, $t43, $t44, $t45;
+  let all_irv_prefixes, all_std_prefixes, cap, diff, irv_body_labels046, irv_pipe_priority, match, monset, ordered_irv_prefixes, ordered_std_prefixes, orifice, orifice_order, prefix, prioritized_irv, prioritized_std, reg, seat, std_body_labels046, std_pipe_priority, $t41, $t42, $t43, $t44;
   match = null;
   std_body_labels046 = new Map([["R046134", "3/4\""], ["R046110", "1\""], ["R04611Q", "1-1/4\""]]);
   irv_body_labels046 = new Map([["R046234", "3/4\""], ["R046210", "1\""], ["R04621Q", "1-1/4\""]]);
@@ -1462,7 +1487,7 @@ function gen_match046(result, opp) {
   orifice_order = ["12", "38", "56", "14", "36", "18"];
   diff = (inlet_input - outlet_input);
   seat = "Poly-Tan";
-  if ($truthy((($truthy(($t42 = ((maop < 600))))) ? (((diff < 400))) : $t42))) {
+  if ($truthy((($truthy(($t41 = ((maop < 600))))) ? (((diff < 400))) : $t41))) {
     seat = "Poly-Tan";
   }
   monset = 0;
@@ -1494,17 +1519,17 @@ function gen_match046(result, opp) {
     }
   }
   if ($truthy(($in("irv_input", $GLOBALS)))) {
-    if ($truthy((($truthy(($t43 = ((!$eq(irv_input, 0)))))) ? (((monset > irv_input))) : $t43))) {
+    if ($truthy((($truthy(($t42 = ((!$eq(irv_input, 0)))))) ? (((monset > irv_input))) : $t42))) {
       monset = irv_input;
     }
   }
-  if ($truthy((($truthy(($t44 = ($eq(opp, "IRV"))))) ? $t44 : (($eq(opp, "Partial")))))) {
+  if ($truthy((($truthy(($t43 = ($eq(opp, "IRV"))))) ? $t43 : (($eq(opp, "Partial")))))) {
     for (const prefix of $iter(ordered_irv_prefixes)) {
       for (const orifice of $iter(orifice_order)) {
         reg = `${$str(prefix)}_${$str(orifice)}`;
         if ($truthy(($in(reg, result)))) {
           cap = $get(result, reg);
-          if ($truthy((($truthy(($t45 = ($eq(will_work(cap, reg, orifice_max046(reg)), "Yes"))))) ? (((!$eq(will_irv_work046(reg, opp), "No")))) : $t45))) {
+          if ($truthy((($truthy(($t44 = ($eq(will_work(cap, reg, orifice_max046(reg)), "Yes"))))) ? (((!$eq(will_irv_work046(reg, opp), "No")))) : $t44))) {
             match = new Map([["reg", reg], ["model", "046-2"], ["diap", null], ["body", $get(irv_body_labels046, prefix)], ["orifice", orifice_type046(reg)], ["seat", seat], ["color", $get(spring_046(outlet_input), "color")], ["range", $get(spring_046(outlet_input), "range")], ["capacity", cap], ["opp", "IRV"], ["mon_color", null], ["mon_range", null]]);
             return match;
           }
@@ -1585,7 +1610,7 @@ function run_regulator_selection046(inlet, outlet, opp) {
   return [result, match, apply, warning];
 }
 function hsc_pnc046(match) {
-  let body, body_map, model, monitor_spring, orifice, orifice_map, output, seat, spring, spring_map, $t46;
+  let body, body_map, model, monitor_spring, orifice, orifice_map, output, seat, spring, spring_map, $t45;
   body_map = new Map([["3/4\"", "3/4"], ["1\"", "1"], ["1-1/4\"", "1-1/4"]]);
   orifice_map = new Map([["1/8\"", "10"], ["3/16\"", "11"], ["1/4\"", "12"], ["5/16\"", "13"], ["3/8\"", "14"], ["1/2\"", "15"]]);
   spring_map = new Map([["Yellow", "23"], ["Aluminum", "24"], ["White", "25"], ["Green", "28"], ["Tan", "26"], ["Gray", "27"]]);
@@ -1598,7 +1623,7 @@ function hsc_pnc046(match) {
   if ($truthy(($eq(model, "046-2")))) {
     output = new Map([["worker", `R.046-2.IRV.${$str(body)}.IRV.${$str(orifice)}.${$str(seat)}.${$str(spring)}.ALU`]]);
   } else {
-    if ($truthy((($truthy(($t46 = ($eq(model, "046"))))) ? (((!$eq($get(match, "opp"), "Monitor")))) : $t46))) {
+    if ($truthy((($truthy(($t45 = ($eq(model, "046"))))) ? (((!$eq($get(match, "opp"), "Monitor")))) : $t45))) {
       output = new Map([["worker", `R.046-1.STD.${$str(body)}.${$str(orifice)}.${$str(seat)}.${$str(spring)}.ALU`]]);
     } else {
       if ($truthy(((!$eq(monitor_spring, "27"))))) {
@@ -1643,10 +1668,10 @@ function body_type121(reg) {
   return "Unknown";
 }
 function body_max121(reg) {
-  let pre, suf, $t47;
+  let pre, suf, $t46;
   pre = $slice(reg, null, 6);
   suf = $slice(reg, (-2), null);
-  if ($truthy((($truthy(($t47 = ($eq(pre, "R12208"))))) ? $t47 : (($eq(pre, "R12212")))))) {
+  if ($truthy((($truthy(($t46 = ($eq(pre, "R12208"))))) ? $t46 : (($eq(pre, "R12212")))))) {
     return 15;
   } else {
     if ($truthy(($eq(suf, "30")))) {
@@ -1657,9 +1682,9 @@ function body_max121(reg) {
   }
 }
 function spring_121_122(op, reg) {
-  let $t48, $t49, $t50, $t51, $t52, $t53, $t54, $t55, $t56, $t57, $t58, $t59, $t60, $t61, $t62, $t63, $t64, $t65, $t66, $t67;
-  if ($truthy((($truthy(($t48 = ($eq(reg, "R1210813"))))) ? $t48 : (($eq(reg, "R121081Q")))))) {
-    if ($truthy((($truthy(($t49 = ((op >= (1.5 / 28)))))) ? (((op <= (3.5 / 28)))) : $t49))) {
+  let $t47, $t48, $t49, $t50, $t51, $t52, $t53, $t54, $t55, $t56, $t57, $t58, $t59, $t60, $t61, $t62, $t63, $t64, $t65, $t66;
+  if ($truthy((($truthy(($t47 = ($eq(reg, "R1210813"))))) ? $t47 : (($eq(reg, "R121081Q")))))) {
+    if ($truthy((($truthy(($t48 = ((op >= (1.5 / 28)))))) ? (((op <= (3.5 / 28)))) : $t48))) {
       return new Map([["color", "Blue-Black with Black-Red counter"], ["range", "(1.5\" - 3.5\" wc)"]]);
     } else {
       if ($truthy(((op < (6.5 / 28))))) {
@@ -1689,8 +1714,8 @@ function spring_121_122(op, reg) {
       }
     }
   } else {
-    if ($truthy((($truthy(($t51 = ($eq(reg, "R121081H"))))) ? $t51 : ((($truthy(($t50 = ($eq(reg, "R1210820"))))) ? $t50 : (($eq(reg, "R121082H")))))))) {
-      if ($truthy((($truthy(($t52 = ((op >= 1))))) ? (((op <= 2))) : $t52))) {
+    if ($truthy((($truthy(($t50 = ($eq(reg, "R121081H"))))) ? $t50 : ((($truthy(($t49 = ($eq(reg, "R1210820"))))) ? $t49 : (($eq(reg, "R121082H")))))))) {
+      if ($truthy((($truthy(($t51 = ((op >= 1))))) ? (((op <= 2))) : $t51))) {
         return new Map([["color", "Orange"], ["range", "(1 - 2 psi)"]]);
       } else {
         if ($truthy(((op <= 4.25)))) {
@@ -1700,8 +1725,8 @@ function spring_121_122(op, reg) {
         }
       }
     } else {
-      if ($truthy((($truthy(($t54 = ($eq(reg, "R121121H"))))) ? $t54 : ((($truthy(($t53 = ($eq(reg, "R1211220"))))) ? $t53 : (($eq(reg, "R121122H")))))))) {
-        if ($truthy((($truthy(($t55 = ((op >= (1.5 / 28)))))) ? (((op <= (3.5 / 28)))) : $t55))) {
+      if ($truthy((($truthy(($t53 = ($eq(reg, "R121121H"))))) ? $t53 : ((($truthy(($t52 = ($eq(reg, "R1211220"))))) ? $t52 : (($eq(reg, "R121122H")))))))) {
+        if ($truthy((($truthy(($t54 = ((op >= (1.5 / 28)))))) ? (((op <= (3.5 / 28)))) : $t54))) {
           return new Map([["color", "Red with counter"], ["range", "(1.5\" - 3.5\" wc)"]]);
         } else {
           if ($truthy(((op < (6.5 / 28))))) {
@@ -1732,7 +1757,7 @@ function spring_121_122(op, reg) {
         }
       } else {
         if ($truthy(($eq(reg, "R1211230")))) {
-          if ($truthy((($truthy(($t56 = ((op >= 1))))) ? (((op < 2))) : $t56))) {
+          if ($truthy((($truthy(($t55 = ((op >= 1))))) ? (((op < 2))) : $t55))) {
             return new Map([["color", "Black"], ["range", "(1 - 2 psi)"]]);
           } else {
             if ($truthy(((op <= 3)))) {
@@ -1743,7 +1768,7 @@ function spring_121_122(op, reg) {
           }
         } else {
           if ($truthy(($eq(reg, "R1211630")))) {
-            if ($truthy((($truthy(($t57 = ((op >= (3.5 / 28)))))) ? (((op < (6.5 / 28)))) : $t57))) {
+            if ($truthy((($truthy(($t56 = ((op >= (3.5 / 28)))))) ? (((op < (6.5 / 28)))) : $t56))) {
               return new Map([["color", "Red"], ["range", "(3.5\" - 6.5\" wc)"]]);
             } else {
               if ($truthy(((op < (8.5 / 28))))) {
@@ -1765,8 +1790,8 @@ function spring_121_122(op, reg) {
               }
             }
           } else {
-            if ($truthy((($truthy(($t61 = ($eq(reg, "R121HP13"))))) ? $t61 : ((($truthy(($t60 = ($eq(reg, "R121HP1Q"))))) ? $t60 : ((($truthy(($t59 = ($eq(reg, "R121HP1H"))))) ? $t59 : ((($truthy(($t58 = ($eq(reg, "R121HP20"))))) ? $t58 : (($eq(reg, "R121HP2H")))))))))))) {
-              if ($truthy((($truthy(($t62 = ((op >= 3))))) ? (((op < 6.5))) : $t62))) {
+            if ($truthy((($truthy(($t60 = ($eq(reg, "R121HP13"))))) ? $t60 : ((($truthy(($t59 = ($eq(reg, "R121HP1Q"))))) ? $t59 : ((($truthy(($t58 = ($eq(reg, "R121HP1H"))))) ? $t58 : ((($truthy(($t57 = ($eq(reg, "R121HP20"))))) ? $t57 : (($eq(reg, "R121HP2H")))))))))))) {
+              if ($truthy((($truthy(($t61 = ((op >= 3))))) ? (((op < 6.5))) : $t61))) {
                 return new Map([["color", "Cadmium"], ["range", "(3 - 6.5 psi)"]]);
               } else {
                 if ($truthy(((op <= 10)))) {
@@ -1776,8 +1801,8 @@ function spring_121_122(op, reg) {
                 }
               }
             } else {
-              if ($truthy((($truthy(($t63 = ($eq(reg, "R1220810"))))) ? $t63 : (($eq(reg, "R122081Q")))))) {
-                if ($truthy((($truthy(($t64 = ((op >= (1.5 / 28)))))) ? (((op <= (3.5 / 28)))) : $t64))) {
+              if ($truthy((($truthy(($t62 = ($eq(reg, "R1220810"))))) ? $t62 : (($eq(reg, "R122081Q")))))) {
+                if ($truthy((($truthy(($t63 = ((op >= (1.5 / 28)))))) ? (((op <= (3.5 / 28)))) : $t63))) {
                   return new Map([["color", "Blue-black with Black counter"], ["range", "(1.5\" - 3.5\" wc)"]]);
                 } else {
                   if ($truthy(((op < (6.5 / 28))))) {
@@ -1803,8 +1828,8 @@ function spring_121_122(op, reg) {
                   }
                 }
               } else {
-                if ($truthy((($truthy(($t66 = ($eq(reg, "R122121H"))))) ? $t66 : ((($truthy(($t65 = ($eq(reg, "R1221220"))))) ? $t65 : (($eq(reg, "R122122H")))))))) {
-                  if ($truthy((($truthy(($t67 = ((op >= (1.5 / 28)))))) ? (((op <= 3.5))) : $t67))) {
+                if ($truthy((($truthy(($t65 = ($eq(reg, "R122121H"))))) ? $t65 : ((($truthy(($t64 = ($eq(reg, "R1221220"))))) ? $t64 : (($eq(reg, "R122122H")))))))) {
+                  if ($truthy((($truthy(($t66 = ((op >= (1.5 / 28)))))) ? (((op <= 3.5))) : $t66))) {
                     return new Map([["color", "Red with Red-Black counter"], ["range", "(1.5 - 3.5)"]]);
                   } else {
                     if ($truthy(((op < (6.5 / 28))))) {
@@ -1840,11 +1865,11 @@ function spring_121_122(op, reg) {
   return new Map([["color", "None"], ["range", "None"]]);
 }
 function will_work_vp(cap, reg, vp) {
-  let min, $t68, $t69, $t70;
+  let min, $t67, $t68, $t69;
   if ($truthy(($eq(cap, "N/A")))) {
     return "No";
   } else {
-    if ($truthy((($truthy(($t68 = ((pload > 0))))) ? ((reg).startsWith("R122")) : $t68))) {
+    if ($truthy((($truthy(($t67 = ((pload > 0))))) ? ((reg).startsWith("R122")) : $t67))) {
       return "No";
     } else {
       if ($truthy(vp)) {
@@ -1852,7 +1877,7 @@ function will_work_vp(cap, reg, vp) {
       } else {
         min = 20;
       }
-      if ($truthy((($truthy(($t70 = ((cap >= (flow_rate * oversizeby)))))) ? ((($truthy(($t69 = (((cap / min) <= min_flow))))) ? (((body_max121(reg) >= maop))) : $t69)) : $t70))) {
+      if ($truthy((($truthy(($t69 = ((cap >= (flow_rate * oversizeby)))))) ? ((($truthy(($t68 = (((cap / min) <= min_flow))))) ? (((body_max121(reg) >= maop))) : $t68)) : $t69))) {
         return "Yes";
       } else {
         return "No";
@@ -2034,7 +2059,7 @@ function body_size_min121(ip, reg) {
   }
 }
 function gen_match121(result121, result122, vp, opp) {
-  let body, body_order121, cap, label, match, model_labels_121, model_labels_121122, mon_color, monset, novp_pipe_priority, ordered_body121, prefix, priority_list, reg, res, vp_pipe_priority, $t71, $t72, $t73, $t74, $t75, $t76, $t77, $t78, $t79, $t80, $t81, $t82, $t83, $t84, $t85;
+  let body, body_order121, cap, label, match, model_labels_121, model_labels_121122, mon_color, monset, novp_pipe_priority, ordered_body121, prefix, priority_list, reg, res, vp_pipe_priority, $t70, $t71, $t72, $t73, $t74, $t75, $t76, $t77, $t78, $t79, $t80, $t81, $t82, $t83, $t84;
   match = null;
   monset = 0;
   if ($truthy(($eq(opp, "Monitor")))) {
@@ -2057,7 +2082,7 @@ function gen_match121(result121, result122, vp, opp) {
     }
   }
   if ($truthy(($in("irv_input", $GLOBALS)))) {
-    if ($truthy((($truthy(($t71 = ((!$eq(irv_input, 0)))))) ? (((monset > irv_input))) : $t71))) {
+    if ($truthy((($truthy(($t70 = ((!$eq(irv_input, 0)))))) ? (((monset > irv_input))) : $t70))) {
       monset = irv_input;
     }
   }
@@ -2075,7 +2100,7 @@ function gen_match121(result121, result122, vp, opp) {
             cap = $get(result121, reg);
             if ($truthy(($eq(will_work_vp(cap, reg, vp), "Yes")))) {
               mon_color = ($truthy(($eq(opp, "Monitor"))) ? ($get(spring_121_122(monset, reg), "color")) : (null));
-              if ($truthy((($truthy(($t73 = ($eq(opp, "None"))))) ? $t73 : ((($truthy(($t72 = ($eq(opp, "Monitor"))))) ? (((!$eq(mon_color, null)))) : $t72))))) {
+              if ($truthy((($truthy(($t72 = ($eq(opp, "None"))))) ? $t72 : ((($truthy(($t71 = ($eq(opp, "Monitor"))))) ? (((!$eq(mon_color, null)))) : $t71))))) {
                 match = new Map([["reg", reg], ["model", $get(model_labels_121, prefix)], ["diap", null], ["body", body_type121(reg)], ["orifice", "V-Port"], ["seat", null], ["color", $get(spring_121_122(outlet_input, reg), "color")], ["range", $get(spring_121_122(outlet_input, reg), "range")], ["capacity", cap], ["opp", opp], ["mon_color", mon_color], ["mon_range", $get(spring_121_122(monset, reg), "range")]]);
                 return match;
               }
@@ -2090,7 +2115,7 @@ function gen_match121(result121, result122, vp, opp) {
           cap = $get(result121, reg);
           if ($truthy(($eq(will_work_vp(cap, reg, vp), "Yes")))) {
             mon_color = ($truthy(($eq(opp, "Monitor"))) ? ($get(spring_121_122(monset, reg), "color")) : (null));
-            if ($truthy((($truthy(($t75 = ($eq(opp, "None"))))) ? $t75 : ((($truthy(($t74 = ($eq(opp, "Monitor"))))) ? (((!$eq(mon_color, null)))) : $t74))))) {
+            if ($truthy((($truthy(($t74 = ($eq(opp, "None"))))) ? $t74 : ((($truthy(($t73 = ($eq(opp, "Monitor"))))) ? (((!$eq(mon_color, null)))) : $t73))))) {
               match = new Map([["reg", reg], ["model", "121-8-HP"], ["diap", null], ["body", body_type121(reg)], ["orifice", "V-Port"], ["seat", null], ["color", $get(spring_121_122(outlet_input, reg), "color")], ["range", $get(spring_121_122(outlet_input, reg), "range")], ["capacity", cap], ["opp", opp], ["mon_color", mon_color], ["mon_range", $get(spring_121_122(monset, reg), "range")]]);
               return match;
             }
@@ -2105,7 +2130,7 @@ function gen_match121(result121, result122, vp, opp) {
     ordered_body121 = $add(priority_list, (() => { const $r = []; for (const b of $iter(body_order121)) { if ($truthy(((!$in(b, priority_list))))) $r.push(b); } return $r; })());
     model_labels_121122 = new Map([["R12108", "121-8"], ["R12112", "121-12"], ["R12116", "121-16"], ["R12208", "122-8"], ["R12212", "122-12"]]);
     model_labels_121 = new Map([["R12108", "121-8"], ["R12112", "121-12"], ["R12116", "121-16"]]);
-    if ($truthy((($truthy(($t79 = (($truthy(($t78 = (($truthy(($t76 = ((outlet_input <= 2))))) ? (($eq(opp, "None"))) : $t76)))) ? $t78 : ((($truthy(($t77 = ((outlet_input <= 1))))) ? (($eq(opp, "Monitor"))) : $t77)))))) ? (($eq(((typeof (result122) === 'string')), false))) : $t79))) {
+    if ($truthy((($truthy(($t78 = (($truthy(($t77 = (($truthy(($t75 = ((outlet_input <= 2))))) ? (($eq(opp, "None"))) : $t75)))) ? $t77 : ((($truthy(($t76 = ((outlet_input <= 1))))) ? (($eq(opp, "Monitor"))) : $t76)))))) ? (($eq(((typeof (result122) === 'string')), false))) : $t78))) {
       for (const [prefix, label] of $iter($items(model_labels_121122))) {
         res = ($truthy((prefix).startsWith("R121")) ? (result121) : (result122));
         for (const body of $iter(ordered_body121)) {
@@ -2114,7 +2139,7 @@ function gen_match121(result121, result122, vp, opp) {
             cap = $get(res, reg);
             if ($truthy(($eq(will_work_vp(cap, reg, vp), "Yes")))) {
               mon_color = ($truthy(($eq(opp, "Monitor"))) ? ($get(spring_121_122(monset, reg), "color")) : (null));
-              if ($truthy((($truthy(($t81 = ($eq(opp, "None"))))) ? $t81 : ((($truthy(($t80 = ($eq(opp, "Monitor"))))) ? (((!$eq(mon_color, null)))) : $t80))))) {
+              if ($truthy((($truthy(($t80 = ($eq(opp, "None"))))) ? $t80 : ((($truthy(($t79 = ($eq(opp, "Monitor"))))) ? (((!$eq(mon_color, null)))) : $t79))))) {
                 match = new Map([["reg", reg], ["model", $get(model_labels_121122, prefix)], ["diap", null], ["body", body_type121(reg)], ["orifice", null], ["seat", null], ["color", $get(spring_121_122(outlet_input, reg), "color")], ["range", $get(spring_121_122(outlet_input, reg), "range")], ["capacity", cap], ["opp", opp], ["mon_color", mon_color], ["mon_range", $get(spring_121_122(monset, reg), "range")]]);
                 return match;
               }
@@ -2131,7 +2156,7 @@ function gen_match121(result121, result122, vp, opp) {
               cap = $get(result121, reg);
               if ($truthy(($eq(will_work_vp(cap, reg, vp), "Yes")))) {
                 mon_color = ($truthy(($eq(opp, "Monitor"))) ? ($get(spring_121_122(monset, reg), "color")) : (null));
-                if ($truthy((($truthy(($t83 = ($eq(opp, "None"))))) ? $t83 : ((($truthy(($t82 = ($eq(opp, "Monitor"))))) ? (((!$eq(mon_color, null)))) : $t82))))) {
+                if ($truthy((($truthy(($t82 = ($eq(opp, "None"))))) ? $t82 : ((($truthy(($t81 = ($eq(opp, "Monitor"))))) ? (((!$eq(mon_color, null)))) : $t81))))) {
                   match = new Map([["reg", reg], ["model", $get(model_labels_121, prefix)], ["diap", null], ["body", body_type121(reg)], ["orifice", null], ["seat", null], ["color", $get(spring_121_122(outlet_input, reg), "color")], ["range", $get(spring_121_122(outlet_input, reg), "range")], ["capacity", cap], ["opp", opp], ["mon_color", mon_color], ["mon_range", $get(spring_121_122(monset, reg), "range")]]);
                   return match;
                 }
@@ -2146,7 +2171,7 @@ function gen_match121(result121, result122, vp, opp) {
             cap = $get(result121, reg);
             if ($truthy(($eq(will_work_vp(cap, reg, vp), "Yes")))) {
               mon_color = ($truthy(($eq(opp, "Monitor"))) ? ($get(spring_121_122(monset, reg), "color")) : (null));
-              if ($truthy((($truthy(($t85 = ($eq(opp, "None"))))) ? $t85 : ((($truthy(($t84 = ($eq(opp, "Monitor"))))) ? (((!$eq(mon_color, null)))) : $t84))))) {
+              if ($truthy((($truthy(($t84 = ($eq(opp, "None"))))) ? $t84 : ((($truthy(($t83 = ($eq(opp, "Monitor"))))) ? (((!$eq(mon_color, null)))) : $t83))))) {
                 match = new Map([["reg", reg], ["model", "121-8-HP"], ["diap", null], ["body", body_type121(reg)], ["orifice", null], ["seat", null], ["color", $get(spring_121_122(outlet_input, reg), "color")], ["range", $get(spring_121_122(outlet_input, reg), "range")], ["capacity", cap], ["opp", opp], ["mon_color", mon_color], ["mon_range", $get(spring_121_122(monset, reg), "range")]]);
                 return match;
               }
@@ -2158,13 +2183,13 @@ function gen_match121(result121, result122, vp, opp) {
   }
 }
 function run_regulator_selection121(inlet, outlet, opp) {
-  let apply, data_used121, match, monitor, result121, result121_VP, result122, vp, warning, $t86, $t87;
+  let apply, data_used121, match, monitor, result121, result121_VP, result122, vp, warning, $t85, $t86;
   if ($truthy(((outlet_input <= 3)))) {
     data_used121 = stddata121;
   } else {
     data_used121 = hpdata121;
   }
-  if ($truthy((($truthy(($t86 = ($eq(opp, "Monitor"))))) ? $t86 : (($eq(opp, "IRV")))))) {
+  if ($truthy((($truthy(($t85 = ($eq(opp, "Monitor"))))) ? $t85 : (($eq(opp, "IRV")))))) {
     opp = "Monitor";
     monitor = true;
     warning = "Sized for worker/monitor setup";
@@ -2173,7 +2198,7 @@ function run_regulator_selection121(inlet, outlet, opp) {
     monitor = false;
     warning = null;
   }
-  if ($truthy((($truthy(($t87 = ($in("vp_preference", $GLOBALS))))) ? (($eq(vp_preference, "vport"))) : $t87))) {
+  if ($truthy((($truthy(($t86 = ($in("vp_preference", $GLOBALS))))) ? (($eq(vp_preference, "vport"))) : $t86))) {
     vp = true;
   } else {
     vp = false;
@@ -2220,7 +2245,7 @@ function run_regulator_selection121(inlet, outlet, opp) {
   return [result121, result121_VP, result122, match, apply, warning];
 }
 function hsc_pnc121(match) {
-  let body, body_map121, body_map122, diap, model, monitor_spring, output, spring, spring_map, vp, $t88, $t89, $t90;
+  let body, body_map121, body_map122, diap, model, monitor_spring, output, spring, spring_map, vp, $t87, $t88, $t89;
   body_map121 = new Map([["3/4\" or 1\"", "1SCD"], ["1\"", "1SCD"], ["1-1/4\"", "11/4SCD"], ["1-1/2\"", "11/2SCD"], ["2\"", "2SCD"], ["2-1/2\"", "21/2SCD"], ["3\"", "3SCD"]]);
   body_map122 = new Map([["3/4\" or 1\"", "1SCD"], ["1\"", "1SCD"], ["1-1/4\"", "1-1/4SCD"], ["1-1/2\"", "1-1/2SCD"], ["2\"", "2SCD"], ["2-1/2\"", "2-1/2SCD"], ["3\"", "3SCD"]]);
   spring_map = new Map([["Blue-Black with Black-Red counter", "37"], ["Red-Black", "1"], ["Blue-Black", "2"], ["Green-Black", "3"], ["Green", "12"], ["Orange", "13"], ["Black", "14"], ["Red with counter", "39"], ["Red", "10"], ["Blue", "11"], ["Cadmium", "15"], ["Yellow", "23"], ["Cadmium + White", "21"], ["Blue-black with Black counter", "33"], ["Red with Red-Black counter", "35"]]);
@@ -2230,7 +2255,7 @@ function hsc_pnc121(match) {
     vp = "STD";
   }
   model = $get(match, "model");
-  if ($truthy((($truthy(($t88 = ($eq(model, "122-12"))))) ? $t88 : (($eq(model, "122-8")))))) {
+  if ($truthy((($truthy(($t87 = ($eq(model, "122-12"))))) ? $t87 : (($eq(model, "122-8")))))) {
     body = $dget(body_map122, $get(match, "body"), null);
   } else {
     body = $dget(body_map121, $get(match, "body"), null);
@@ -2240,7 +2265,7 @@ function hsc_pnc121(match) {
   if ($truthy(($eq(model, "121-16")))) {
     diap = "16";
   } else {
-    if ($truthy((($truthy(($t89 = ($eq(model, "122-12"))))) ? $t89 : (($eq(model, "121-12")))))) {
+    if ($truthy((($truthy(($t88 = ($eq(model, "122-12"))))) ? $t88 : (($eq(model, "121-12")))))) {
       diap = "12";
     } else {
       if ($truthy(($eq(model, "121-8-HP")))) {
@@ -2250,7 +2275,7 @@ function hsc_pnc121(match) {
       }
     }
   }
-  if ($truthy((($truthy(($t90 = ($eq(model, "122-8"))))) ? $t90 : (($eq(model, "122-12")))))) {
+  if ($truthy((($truthy(($t89 = ($eq(model, "122-8"))))) ? $t89 : (($eq(model, "122-12")))))) {
     if ($truthy(($eq($get(match, "opp"), "Monitor")))) {
       output = new Map([["worker", `R.${$str(model)}.STD.${$str(body)}.${$str(diap)}.INTCON.STD.STD.${$str(spring)}.ALU`], ["monitor", `R.${$str(model)}.STD.${$str(body)}.${$str(diap)}.EXTCON.STD.STD.${$str(monitor_spring)}.ALU`], ["controlline", "CONTROL LINE KIT"], ["controllineqty", 1]]);
     } else {
@@ -2266,8 +2291,8 @@ function hsc_pnc121(match) {
   return output;
 }
 function model_461_single(inlet_p, outlet_p) {
-  let $t91, $t92;
-  if ($truthy((($truthy(($t91 = ((inlet_p <= 175))))) ? (((maop <= 175))) : $t91))) {
+  let $t90, $t91;
+  if ($truthy((($truthy(($t90 = ((inlet_p <= 175))))) ? (((maop <= 175))) : $t90))) {
     if ($truthy(((outlet_p < 1)))) {
       return "N/A";
     } else {
@@ -2294,7 +2319,7 @@ function model_461_single(inlet_p, outlet_p) {
       }
     }
   } else {
-    if ($truthy((($truthy(($t92 = ((inlet_p <= 1000))))) ? (((maop <= 1000))) : $t92))) {
+    if ($truthy((($truthy(($t91 = ((inlet_p <= 1000))))) ? (((maop <= 1000))) : $t91))) {
       if ($truthy(((outlet_p < 3)))) {
         return "N/A";
       } else {
@@ -2318,8 +2343,8 @@ function model_461_single(inlet_p, outlet_p) {
   }
 }
 function model_461_double(inlet_p, outlet_p) {
-  let $t93, $t94;
-  if ($truthy((($truthy(($t93 = ((inlet_p <= 175))))) ? (((maop <= 175))) : $t93))) {
+  let $t92, $t93;
+  if ($truthy((($truthy(($t92 = ((inlet_p <= 175))))) ? (((maop <= 175))) : $t92))) {
     if ($truthy(((outlet_p <= 3)))) {
       return "461-S";
     } else {
@@ -2342,7 +2367,7 @@ function model_461_double(inlet_p, outlet_p) {
       }
     }
   } else {
-    if ($truthy((($truthy(($t94 = ((inlet_p <= 1000))))) ? (((maop <= 1000))) : $t94))) {
+    if ($truthy((($truthy(($t93 = ((inlet_p <= 1000))))) ? (((maop <= 1000))) : $t93))) {
       if ($truthy(((outlet_p < 3)))) {
         return "N/A";
       } else {
@@ -2366,11 +2391,11 @@ function model_461_double(inlet_p, outlet_p) {
   }
 }
 function model_441_2(inlet_p, outlet_p, max_pressure = null, tier2_max = null) {
-  let $t95, $t96, $t97, $t98, $t99;
+  let $t94, $t95, $t96, $t97, $t98;
   if ($truthy(((outlet_p < (5.25 / 28))))) {
     return "N/A";
   } else {
-    if ($truthy((($truthy(($t95 = ((inlet_p <= 100))))) ? (((maop <= 100))) : $t95))) {
+    if ($truthy((($truthy(($t94 = ((inlet_p <= 100))))) ? (((maop <= 100))) : $t94))) {
       if ($truthy(((outlet_p < (5.25 / 28))))) {
         return "N/A";
       } else {
@@ -2397,7 +2422,7 @@ function model_441_2(inlet_p, outlet_p, max_pressure = null, tier2_max = null) {
         }
       }
     } else {
-      if ($truthy((($truthy(($t97 = max_pressure))) ? ((($truthy(($t96 = ((inlet_p <= max_pressure))))) ? (((maop <= max_pressure))) : $t96)) : $t97))) {
+      if ($truthy((($truthy(($t96 = max_pressure))) ? ((($truthy(($t95 = ((inlet_p <= max_pressure))))) ? (((maop <= max_pressure))) : $t95)) : $t96))) {
         if ($truthy(((outlet_p < 3)))) {
           return "N/A";
         } else {
@@ -2416,7 +2441,7 @@ function model_441_2(inlet_p, outlet_p, max_pressure = null, tier2_max = null) {
           }
         }
       } else {
-        if ($truthy((($truthy(($t99 = tier2_max))) ? ((($truthy(($t98 = ((inlet_p <= tier2_max))))) ? (((maop <= tier2_max))) : $t98)) : $t99))) {
+        if ($truthy((($truthy(($t98 = tier2_max))) ? ((($truthy(($t97 = ((inlet_p <= tier2_max))))) ? (((maop <= tier2_max))) : $t97)) : $t98))) {
           if ($truthy(((outlet_p < 3)))) {
             return "N/A";
           } else {
@@ -2434,8 +2459,8 @@ function model_441_2(inlet_p, outlet_p, max_pressure = null, tier2_max = null) {
   }
 }
 function model_441_3(inlet_p, outlet_p, max_pressure = null, tier2_max = null) {
-  let $t100, $t101, $t102, $t103, $t104;
-  if ($truthy((($truthy(($t100 = ((inlet_p <= 100))))) ? (((maop <= 100))) : $t100))) {
+  let $t100, $t101, $t102, $t103, $t99;
+  if ($truthy((($truthy(($t99 = ((inlet_p <= 100))))) ? (((maop <= 100))) : $t99))) {
     if ($truthy(((outlet_p <= 3)))) {
       return "441-S";
     } else {
@@ -2458,7 +2483,7 @@ function model_441_3(inlet_p, outlet_p, max_pressure = null, tier2_max = null) {
       }
     }
   } else {
-    if ($truthy((($truthy(($t102 = max_pressure))) ? ((($truthy(($t101 = ((inlet_p <= max_pressure))))) ? (((maop <= max_pressure))) : $t101)) : $t102))) {
+    if ($truthy((($truthy(($t101 = max_pressure))) ? ((($truthy(($t100 = ((inlet_p <= max_pressure))))) ? (((maop <= max_pressure))) : $t100)) : $t101))) {
       if ($truthy(((outlet_p < 3)))) {
         return "N/A";
       } else {
@@ -2477,7 +2502,7 @@ function model_441_3(inlet_p, outlet_p, max_pressure = null, tier2_max = null) {
         }
       }
     } else {
-      if ($truthy((($truthy(($t104 = tier2_max))) ? ((($truthy(($t103 = ((inlet_p <= tier2_max))))) ? (((maop <= tier2_max))) : $t103)) : $t104))) {
+      if ($truthy((($truthy(($t103 = tier2_max))) ? ((($truthy(($t102 = ((inlet_p <= tier2_max))))) ? (((maop <= tier2_max))) : $t102)) : $t103))) {
         if ($truthy(((outlet_p < 3)))) {
           return "N/A";
         } else {
@@ -2494,8 +2519,8 @@ function model_441_3(inlet_p, outlet_p, max_pressure = null, tier2_max = null) {
   }
 }
 function model_441_4(inlet_p, outlet_p, max_pressure) {
-  let $t105, $t106, $t107;
-  if ($truthy((($truthy(($t105 = ((inlet_p <= 100))))) ? (((maop <= 100))) : $t105))) {
+  let $t104, $t105, $t106;
+  if ($truthy((($truthy(($t104 = ((inlet_p <= 100))))) ? (((maop <= 100))) : $t104))) {
     if ($truthy(((outlet_p <= 3)))) {
       return "441-S";
     } else {
@@ -2510,11 +2535,11 @@ function model_441_4(inlet_p, outlet_p, max_pressure) {
       }
     }
   } else {
-    if ($truthy((($truthy(($t106 = ((inlet_p <= max_pressure))))) ? (((maop <= max_pressure))) : $t106))) {
+    if ($truthy((($truthy(($t105 = ((inlet_p <= max_pressure))))) ? (((maop <= max_pressure))) : $t105))) {
       if ($truthy(((outlet_p < 3)))) {
         return "N/A";
       } else {
-        if ($truthy((($truthy(($t107 = ((outlet_p <= 100))))) ? (((inlet_p < 720))) : $t107))) {
+        if ($truthy((($truthy(($t106 = ((outlet_p <= 100))))) ? (((inlet_p < 720))) : $t106))) {
           return "441-57S";
         } else {
           return "N/A";
@@ -2526,8 +2551,8 @@ function model_441_4(inlet_p, outlet_p, max_pressure) {
   }
 }
 function model_441_6(inlet_p, outlet_p, max_pressure) {
-  let $t108;
-  if ($truthy((($truthy(($t108 = ((inlet_p <= max_pressure))))) ? (((maop <= max_pressure))) : $t108))) {
+  let $t107;
+  if ($truthy((($truthy(($t107 = ((inlet_p <= max_pressure))))) ? (((maop <= max_pressure))) : $t107))) {
     if ($truthy(((outlet_p < 3)))) {
       return "N/A";
     } else {
@@ -2542,8 +2567,8 @@ function model_441_6(inlet_p, outlet_p, max_pressure) {
   }
 }
 function spring_diap_461S(op) {
-  let output, $t109;
-  if ($truthy((($truthy(($t109 = ((op >= (2 / 28)))))) ? (((op <= (3.5 / 28)))) : $t109))) {
+  let output, $t108;
+  if ($truthy((($truthy(($t108 = ((op >= (2 / 28)))))) ? (((op <= (3.5 / 28)))) : $t108))) {
     output = new Map([["diap", "12\" CI"], ["color", "Aluminum"], ["range", "(2\" - 10\" wc)"]]);
   } else {
     if ($truthy(((op < (6.5 / 28))))) {
@@ -2604,8 +2629,8 @@ function mon_spring_diap_461S(op) {
   return output;
 }
 function spring_diap_441S(op) {
-  let output, $t110;
-  if ($truthy((($truthy(($t110 = ((op >= (4.25 / 28)))))) ? (((op <= (4.75 / 28)))) : $t110))) {
+  let output, $t109;
+  if ($truthy((($truthy(($t109 = ((op >= (4.25 / 28)))))) ? (((op <= (4.75 / 28)))) : $t109))) {
     output = new Map([["diap", "18\""], ["color", "Aluminum"], ["range", "(4.25\" - 4.75\" wc)"]]);
   } else {
     if ($truthy(((op < (5.25 / 28))))) {
@@ -2682,8 +2707,8 @@ function mon_spring_diap_441S(op) {
   return output;
 }
 function spring_57S(op) {
-  let $t111;
-  if ($truthy((($truthy(($t111 = ((op < 6))))) ? (((op >= 3))) : $t111))) {
+  let $t110;
+  if ($truthy((($truthy(($t110 = ((op < 6))))) ? (((op >= 3))) : $t110))) {
     return new Map([["diap", null], ["color", "Yellow"], ["range", "(3 - 6 psi)"]]);
   } else {
     if ($truthy(((op < 9)))) {
@@ -2714,8 +2739,8 @@ function spring_57S(op) {
   }
 }
 function spring_X57(op) {
-  let $t112;
-  if ($truthy((($truthy(($t112 = ((op < 100))))) ? (((op >= 75))) : $t112))) {
+  let $t111;
+  if ($truthy((($truthy(($t111 = ((op < 100))))) ? (((op >= 75))) : $t111))) {
     return new Map([["diap", null], ["color", "Red"], ["range", "(75 - 100 psi)"]]);
   } else {
     if ($truthy(((op < 175)))) {
@@ -2746,19 +2771,19 @@ function calc_qmax(K, inlet_p, outlet_p, monitor) {
   return q;
 }
 function applicable(model_str, qmax, qmin, max_flow, min_flow) {
-  let $t113;
+  let $t112;
   if ($truthy(($eq(model_str, "N/A")))) {
     return "N";
   }
-  if ($truthy((($truthy(($t113 = (((max_flow * oversizeby) <= qmax))))) ? (((min_flow >= qmin))) : $t113))) {
+  if ($truthy((($truthy(($t112 = (((max_flow * oversizeby) <= qmax))))) ? (((min_flow >= qmin))) : $t112))) {
     return "Y";
   }
   return "N";
 }
 function build_standard_table(inlet_p, outlet_p, max_flow, min_flow, opp) {
-  let K, body, model, monitor, orifice, qmax, qmin, rows, table, yn, $t114;
+  let K, body, model, monitor, orifice, qmax, qmin, rows, table, yn, $t113;
   rows = [["2\"", "11/16\" single", 650, model_461_single(inlet_p, outlet_p)], ["2\"", "11/16\" double", 1000, model_461_double(inlet_p, outlet_p)], ["2\"", "1\" single", 1300, model_461_single(inlet_p, outlet_p)], ["2\"", "1\" double", 2000, model_461_double(inlet_p, outlet_p)], ["2\"", "1-1/2\"", 4270, model_441_2(inlet_p, outlet_p, 1000, null)], ["2\"", "1-3/4\"", 5450, model_441_2(inlet_p, outlet_p, 575, 1000)], ["3\"", "1-1/2\"", 4270, model_441_3(inlet_p, outlet_p, 1000, null)], ["3\"", "1-3/4\"", 6630, model_441_3(inlet_p, outlet_p, 575, 1000)], ["3\"", "2-1/8\"", 8880, model_441_3(inlet_p, outlet_p, 400, 500)], ["4\"", "1-3/4\"", 5420, model_441_4(inlet_p, outlet_p, 1000)], ["4\"", "2-1/8\"", 8880, model_441_4(inlet_p, outlet_p, 500)], ["4\"", "3\"", 17740, model_441_4(inlet_p, outlet_p, 300)], ["6\"", "2-1/8\"", 8880, model_441_6(inlet_p, outlet_p, 500)], ["6\"", "3\"", 18500, model_441_6(inlet_p, outlet_p, 300)], ["6\"", "4-1/4\"", 33000, model_441_6(inlet_p, outlet_p, 150)]];
-  if ($truthy((($truthy(($t114 = ($eq(opp, "Monitor"))))) ? $t114 : (($eq(opp, "IRV")))))) {
+  if ($truthy((($truthy(($t113 = ($eq(opp, "Monitor"))))) ? $t113 : (($eq(opp, "IRV")))))) {
     monitor = true;
     opp = "Monitor";
   } else {
@@ -2775,9 +2800,9 @@ function build_standard_table(inlet_p, outlet_p, max_flow, min_flow, opp) {
   return table;
 }
 function build_vport_table(inlet_p, outlet_p, max_flow, min_flow, opp) {
-  let K, body, model, monitor, orifice, qmax, qmin, rows, table, yn, $t115;
+  let K, body, model, monitor, orifice, qmax, qmin, rows, table, yn, $t114;
   rows = [["2\"", "1\" single", 975, model_461_single(inlet_p, outlet_p)], ["2\"", "1\" double", 1500, model_461_double(inlet_p, outlet_p)], ["2\"", "1-1/2\"", 4160, model_441_2(inlet_p, outlet_p, 1000, null)], ["2\"", "1-3/4\"", 5260, model_441_2(inlet_p, outlet_p, 575, 1000)], ["3\"", "1-1/2\"", 4160, model_441_3(inlet_p, outlet_p, 1000, null)], ["3\"", "1-3/4\"", 6390, model_441_3(inlet_p, outlet_p, 575, 1000)], ["3\"", "2-1/8\"", 8440, model_441_3(inlet_p, outlet_p, 400, 500)], ["4\"", "1-3/4\"", 5260, model_441_4(inlet_p, outlet_p, 1000)], ["4\"", "2-1/8\"", 8440, model_441_4(inlet_p, outlet_p, 500)], ["4\"", "3\"", 13850, model_441_4(inlet_p, outlet_p, 300)], ["6\"", "2-1/8\"", 8440, model_441_6(inlet_p, outlet_p, 500)], ["6\"", "3\"", 14430, model_441_6(inlet_p, outlet_p, 300)], ["6\"", "4-1/4\"", 25500, model_441_6(inlet_p, outlet_p, 150)]];
-  if ($truthy((($truthy(($t115 = ($eq(opp, "Monitor"))))) ? $t115 : (($eq(opp, "IRV")))))) {
+  if ($truthy((($truthy(($t114 = ($eq(opp, "Monitor"))))) ? $t114 : (($eq(opp, "IRV")))))) {
     monitor = true;
     opp = "Monitor";
   } else {
@@ -2803,8 +2828,8 @@ function find_first(table) {
   return null;
 }
 function run_regulator_selection461(inlet_p, outlet_p, max_flow, min_flow, opp, vp_preference) {
-  let ansi, apply, body, color, diap, dp, is_vport, match, max_capacity, model, mon_color, mon_range, monitor, monset, orifice, primary, range, raw_model, seat, std, std_match, vp, vp_match, warning, $t116, $t117, $t118, $t119, $t120, $t121, $t122, $t123, $t124, $t125;
-  if ($truthy((($truthy(($t116 = ($eq(opp, "Monitor"))))) ? $t116 : (($eq(opp, "IRV")))))) {
+  let ansi, apply, body, color, diap, dp, is_vport, match, max_capacity, model, mon_color, mon_range, monitor, monset, orifice, primary, range, raw_model, seat, std, std_match, vp, vp_match, warning, $t115, $t116, $t117, $t118, $t119, $t120, $t121, $t122, $t123, $t124;
+  if ($truthy((($truthy(($t115 = ($eq(opp, "Monitor"))))) ? $t115 : (($eq(opp, "IRV")))))) {
     monitor = true;
     opp = "Monitor";
     warning = "Sized for worker/monitor setup";
@@ -2865,10 +2890,10 @@ function run_regulator_selection461(inlet_p, outlet_p, max_flow, min_flow, opp, 
     }
   }
   body = $get(primary, "body");
-  if ($truthy((($truthy(($t117 = ($eq(model, "441-S"))))) ? $t117 : (($eq(model, "461-S")))))) {
+  if ($truthy((($truthy(($t116 = ($eq(model, "441-S"))))) ? $t116 : (($eq(model, "461-S")))))) {
     ansi = "ANSI125";
   } else {
-    if ($truthy((($truthy(($t118 = ($eq(model, "441-X57"))))) ? $t118 : (($eq(model, "461-X57")))))) {
+    if ($truthy((($truthy(($t117 = ($eq(model, "441-X57"))))) ? $t117 : (($eq(model, "461-X57")))))) {
       if ($truthy(((maop <= 575)))) {
         ansi = "ANSI250";
       } else {
@@ -2897,8 +2922,8 @@ function run_regulator_selection461(inlet_p, outlet_p, max_flow, min_flow, opp, 
   body = `${$str(body)} ${$str(ansi)}`;
   orifice = $add($get(primary, "orifice"), ($truthy(is_vport) ? (" VP") : ("")));
   dp = (inlet_p - outlet_p);
-  if ($truthy((($truthy(($t119 = ((maop < 575))))) ? (((dp < 250))) : $t119))) {
-    if ($truthy((($truthy(($t120 = ($eq($get(primary, "orifice"), "11/16\" single"))))) ? $t120 : (($eq($get(primary, "orifice"), "1\" single")))))) {
+  if ($truthy((($truthy(($t118 = ((maop < 575))))) ? (((dp < 250))) : $t118))) {
+    if ($truthy((($truthy(($t119 = ($eq($get(primary, "orifice"), "11/16\" single"))))) ? $t119 : (($eq($get(primary, "orifice"), "1\" single")))))) {
       seat = "Poly-Tan";
     } else {
       seat = "BUNA";
@@ -2952,13 +2977,13 @@ function run_regulator_selection461(inlet_p, outlet_p, max_flow, min_flow, opp, 
     }
   }
   if ($truthy(($in("irv_input", $GLOBALS)))) {
-    if ($truthy((($truthy(($t121 = ((!$eq(irv_input, 0)))))) ? (((monset > irv_input))) : $t121))) {
+    if ($truthy((($truthy(($t120 = ((!$eq(irv_input, 0)))))) ? (((monset > irv_input))) : $t120))) {
       monset = irv_input;
     }
   }
   mon_color = null;
   mon_range = null;
-  if ($truthy((($truthy(($t122 = ($eq(model, "461-57S"))))) ? $t122 : (($eq(model, "441-57S")))))) {
+  if ($truthy((($truthy(($t121 = ($eq(model, "461-57S"))))) ? $t121 : (($eq(model, "441-57S")))))) {
     color = $get(spring_57S(outlet_input), "color");
     range = $get(spring_57S(outlet_input), "range");
     if ($truthy(monitor)) {
@@ -2966,7 +2991,7 @@ function run_regulator_selection461(inlet_p, outlet_p, max_flow, min_flow, opp, 
       mon_range = $get(spring_57S(monset), "range");
     }
   } else {
-    if ($truthy((($truthy(($t123 = ($eq(model, "461-X57"))))) ? $t123 : (($eq(model, "441-X57")))))) {
+    if ($truthy((($truthy(($t122 = ($eq(model, "461-X57"))))) ? $t122 : (($eq(model, "441-X57")))))) {
       color = $get(spring_X57(outlet_input), "color");
       range = $get(spring_X57(outlet_input), "range");
       if ($truthy(monitor)) {
@@ -2996,10 +3021,10 @@ function run_regulator_selection461(inlet_p, outlet_p, max_flow, min_flow, opp, 
       }
     }
   }
-  if ($truthy((($truthy(($t124 = ($eq(model, "461-57S"))))) ? $t124 : (($eq(model, "441-57S")))))) {
+  if ($truthy((($truthy(($t123 = ($eq(model, "461-57S"))))) ? $t123 : (($eq(model, "441-57S")))))) {
     diap = null;
   } else {
-    if ($truthy((($truthy(($t125 = ($eq(model, "461-X57"))))) ? $t125 : (($eq(model, "441-X57")))))) {
+    if ($truthy((($truthy(($t124 = ($eq(model, "461-X57"))))) ? $t124 : (($eq(model, "441-X57")))))) {
       diap = null;
     } else {
       if ($truthy(($eq(model, "441-S")))) {
@@ -3022,7 +3047,7 @@ function run_regulator_selection461(inlet_p, outlet_p, max_flow, min_flow, opp, 
   return [match, apply, warning];
 }
 function hsc_pnc461(match) {
-  let body, body_map, diap, diap_map, end, model, mon_spring, opp, orifice, orifice_map, output, seat, spring, spring_map, $t126, $t127, $t128, $t129, $t130, $t131, $t132, $t133;
+  let body, body_map, diap, diap_map, end, model, mon_spring, opp, orifice, orifice_map, output, seat, spring, spring_map, $t125, $t126, $t127, $t128, $t129, $t130, $t131, $t132;
   body_map = new Map([["2\" ANSI125", "2FLG125"], ["2\" ANSI250", "2FLG250"], ["2\" ANSI300", "2FLG300"], ["2\" ANSI600", "2FLG600"], ["3\" ANSI125", "3FLG125"], ["3\" ANSI250", "3FLG250"], ["3\" ANSI300", "3FLG300"], ["3\" ANSI600", "3FLG600"], ["4\" ANSI125", "4FLG125"], ["4\" ANSI250", "4FLG250"], ["4\" ANSI300", "4FLG300"], ["6\" ANSI125", "6FLG125"], ["6\" ANSI250", "6FLG250"]]);
   diap_map = new Map([["10\"", "10"], ["12\"", "12"], ["14\"", "14"], ["16\"", "16"], ["18\"", "18"], ["20\"", "20"], ["12\" CI", "461S-12"], ["12\" Al", "461-12-S"], ["8\" Al", "461-8-S"]]);
   orifice_map = new Map([["11/16\" single", "22S"], ["11/16\" double", "22D"], ["1\" single", "20S"], ["1\" double", "20D"], ["1-1/2\"", "23"], ["1-3/4\"", "24"], ["2-1/8\"", "25"], ["3\"", "26"], ["4-1/4\"", "27"], ["1\" single VP", "20VPS"], ["1\" double VP", "20VPD"], ["1-1/2\" VP", "23VP"], ["1-3/4\" VP", "24VP"], ["2-1/8\" VP", "25VP"], ["3\" VP", "26VP"], ["4-1/4\" VP", "27VP"]]);
@@ -3046,16 +3071,16 @@ function hsc_pnc461(match) {
       output = new Map([["worker", `R.${$str(model)}.${$str(body)}.${$str(diap)}.${$str(orifice)}.${$str(seat)}.${$str(spring)}.ST`]]);
     }
   } else {
-    if ($truthy((($truthy(($t126 = ($eq(model, "461-57S"))))) ? $t126 : (($eq(model, "461-S")))))) {
+    if ($truthy((($truthy(($t125 = ($eq(model, "461-57S"))))) ? $t125 : (($eq(model, "461-S")))))) {
       seat = ($truthy(($eq(seat, "BUNA"))) ? ("B") : (seat));
-      model = ($truthy((($truthy(($t128 = ($eq(diap, "461S-12"))))) ? $t128 : ((($truthy(($t127 = ($eq(diap, "461-12-S"))))) ? $t127 : (($eq(diap, "461-8-S"))))))) ? (diap) : (model));
+      model = ($truthy((($truthy(($t127 = ($eq(diap, "461S-12"))))) ? $t127 : ((($truthy(($t126 = ($eq(diap, "461-12-S"))))) ? $t126 : (($eq(diap, "461-8-S"))))))) ? (diap) : (model));
       if ($truthy(($eq(opp, "Monitor")))) {
         output = new Map([["worker", `R.${$str(model)}.${$str(body)}.${$str(orifice)}.${$str(seat)}.${$str(spring)}`], ["monitor", `R.${$str(model)}.${$str(body)}.${$str(orifice)}.${$str(seat)}.${$str(mon_spring)}`]]);
       } else {
         output = new Map([["worker", `R.${$str(model)}.${$str(body)}.${$str(orifice)}.${$str(seat)}.${$str(spring)}`]]);
       }
     } else {
-      if ($truthy((($truthy(($t129 = ($eq(model, "441-57S"))))) ? (($in($get(body, 0), ["4", "6"]))) : $t129))) {
+      if ($truthy((($truthy(($t128 = ($eq(model, "441-57S"))))) ? (($in($get(body, 0), ["4", "6"]))) : $t128))) {
         seat = ($truthy(($eq(seat, "BUNA"))) ? ("B") : (seat));
         if ($truthy(($eq(opp, "Monitor")))) {
           output = new Map([["worker", `R.${$str(model)}.${$str(body)}.${$str(orifice)}.${$str(seat)}.${$str(spring)}.${$str(end)}`], ["monitor", `R.${$str(model)}.${$str(body)}.${$str(orifice)}.${$str(seat)}.${$str(mon_spring)}.${$str(end)}`]]);
@@ -3063,7 +3088,7 @@ function hsc_pnc461(match) {
           output = new Map([["worker", `R.${$str(model)}.${$str(body)}.${$str(orifice)}.${$str(seat)}.${$str(spring)}.${$str(end)}`]]);
         }
       } else {
-        if ($truthy((($truthy(($t131 = ($eq(model, "441-S"))))) ? ((($truthy(($t130 = ($eq(diap, "12"))))) ? (($eq(body, "2FLG125"))) : $t130)) : $t131))) {
+        if ($truthy((($truthy(($t130 = ($eq(model, "441-S"))))) ? ((($truthy(($t129 = ($eq(diap, "12"))))) ? (($eq(body, "2FLG125"))) : $t129)) : $t130))) {
           if ($truthy(($eq(opp, "Monitor")))) {
             output = new Map([["worker", `R.${$str(model)}.${$str(body)}.${$str(diap)}.${$str(orifice)}.${$str(seat)}.${$str(spring)}`], ["monitor", `R.${$str(model)}.${$str(body)}.${$str(diap)}.${$str(orifice)}.${$str(seat)}.${$str(mon_spring)}`]]);
           } else {
@@ -3082,7 +3107,7 @@ function hsc_pnc461(match) {
       }
     }
   }
-  if ($truthy((($truthy(($t133 = ($eq(model, "441-S"))))) ? $t133 : ((($truthy(($t132 = ($eq(model, "441-57S"))))) ? $t132 : (($eq(model, "441-X57")))))))) {
+  if ($truthy((($truthy(($t132 = ($eq(model, "441-S"))))) ? $t132 : ((($truthy(($t131 = ($eq(model, "441-57S"))))) ? $t131 : (($eq(model, "441-X57")))))))) {
     $set(output, "controlline", "CONTROL LINE KIT - 441-1/2\"");
     if ($truthy(($eq(opp, "Monitor")))) {
       $set(output, "controllineqty", 2);
@@ -3100,7 +3125,7 @@ function hsc_pnc461(match) {
   return output;
 }
 function allmodels_selector(inlet, outlet, opp) {
-  let add_cart, apply046, apply121, apply143, apply243, apply461, apply496, match, match046, match121, match143, match243, match461, match496, model_selection, partnumber, pipe_requirement, result046, result121, result121_VP, result122, result143, result243, result496, warning, warning046, warning121, warning143, warning243, warning461, warning496, $t134, $t135, $t136, $t137, $t138, $t139, $t140, $t141, $t142, $t143, $t144;
+  let add_cart, apply046, apply121, apply143, apply243, apply461, apply496, match, match046, match121, match143, match243, match461, match496, model_selection, partnumber, pipe_requirement, result046, result121, result121_VP, result122, result143, result243, result496, warning, warning046, warning121, warning143, warning243, warning461, warning496, $t133, $t134, $t135, $t136, $t137, $t138, $t139, $t140, $t141, $t142, $t143;
   model_selection = null;
   match = null;
   warning = null;
@@ -3118,7 +3143,7 @@ function allmodels_selector(inlet, outlet, opp) {
     if ($truthy(apply496)) {
       model_selection = "496";
     } else {
-      if ($truthy((($truthy(($t134 = apply046))) ? (apply243) : $t134))) {
+      if ($truthy((($truthy(($t133 = apply046))) ? (apply243) : $t133))) {
         if ($truthy(($eq(opp, "IRV")))) {
           if ($truthy(($eq($get(match046, "model"), "046-2")))) {
             model_selection = "046";
@@ -3135,7 +3160,7 @@ function allmodels_selector(inlet, outlet, opp) {
           if ($truthy(apply046)) {
             model_selection = "046";
           } else {
-            if ($truthy((($truthy(($t135 = apply121))) ? (apply461) : $t135))) {
+            if ($truthy((($truthy(($t134 = apply121))) ? (apply461) : $t134))) {
               if ($truthy(combust_pref)) {
                 if ($truthy(apply121)) {
                   model_selection = "121";
@@ -3168,47 +3193,47 @@ function allmodels_selector(inlet, outlet, opp) {
   if ($truthy(($eq(model_selection, "496")))) {
     match = match496;
     warning = warning496;
-    $t136 = hsc_pnc496(match496);
-    partnumber = $t136;
-    add_cart = $t136;
+    $t135 = hsc_pnc496(match496);
+    partnumber = $t135;
+    add_cart = $t135;
   } else {
     if ($truthy(($eq(model_selection, "143")))) {
       match = match143;
       warning = warning143;
-      $t137 = hsc_pnc143(match143);
-      partnumber = $t137;
-      add_cart = $t137;
+      $t136 = hsc_pnc143(match143);
+      partnumber = $t136;
+      add_cart = $t136;
     } else {
       if ($truthy(($eq(model_selection, "243")))) {
         match = match243;
         warning = warning243;
-        $t138 = hsc_pnc243(match243);
-        partnumber = $t138;
-        add_cart = $t138;
+        $t137 = hsc_pnc243(match243);
+        partnumber = $t137;
+        add_cart = $t137;
       } else {
         if ($truthy(($eq(model_selection, "046")))) {
           match = match046;
           warning = warning046;
-          $t139 = hsc_pnc046(match046);
-          partnumber = $t139;
-          add_cart = $t139;
+          $t138 = hsc_pnc046(match046);
+          partnumber = $t138;
+          add_cart = $t138;
         } else {
           if ($truthy(($eq(model_selection, "121")))) {
             match = match121;
             warning = warning121;
-            $t140 = hsc_pnc121(match121);
-            partnumber = $t140;
-            add_cart = $t140;
-            if ($truthy((($truthy(($t143 = ($eq($get(match, "model"), "121-8"))))) ? $t143 : ((($truthy(($t142 = ($eq($get(match, "model"), "121-12"))))) ? $t142 : ((($truthy(($t141 = ($eq($get(match, "model"), "121-16"))))) ? $t141 : (($eq($get(match, "model"), "121-8-HP")))))))))) {
+            $t139 = hsc_pnc121(match121);
+            partnumber = $t139;
+            add_cart = $t139;
+            if ($truthy((($truthy(($t142 = ($eq($get(match, "model"), "121-8"))))) ? $t142 : ((($truthy(($t141 = ($eq($get(match, "model"), "121-12"))))) ? $t141 : ((($truthy(($t140 = ($eq($get(match, "model"), "121-16"))))) ? $t140 : (($eq($get(match, "model"), "121-8-HP")))))))))) {
               pipe_requirement = `Note: Model 121 regulators have outlet pipe sizing requirements, regulator was sized for use with ${$str(body_size_min121(inlet_input, $get(match, "reg")))} outlet pipe.  For capacities with smaller outlet piping, see regulator brochure.`;
             }
           } else {
             if ($truthy(($eq(model_selection, "461")))) {
               match = match461;
               warning = warning461;
-              $t144 = hsc_pnc461(match461);
-              partnumber = $t144;
-              add_cart = $t144;
+              $t143 = hsc_pnc461(match461);
+              partnumber = $t143;
+              add_cart = $t143;
             }
           }
         }
@@ -3267,7 +3292,7 @@ function defaulted(input) {
     flow: 0, min_flow: 0, flow_units: "CFH",
     maop: 0,
     pipe_size: "N/A",
-    opp_required: false, opp_pref: "IRV", irv_pressure: 2.0, partial_irv: false,
+    opp_required: false, opp_pref: "IRV", irv_pressure: 0, partial_irv: false,
     high_efficiency: false, high_efficiency_pct: 100,
     override_oversize: false, oversize_pct: 25,
     prefer_combustion: false,
@@ -3524,8 +3549,24 @@ function sizeTool(rawInput) {
   var controlLineQty = pnField('controllineqty');
   if (controlLineQty === undefined) controlLineQty = null;
 
+  // ---- IRV limit actually applied ----
+  // A typed IRV pressure is used as entered. Left at 0, the algorithm's
+  // will_irv_work*() functions apply a default instead: outlet + 10 psi when the 046 was selected, otherwise 2 psi below
+  // a 2 psi outlet and 5 psi from 2 psi up.
+  // This repeats that rule so the summary and adjustments can say what was
+  // used - change the two together. "Sized with IRV" means IRV was asked for
+  // and the selection carries it; a partial-IRV body has an IRV but no limit
+  // was checked, so it does not count.
+  var irvSized = opp_type === "IRV" && mget('opp') === "IRV";
+  var irvDefaulted = !(irv_input > 0);
+  var irvLimit = irvDefaulted ? (String(mget('model') || '').indexOf('046') === 0) ? outlet_psi + 10 : (outlet_psi < 2 ? 2 : 5) : irv_input;
+  var irvTag = irvDefaulted ? " (default)" : "";
+
   // ---- sizing adjustments ----
   var adjustments = [kv("Oversized By", $format(oversize_percent, ".0f") + "%")];
+  if (irvSized) {
+    adjustments.push(kv("IRV Protect Downstream Pressure To", $format(irvLimit, ".1f") + " psi" + irvTag));
+  }
   if (mget('opp') === "Monitor") adjustments.push(kv("Monitor Capacity Reduction", "30%"));
   if (gastypemult !== 1) adjustments.push(kv("Gas Type Factor", $format(gastypemult, ".4f")));
   if (Patm < 14.4) adjustments.push(kv("Elevation capacity reduction", $format(elevation_reduction, ".0f") + "%"));
@@ -3545,7 +3586,8 @@ function sizeTool(rawInput) {
   } else {
     summary.push(kv("Protection Type", opp_pref));
     if (opp_pref === "IRV") {
-      summary.push(kv("IRV Protect Downstream Pressure To (psi)", $format(irv_input, ".1f")));
+      summary.push(kv("IRV Protect Downstream Pressure To (psi)",
+        (irvDefaulted && !irvSized) ? "Default (not used)" : $format(irvLimit, ".1f") + irvTag));
     }
   }
   summary.push(kv("Percent Load Feeding High-Efficiency Appliance", p.high_efficiency ? (pload_pct + "%") : "0"));
@@ -3632,7 +3674,7 @@ function sizeTool(rawInput) {
   ns.versions = ns.versions || {};
   ns.versions['all-models'] = {
     version: '1.1.0',
-    algorithm: 'sha256:4d4de357fd82',
-    sources: 'sha256:abb9127939e7'
+    algorithm: 'sha256:5044addece3f',
+    sources: 'sha256:55124357989c'
   };
 })(typeof window !== 'undefined' ? window : this);

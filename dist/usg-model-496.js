@@ -8,8 +8,8 @@
  *
  * tool:      model-496
  * version:   1.1.0
- * algorithm: sha256:eb14a67f90fc
- * sources:   sha256:2350016355e6
+ * algorithm: sha256:860b588597c6
+ * sources:   sha256:2f9753156a8d
  *
  * Adds to the shared namespace:
  *   USGSizing.sizeModel496(input)  -> result object
@@ -371,9 +371,18 @@ function spring_496(op) {
   }
 }
 function will_irv_work496(reg, opp) {
-  let inlet_keys, irvdata496, orifice_key, out_pressure_build, p_high, p_low, t, v_high, v_low, $t10, $t9;
+  let inlet_keys, irv_adjusted, irvdata496, orifice_key, out_pressure_build, p_high, p_low, t, v_high, v_low, $t10, $t9;
   if ($truthy(($eq(opp, "Partial")))) {
     return "Partial";
+  }
+  if ($truthy(($eq(irv_input, 0)))) {
+    if ($truthy(((outlet_input < 2)))) {
+      irv_adjusted = 2;
+    } else {
+      irv_adjusted = 5;
+    }
+  } else {
+    irv_adjusted = irv_input;
   }
   irvdata496 = new Map([[0, new Map([["18", 0.25], ["36", 0.25], ["14", 0.25], ["56", 0.25], ["38", 0.25], ["12", 0.25]])], [3, new Map([["18", 0.39], ["36", 0.39], ["14", 0.39], ["56", 0.39], ["38", 0.39], ["12", 0.46]])], [10, new Map([["18", 0.39], ["36", 0.39], ["14", 0.39], ["56", 0.64], ["38", 0.79], ["12", 1.18]])], [12, new Map([["18", 0.39], ["36", 0.39], ["14", 0.54], ["56", 0.75], ["38", 1], ["12", 1.54]])], [20, new Map([["18", 0.39], ["36", 0.54], ["14", 0.82], ["56", 1.11], ["38", 1.54], ["12", 2.61]])], [30, new Map([["18", 0.43], ["36", 0.75], ["14", 1.11], ["56", 1.82], ["38", 2.61], ["12", null]])], [40, new Map([["18", 0.46], ["36", 0.89], ["14", 1.54], ["56", 2.61], ["38", null], ["12", null]])], [50, new Map([["18", 0.5], ["36", 1.11], ["14", 1.96], ["56", null], ["38", null], ["12", null]])], [60, new Map([["18", 0.61], ["36", 1.36], ["14", 2.32], ["56", null], ["38", null], ["12", null]])], [70, new Map([["18", 0.64], ["36", 1.54], ["14", null], ["56", null], ["38", null], ["12", null]])], [80, new Map([["18", 0.75], ["36", 1.89], ["14", null], ["56", null], ["38", null], ["12", null]])], [90, new Map([["18", 0.79], ["36", 2.18], ["14", null], ["56", null], ["38", null], ["12", null]])], [100, new Map([["18", 0.82], ["36", 2.43], ["14", null], ["56", null], ["38", null], ["12", null]])], [125, new Map([["18", null], ["36", null], ["14", null], ["56", null], ["38", null], ["12", null]])]]);
   orifice_key = $slice(reg, (-2), null);
@@ -400,10 +409,10 @@ function will_irv_work496(reg, opp) {
       }
     }
   }
-  if ($truthy((($truthy(($t10 = ($eq(out_pressure_build, null))))) ? $t10 : (($eq(irv_input, null)))))) {
+  if ($truthy((($truthy(($t10 = ($eq(out_pressure_build, null))))) ? $t10 : (($eq(irv_adjusted, null)))))) {
     return "No";
   } else {
-    if ($truthy((($add(out_pressure_build, outlet_input) <= irv_input)))) {
+    if ($truthy((($add(out_pressure_build, outlet_input) <= irv_adjusted)))) {
       return "Yes";
     } else {
       return "No";
@@ -552,7 +561,7 @@ function defaulted(input) {
     flow: 0, flow_units: "CFH",
     maop: 0,
     pipe_size: "N/A",
-    opp_required: false, irv_pressure: 2.0, partial_irv: false,
+    opp_required: false, irv_pressure: 0, partial_irv: false,
     high_efficiency: false, high_efficiency_pct: 100,
     override_oversize: false, oversize_pct: 25,
     gas_type: "Natural Gas", specific_gravity: 0.6,
@@ -829,8 +838,23 @@ function sizeTool(rawInput) {
     };
   }
 
+  // ---- IRV limit actually applied ----
+  // A typed IRV pressure is used as entered. Left at 0, the algorithm's
+  // will_irv_work*() functions apply a default instead: 2 psi below a 2 psi outlet, 5 psi from 2 psi up.
+  // This repeats that rule so the summary and adjustments can say what was
+  // used - change the two together. "Sized with IRV" means IRV was asked for
+  // and the selection carries it; a partial-IRV body has an IRV but no limit
+  // was checked, so it does not count.
+  var irvSized = $truthy(apply) && opp_type === "IRV" && mget('opp') === "IRV";
+  var irvDefaulted = !(irv_input > 0);
+  var irvLimit = irvDefaulted ? (outlet_psi < 2 ? 2 : 5) : irv_input;
+  var irvTag = irvDefaulted ? " (default)" : "";
+
   // ---- sizing adjustments ----
   var adjustments = [kv("Oversized By", $format(oversize_percent, ".0f") + "%")];
+  if (irvSized) {
+    adjustments.push(kv("IRV Protect Downstream Pressure To", $format(irvLimit, ".1f") + " psi" + irvTag));
+  }
   if ($truthy(apply) && mget('opp') === "Monitor") adjustments.push(kv("Monitor Capacity Reduction", "30%"));
   if (gastypemult !== 1) adjustments.push(kv("Gas Type Factor", $format(gastypemult, ".4f")));
   if (Patm < 14.4) adjustments.push(kv("Elevation capacity reduction", $format(elevation_reduction, ".0f") + "%"));
@@ -846,7 +870,8 @@ function sizeTool(rawInput) {
     kv("Overpressure Protection Required", p.opp_required ? "Yes" : "No")
   ];
   if (p.opp_required) {
-    summary.push(kv("IRV Protect Downstream Pressure To (psi)", $format(irv_input, ".1f")));
+    summary.push(kv("IRV Protect Downstream Pressure To (psi)",
+        (irvDefaulted && !irvSized) ? "Default (not used)" : $format(irvLimit, ".1f") + irvTag));
   } else {
     summary.push(kv("Select Regulator with IRV", opp_type === "Partial" ? "Yes" : "No"));
   }
@@ -917,7 +942,7 @@ function sizeTool(rawInput) {
   ns.versions = ns.versions || {};
   ns.versions['model-496'] = {
     version: '1.1.0',
-    algorithm: 'sha256:eb14a67f90fc',
-    sources: 'sha256:2350016355e6'
+    algorithm: 'sha256:860b588597c6',
+    sources: 'sha256:2f9753156a8d'
   };
 })(typeof window !== 'undefined' ? window : this);
