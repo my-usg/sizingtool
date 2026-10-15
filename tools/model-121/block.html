@@ -18,7 +18,7 @@
 <!-- Sizing algorithm, generated from the Python source. Pin a release tag
      (@v1.0.0) for strict change control, or track @main to pick up pushes
      automatically. -->
-<script src="https://cdn.jsdelivr.net/gh/my-usg/sizingtool@main/dist/usg-model-121.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/my-usg/sizingtool@4d26872/dist/usg-model-121.js"></script>
 
 <div id="usg-sizing-tool">
   <p class="hsg-crumb">
@@ -115,14 +115,6 @@
         </select>
       </div>
 
-      <div class="usg-widget">
-        <label class="usg-label">Standard or V-Port orifice preferred? <span class="usg-help" tabindex="0" role="button" aria-label="More information" data-tip="The V-Port allows for increased turndown and helps reduce outlet pressure pulsation. If the preferred orifice cannot be sized the tool falls back to the other.">i</span></label>
-        <div class="usg-radio-group">
-          <label class="usg-radio"><input type="radio" name="usg-vp" value="Standard" checked><span>Standard</span></label>
-          <label class="usg-radio"><input type="radio" name="usg-vp" value="V-Port"><span>V-Port</span></label>
-        </div>
-      </div>
-
       <p class="usg-group-label usg-group-next"><strong>Overpressure Protection</strong></p>
 
       <div class="usg-widget">
@@ -177,6 +169,14 @@
       <details class="usg-advanced">
         <summary class="usg-group-label usg-group-next usg-adv-summary"><span class="usg-adv-chevron" aria-hidden="true">&#8250;</span><strong>⚙️ Advanced Settings</strong></summary>
         <div class="usg-adv-body">
+
+      <div class="usg-widget">
+        <label class="usg-label">Standard or V-Port orifice preferred? <span class="usg-help" tabindex="0" role="button" aria-label="More information" data-tip="The V-Port allows for increased turndown and helps reduce outlet pressure pulsation. If the preferred orifice cannot be sized the tool falls back to the other.">i</span></label>
+        <div class="usg-radio-group">
+          <label class="usg-radio"><input type="radio" name="usg-vp" value="Standard" checked><span>Standard</span></label>
+          <label class="usg-radio"><input type="radio" name="usg-vp" value="V-Port"><span>V-Port</span></label>
+        </div>
+      </div>
 
       <div class="usg-widget">
         <label class="usg-label">Override percentage regulator is oversized by? <span class="usg-help" tabindex="0" role="button" aria-label="More information" data-tip="Default is set to 25% or 100% for high-efficiency appliances">i</span></label>

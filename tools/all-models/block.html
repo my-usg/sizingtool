@@ -18,7 +18,7 @@
 <!-- Sizing algorithm, generated from the Python source. Pin a release tag
      (@v1.0.0) for strict change control, or track @main to pick up pushes
      automatically. -->
-<script src="https://cdn.jsdelivr.net/gh/my-usg/sizingtool@42f3a30/dist/usg-all-models.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/my-usg/sizingtool@4d26872/dist/usg-all-models.js"></script>
 
 <div id="usg-sizing-tool">
   <h1 class="usg-h1">General Sizing Tool - All Models</h1>
@@ -101,21 +101,6 @@
         </select>
       </div>
 
-      <div class="usg-widget">
-        <label class="usg-label">Standard or V-Port orifice preferred if applicable? <span class="usg-help" tabindex="0" role="button" aria-label="More information" data-tip="The V-Port allows for increased turndown and helps reduce outlet pressure pulsation. If the preferred orifice cannot be sized the tool falls back to the other.">i</span></label>
-        <div class="usg-radio-group">
-          <label class="usg-radio"><input type="radio" name="usg-vp" value="Standard" checked><span>Standard</span></label>
-          <label class="usg-radio"><input type="radio" name="usg-vp" value="V-Port"><span>V-Port</span></label>
-        </div>
-      </div>
-
-      <div class="usg-widget">
-        <label class="usg-label">Prioritize choosing 441/461 model or 121/122 model? <span class="usg-help" tabindex="0" role="button" aria-label="More information" data-tip="If Model 121/122 is selected, the program will attempt to select a Model 121 or 122 regulator before a Model 461 or 441 regulator.">i</span></label>
-        <div class="usg-radio-group">
-          <label class="usg-radio"><input type="radio" name="usg-combust" value="441/461" checked><span>Model 441/461</span></label>
-          <label class="usg-radio"><input type="radio" name="usg-combust" value="121/122"><span>Model 121/122</span></label>
-        </div>
-      </div>
       <p class="usg-group-label usg-group-next"><strong>Overpressure Protection</strong></p>
 
       <div class="usg-widget">
@@ -190,6 +175,22 @@
       <details class="usg-advanced">
         <summary class="usg-group-label usg-group-next usg-adv-summary"><span class="usg-adv-chevron" aria-hidden="true">&#8250;</span><strong>⚙️ Advanced Settings</strong></summary>
         <div class="usg-adv-body">
+
+      <div class="usg-widget">
+        <label class="usg-label">Standard or V-Port orifice preferred if applicable? <span class="usg-help" tabindex="0" role="button" aria-label="More information" data-tip="The V-Port allows for increased turndown and helps reduce outlet pressure pulsation. If the preferred orifice cannot be sized the tool falls back to the other.">i</span></label>
+        <div class="usg-radio-group">
+          <label class="usg-radio"><input type="radio" name="usg-vp" value="Standard" checked><span>Standard</span></label>
+          <label class="usg-radio"><input type="radio" name="usg-vp" value="V-Port"><span>V-Port</span></label>
+        </div>
+      </div>
+
+      <div class="usg-widget">
+        <label class="usg-label">Prioritize choosing 441/461 model or 121/122 model? <span class="usg-help" tabindex="0" role="button" aria-label="More information" data-tip="If Model 121/122 is selected, the program will attempt to select a Model 121 or 122 regulator before a Model 461 or 441 regulator.">i</span></label>
+        <div class="usg-radio-group">
+          <label class="usg-radio"><input type="radio" name="usg-combust" value="441/461" checked><span>Model 441/461</span></label>
+          <label class="usg-radio"><input type="radio" name="usg-combust" value="121/122"><span>Model 121/122</span></label>
+        </div>
+      </div>
 
       <div class="usg-widget" id="usg-irv-input-block" style="display:none">
           <label class="usg-label">Internal relief valve should protect downstream pressure to (psi)</label>
