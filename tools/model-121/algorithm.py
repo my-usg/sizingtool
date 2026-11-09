@@ -575,97 +575,137 @@ def will_work_vp(cap, reg, vp):
             return "No"
 
 
-# Body Size Minimum
+# Body Size Minimum (minimum outlet pipe size)
 # ------------------------------------------------------------------------------------------------------
+# Read from the heavy dashed lines in the capacity tables of brochure
+# USG-SB-007 Rev. 2 (pages 4-7). Each regulator lists its setpoint columns as
+# [outlet pressure ceiling, rows], and each row as [inlet pressure ceiling,
+# pipe size]. Both ceilings are "less than or equal to": an outlet above one
+# column's setpoint uses the next column up, and an inlet above one row's
+# pressure uses the next row down. For example R1210813 at 7" wc and 50 psi
+# reads the 7" wc column, where the 2" band runs from just above 3 psi up to
+# and including 50 psi, so it returns 2".
+# An outlet below the first setpoint uses the first column; an outlet above
+# the last uses the last column.
 
-def body_size_min121(ip, reg):
-    if reg == 'R1210813':
-        if ip <= 3:
-            return '1"'
-        elif ip <= 40:
-            return '2"'
-        elif ip <= 60:
-            return '3"'
-    elif reg == 'R121081Q':
-        if ip <= 5:
-            return '1.25"'
-        elif ip <= 25:
-            return '2"'
-        elif ip <= 60:
-            return '3"'
-    elif reg == 'R121081H':
-        if ip <= 40:
-            return '1.5"'
-        elif ip <= 60:
-            return '2"'
-    elif reg == 'R1210820':
-        if ip <= 40:
-            return '2"'
-        elif ip <= 60:
-            return '3"'
-    elif reg == 'R121082H':
-        if ip <= 40:
-            return '2.5"'
-        elif ip <= 60:
-            return '3"'
-    elif reg == 'R121121H':
-        if ip <= 3:
-            return '1.5"'
-        elif ip <= 15:
-            return '2"'
-        elif ip <= 60:
-            return '3"'
-    elif reg == 'R1211220':
-        if ip <= 5:
-            return '2"'
-        elif ip <= 25:
-            return '3"'
-        elif ip <= 60:
-            return '4"'
-    elif reg == 'R121122H':
-        if ip <= 5:
-            return '2.5"'
-        elif ip <= 25:
-            return '3"'
-        elif ip <= 60:
-            return '4"'
-    elif reg == 'R1211230':
-        if ip <= 40:
-            return '3"'
-    elif reg == 'R1211630':
-        if ip <= 5:
-            return '3"'
-        elif ip <= 15:
-            return '4"'
-        elif ip <= 40:
-            return '6"'
-    elif reg == 'R121HP13':
-        if ip <= 50:
-            return '1"'
-        elif ip <= 60:
-            return '2"'
-    elif reg == 'R121HP1Q':
-        if ip <= 40:
-            return '1.25"'
-        elif ip <= 60:
-            return '2"'
-    elif reg == 'R121HP1H':
-        if ip <= 40:
-            return '1.5"'
-        elif ip <= 60:
-            return '2"'
-    elif reg == 'R121HP20':
-        if ip <= 40:
-            return '2"'
-        elif ip <= 60:
-            return '3"'
-    elif reg == 'R121HP2H':
-        if ip <= 40:
-            return '2.5"'
-        elif ip <= 60:
-            return '3"'
-    else:
-	    return 'None'
+pipe_size121 = {
+    # 121-8, 3/4" x 1" and 1" x 1" (page 4)
+    'R1210813': [
+        [5/28,  [[3, '1"'], [40, '2"'], [60, '3"']]],
+        [7/28,  [[3, '1"'], [50, '2"'], [60, '3"']]],
+        [11/28, [[5, '1"'], [60, '2"']]],
+        [18/28, [[5, '1"'], [60, '2"']]],
+        [1,     [[10, '1"'], [60, '2"']]],
+        [2,     [[25, '1"'], [60, '2"']]],
+        [3,     [[25, '1"'], [60, '2"']]],
+    ],
+    # 121-8, bodies ending in 1-1/4" (page 4)
+    'R121081Q': [
+        [5/28,  [[5, '1.25"'], [25, '2"'], [60, '3"']]],
+        [7/28,  [[5, '1.25"'], [25, '2"'], [60, '3"']]],
+        [11/28, [[5, '1.25"'], [50, '2"'], [60, '3"']]],
+        [18/28, [[10, '1.25"'], [50, '2"'], [60, '3"']]],
+        [1,     [[10, '1.25"'], [60, '2"']]],
+        [2,     [[25, '1.25"'], [60, '2"']]],
+        [3,     [[25, '1.25"'], [60, '2"']]],
+    ],
+    # 121-8, 1-1/2", 2", 2-1/2" (page 5, 2 psi and 3 psi setpoints)
+    'R121081H': [
+        [2, [[40, '1.5"'], [60, '2"']]],
+        [3, [[60, '1.5"']]],
+    ],
+    'R1210820': [
+        [2, [[40, '2"'], [60, '3"']]],
+        [3, [[60, '2"']]],
+    ],
+    'R121082H': [
+        [2, [[40, '2.5"'], [60, '3"']]],
+        [3, [[60, '2.5"']]],
+    ],
+    # 121-12, 1-1/2", 2", 2-1/2" (page 6)
+    'R121121H': [
+        [5/28,  [[3, '1.5"'], [15, '2"'], [60, '3"']]],
+        [7/28,  [[3, '1.5"'], [15, '2"'], [60, '3"']]],
+        [11/28, [[5, '1.5"'], [25, '2"'], [60, '3"']]],
+        [18/28, [[5, '1.5"'], [25, '2"'], [60, '3"']]],
+        [1,     [[15, '1.5"'], [50, '2"'], [60, '3"']]],
+        [2,     [[25, '1.5"'], [60, '2"']]],
+        [3,     [[40, '1.5"'], [60, '2"']]],
+    ],
+    'R1211220': [
+        [5/28,  [[5, '2"'], [25, '3"'], [60, '4"']]],
+        [7/28,  [[5, '2"'], [25, '3"'], [60, '4"']]],
+        [11/28, [[10, '2"'], [60, '3"']]],
+        [18/28, [[10, '2"'], [60, '3"']]],
+        [1,     [[15, '2"'], [60, '3"']]],
+        [2,     [[25, '2"'], [60, '3"']]],
+        [3,     [[40, '2"'], [60, '3"']]],
+    ],
+    'R121122H': [
+        [5/28,  [[5, '2.5"'], [25, '3"'], [60, '4"']]],
+        [7/28,  [[5, '2.5"'], [25, '3"'], [60, '4"']]],
+        [11/28, [[10, '2.5"'], [60, '3"']]],
+        [18/28, [[10, '2.5"'], [60, '3"']]],
+        [1,     [[15, '2.5"'], [60, '3"']]],
+        [2,     [[25, '2.5"'], [60, '3"']]],
+        [3,     [[40, '2.5"'], [60, '3"']]],
+    ],
+    # 121-12, 3" (page 7): no outlet pipe increase in the table
+    'R1211230': [
+        [3, [[40, '3"']]],
+    ],
+    # 121-16, 3" (page 7)
+    'R1211630': [
+        [5/28,  [[5, '3"'], [15, '4"'], [40, '6"']]],
+        [7/28,  [[5, '3"'], [25, '4"'], [40, '6"']]],
+        [11/28, [[15, '3"'], [40, '4"']]],
+        [18/28, [[15, '3"'], [40, '4"']]],
+        [1,     [[25, '3"'], [40, '4"']]],
+    ],
+    # 121-8HP, bodies ending in 1" and 1-1/4" (page 4)
+    'R121HP13': [
+        [5,  [[50, '1"'], [60, '2"']]],
+        [10, [[60, '1"']]],
+    ],
+    'R121HP1Q': [
+        [5,  [[40, '1.25"'], [60, '2"']]],
+        [10, [[60, '1.25"']]],
+    ],
+    # 121-8HP, 1-1/2", 2", 2-1/2" (page 5): no outlet pipe increase in the table
+    'R121HP1H': [
+        [5,  [[60, '1.5"']]],
+        [10, [[60, '1.5"']]],
+    ],
+    'R121HP20': [
+        [5,  [[60, '2"']]],
+        [10, [[60, '2"']]],
+    ],
+    'R121HP2H': [
+        [5,  [[60, '2.5"']]],
+        [10, [[60, '2.5"']]],
+    ],
+}
+
+def body_size_min121(ip, op, reg):
+    if reg not in pipe_size121:
+        return 'None'
+
+    columns = pipe_size121[reg]
+
+    # Outlet: the first setpoint column at or above the outlet pressure
+    rows = None
+    for col in columns:
+        if rows == None and op <= col[0]:
+            rows = col[1]
+    if rows == None:
+        rows = columns[len(columns) - 1][1]
+
+    # Inlet: the first row band at or above the inlet pressure
+    for row in rows:
+        if ip <= row[0]:
+            return row[1]
+
+    return None
 
 
 # Regulator Match Functions
