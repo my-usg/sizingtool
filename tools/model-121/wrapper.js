@@ -328,7 +328,7 @@ function sizeTool(rawInput) {
       if (modelName.indexOf(PIPE_NOTE_MODELS[m]) !== -1) {
         var pipeReq;
         try {
-          pipeReq = body_size_min121(inlet_psi, mget('reg'));
+          pipeReq = body_size_min121(inlet_psi, outlet_psi, mget('reg'));
         } catch (err2) {
           pipeReq = null;
         }

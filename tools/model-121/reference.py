@@ -299,7 +299,7 @@ def run(payload) -> Dict[str, Any]:
         for marker in PIPE_NOTE_MODELS:
             if marker in model_name:
                 try:
-                    pipe_req = ns["body_size_min121"](ip=inlet_psi, reg=match121["reg"])
+                    pipe_req = ns["body_size_min121"](ip=inlet_psi, op=outlet_psi, reg=match121["reg"])
                 except Exception:
                     pipe_req = None
                 if pipe_req:

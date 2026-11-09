@@ -308,7 +308,7 @@
     }
    ],
    "capacity": "11,850",
-   "pipe_note": "Model 121 regulators have outlet pipe sizing requirements. This regulator was sized for use with 2\" outlet pipe. For capacities with smaller outlet piping, see regulator brochure.",
+   "pipe_note": "Model 121 regulators have outlet pipe sizing requirements. This regulator was sized for use with 1\" outlet pipe. For capacities with smaller outlet piping, see regulator brochure.",
    "part_numbers": [
     "R.121-8.STD.1SCD.8.EXTCON.STD.STD.STD.14.ALU"
    ],
@@ -1010,7 +1010,7 @@
     }
    ],
    "capacity": "8,995",
-   "pipe_note": "Model 121 regulators have outlet pipe sizing requirements. This regulator was sized for use with 2\" outlet pipe. For capacities with smaller outlet piping, see regulator brochure.",
+   "pipe_note": "Model 121 regulators have outlet pipe sizing requirements. This regulator was sized for use with 1\" outlet pipe. For capacities with smaller outlet piping, see regulator brochure.",
    "part_numbers": [
     "R.121-8.STD.1SCD.8.EXTCON.STD.STD.STD.13.ALU",
     "R.121-8.STD.1SCD.8.EXTCON.STD.STD.STD.14.ALU"
