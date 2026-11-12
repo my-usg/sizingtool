@@ -18,7 +18,7 @@
 <!-- Sizing algorithm, generated from the Python source. Pin a release tag
      (@v1.0.0) for strict change control, or track @main to pick up pushes
      automatically. -->
-<script src="https://cdn.jsdelivr.net/gh/my-usg/sizingtool@a822d31/dist/usg-model-121.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/my-usg/sizingtool@7ccdaff/dist/usg-model-121.js"></script>
 
 <div id="usg-sizing-tool">
   <p class="hsg-crumb">
@@ -628,6 +628,15 @@ function buildInput() {
 // if a part number is not recognised).
 var CART_ENDPOINT = 'https://hollandsupplycompany.com/api/sizing-tool/add-to-cart';
 
+// PRICING OFF (temporary, November 2026). Prices, the line total, the
+// account-pricing note and Add to Cart are switched off, and the button sends
+// the customer to the contact page for a quote instead. Lead times still show.
+// Nothing was deleted: each switched-off line is kept as a comment marked
+// "PRICING OFF". To turn pricing back on, search this block for "PRICING OFF"
+// and do what each note says - there are four places, this one included, and
+// QUOTE_URL can be deleted once the last of them is restored.
+var QUOTE_URL = 'https://hollandsupplycompany.com/contact';
+
 // The account-pricing note that sits above Add to Cart on the product pages.
 // It shows unconditionally: the tool cannot tell whether this visitor is
 // signed in or already on account pricing, and a note about better prices is
@@ -823,7 +832,9 @@ function onQtyChange(root) {
   var items = itemsFromDom(root);
   var wrap = root.querySelector('.usg-cart[data-items]');
   var btn = wrap ? wrap.querySelector('.usg-btn-cart') : null;
-  if (btn) btn.setAttribute('data-cart', cartUrl(items));
+  // PRICING OFF - uncomment the next line so a quantity change rewrites the
+  // cart address again. While it is off the button keeps QUOTE_URL.
+  // if (btn) btn.setAttribute('data-cart', cartUrl(items));
   paintInfo(root);
   scheduleLeadTimes(items, root);
 }
@@ -978,7 +989,8 @@ function loadInfo(root) {
   var items = itemsFromDom(root);
   if (!items.length) return;
   var token = ++lookupToken;
-  for (var i = 0; i < items.length; i++) fetchPrice(items[i].part, token, root);
+  // PRICING OFF - uncomment the next line to fetch prices again.
+  // for (var i = 0; i < items.length; i++) fetchPrice(items[i].part, token, root);
   fetchLeadTimes(items, token, root);
   paintInfo(root);
 }
@@ -1213,10 +1225,15 @@ function render(body) {
       // selection returns two different regulators, so both go in the cart.
       var items = cartItems(body);
       html += '<p class="usg-cart" data-items="' + esc(itemsAttr(items)) + '">' +
-        '<span class="usg-total" hidden></span>' +
-        accountNote() +
+        // PRICING OFF - the line total, the account-pricing note and Add to
+        // Cart. To restore them, uncomment the lines straight after this
+        // note and delete the two Contact for a Quote lines below those.
+        // '<span class="usg-total" hidden></span>' +
+        // accountNote() +
+        // '<button type="button" class="usg-btn-cart" data-cart="' +
+        // esc(cartUrl(items)) + '">Add to Cart</button></p>';
         '<button type="button" class="usg-btn-cart" data-cart="' +
-        esc(cartUrl(items)) + '">Add to Cart</button></p>';
+        esc(QUOTE_URL) + '">Contact for a Quote</button></p>';
 
       // The PDF summary sits with the part numbers: those are what a customer
       // acts on. The capacity tables and adjustments below are reference

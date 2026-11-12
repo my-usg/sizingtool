@@ -18,6 +18,14 @@ const path = require('path');
 const { JSDOM } = require('jsdom');
 
 const ROOT = path.join(__dirname, '..');
+
+// PRICING OFF (temporary, November 2026). The blocks show "Contact for a
+// Quote", pointing at QUOTE_URL, in place of Add to Cart, with no prices and no
+// account-pricing note. While this is true the test holds them to that; set it
+// to false when pricing is turned back on, and the full cart checks below run
+// again unchanged.
+const QUOTE_MODE = true;
+const QUOTE_URL = 'https://hollandsupplycompany.com/contact';
 const TOOLS_DIR = path.join(ROOT, 'tools');
 
 let pass = 0, fail = 0;
@@ -91,6 +99,7 @@ function driver(dom) {
           const link = out.querySelector('a.usg-btn-cart');
           return link ? link.getAttribute('href') : null;
         })(),
+        cartText: ((out.querySelector('.usg-btn-cart') || {}).textContent || '').trim(),
         adjustments: Array.from(out.querySelectorAll('.usg-table tbody tr'))
           .map(tr => Array.from(tr.querySelectorAll('td')).map(td => td.textContent.trim())),
         // One quantity box per cart line, in cart order: a regulator each,
@@ -178,6 +187,12 @@ async function testTool(slug) {
 
   console.log(`\n=== ${slug}: block contains no algorithm ===`);
   check('block carries no capacity data', blockHtml.length < 80000, blockHtml.length + ' bytes');
+  if (QUOTE_MODE) {
+    // jsdom has no fetch, so the scenarios never reach a price lookup; this is
+    // the only check that the lookup really is switched off.
+    check('prices are not fetched (PRICING OFF)',
+      !/^[ \t]*for \(.*fetchPrice\(/m.test(blockHtml));
+  }
   check('loads its own bundle from jsDelivr',
     blockHtml.indexOf('cdn.jsdelivr.net') !== -1 && blockHtml.indexOf('dist/' + cfg.output) !== -1);
 
@@ -331,12 +346,16 @@ async function testTool(slug) {
         problems.push('no include-kit checkbox on a result with a kit');
       } else {
         if (!got.kitBox.checked) problems.push('include-kit checkbox does not start ticked');
+        if (QUOTE_MODE) {
+          if (got.cartWithoutKit !== QUOTE_URL) problems.push('unticking the kit changed the quote link: ' + got.cartWithoutKit);
+        } else {
         const offParts = (got.cartWithoutKit || '').split('?').pop().split('&')
           .filter(x => x.indexOf('part[]=') === 0)
           .map(x => decodeURIComponent(x.slice('part[]='.length)));
         const regs = want.part_numbers || [];
         if (JSON.stringify(offParts) !== JSON.stringify(regs)) {
           problems.push('cart with the kit unticked ' + JSON.stringify(offParts) + ' vs ' + JSON.stringify(regs));
+        }
         }
         if (!got.kitDimmed) problems.push('unticked kit is not dimmed');
         if (got.kitQtyLocked !== true) problems.push('unticked kit quantity is still editable');
@@ -359,9 +378,13 @@ async function testTool(slug) {
       if (JSON.stringify(got.qtys) !== JSON.stringify(wantBoxes)) {
         problems.push('quantity boxes ' + JSON.stringify(got.qtys) + ' vs ' + JSON.stringify(wantBoxes));
       }
+      if (QUOTE_MODE) {
+        if (got.hasAccountNote) problems.push('account-pricing note shown while pricing is off');
+      } else {
       if (!got.hasAccountNote) problems.push('missing the account-pricing note above Add to Cart');
       if (got.html.indexOf('usg-signin') > got.html.indexOf('usg-btn-cart')) {
         problems.push('account-pricing note is below Add to Cart');
+      }
       }
     }
 
@@ -372,6 +395,9 @@ async function testTool(slug) {
     if (wantPns.length) {
       if (!got.cartHref) {
         problems.push('no Add to Cart button');
+      } else if (QUOTE_MODE) {
+        if (got.cartHref !== QUOTE_URL) problems.push('quote button goes to ' + got.cartHref);
+        if (got.cartText !== 'Contact for a Quote') problems.push('button reads "' + got.cartText + '"');
       } else {
         const ENDPOINT = 'https://hollandsupplycompany.com/api/sizing-tool/add-to-cart';
         if (got.cartHref.indexOf(ENDPOINT + '?') !== 0) {

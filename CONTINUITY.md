@@ -3,7 +3,7 @@
 Everything a new person (or a future me) needs to pick this up. Written to be
 read top to bottom once, then used as reference.
 
-Last updated against `VERSION` 1.1.0.
+Last updated 9 November 2026, against `VERSION` 1.1.0.
 
 ---
 
@@ -62,8 +62,10 @@ Nearly every "I made the change but nothing happened" moment traces to this.
 Each block loads its bundle from a **specific commit**:
 
 ```
-https://cdn.jsdelivr.net/gh/my-usg/sizingtool@a822d31/dist/usg-<tool>.js
+https://cdn.jsdelivr.net/gh/my-usg/sizingtool@<commit>/dist/usg-<tool>.js
 ```
+
+The commit each block uses today is in section 5.
 
 They used to load `@main`. That was abandoned after a release where GitHub had
 the new bundle, CI was green, the purge links had been opened — and jsDelivr
@@ -72,19 +74,62 @@ points to separately from the files themselves. A commit-pinned address can
 never be stale: that commit's files never change. The cost is one edit per
 release.
 
-**The release routine**, for anything that changes a bundle:
+**Every change to a bundle needs the blocks updated and re-pasted.** Pushing
+and a green CI run put the new bundle on GitHub; nothing reaches a customer
+until the block's script address points at a commit that contains it.
 
-1. Push, and wait for the Actions run to go green.
-2. Take the **newest** commit hash from the repo's commit list (the short
-   7-character code). CI may add its own commit after yours, so the commit on
-   the Actions page is not always the one to use.
-3. Confirm that commit carries the bundles you expect: open
-   `https://raw.githubusercontent.com/my-usg/sizingtool/<hash>/dist/usg-all-models.js`
-   and check the `sources: 'sha256:…'` value (section 5).
-4. Replace the old hash with the new one in the script address of **all eight**
-   blocks — every page on one commit keeps the next release a single
-   find-and-replace — and paste them.
-5. Check the console (below).
+**The release routine**, for anything that changes a bundle (`algorithm.py`,
+`wrapper.js`, `VERSION`):
+
+1. **Push, and wait for the Actions run to go green.**
+2. **Find the commit CI made.** When a bundle changes, CI commits the rebuilt
+   `dist/` itself, a few minutes after your push, as **"Rebuild sizing bundles
+   from algorithms [skip ci]"**. *That* commit is the one to pin — your own
+   commit still holds the old `dist/`, so pinning it changes nothing. Copy its
+   short 7-character hash from the repo's commit list. No rebuild commit means
+   no bundle changed, or Actions lacks write permission (section 14).
+3. **See which tools it changed.** Open the rebuild commit on GitHub: its
+   changed-files list names exactly the `dist/usg-*.js` files that moved, and
+   those are the blocks that must be re-pinned. Note each one's new hashes —
+   open `https://raw.githubusercontent.com/my-usg/sizingtool/<hash>/dist/usg-<tool>.js`
+   and search for `sources:`.
+4. **Edit the pin.** In each affected `tools/<tool>/block.html`, change only the
+   hash in the script line near the top (about line 21):
+
+   ```html
+   <script src="https://cdn.jsdelivr.net/gh/my-usg/sizingtool@OLDHASH/dist/usg-<tool>.js"></script>
+   ```
+
+   The tool name and path stay as they are. On GitHub, open the file, press the
+   pencil, change the seven characters, commit. From a clone, one command does
+   them all:
+
+   ```
+   sed -i 's#sizingtool@OLDHASH/#sizingtool@NEWHASH/#' tools/*/block.html
+   ```
+
+   Re-pinning a block whose bundle did not change is harmless — it loads a
+   byte-identical file — and keeps every block on one hash, but it is not
+   required. Section 5 records each block's pin either way.
+5. **Paste** each updated block into its Concrete page, replacing the old one,
+   and publish.
+6. **Check the console** on each page (below). `sources` must show the new
+   value; the old one means the paste did not take or the wrong hash went in.
+7. **Commit the blocks and section 5**, so the repo shows what is live. That
+   commit changes no bundle, so CI adds no rebuild commit after it — and the
+   block ends up pointing at a commit older than the one it sits in. That is
+   expected; there is no need to re-pin to it.
+
+**CI does not check the pin.** The browser test swaps each block's jsDelivr
+script for the local `dist/` file, so a block pinned to the wrong commit, or to
+a typo, passes every test. Step 6 is the only check.
+
+**Purging does not move a pinned page.** The purge links and CI's purge step
+clear `@main` addresses. A pinned page asks for `@<hash>`, whose files never
+change, so no purge can bring it forward — only a new pin can. On 9 November
+2026 two clean purges and a refresh still showed the
+October bundle, because the block was pinned to `a822d31`. If a page shows an
+old hash after a release, look at the pin before anything else.
 
 **Order matters when a release changes both a block and its bundle.** The
 block goes live the moment it is pasted; its bundle only when the pin moves.
@@ -102,10 +147,19 @@ Open its console and enter:
 USGSizing.versions
 ```
 
+It answers with one entry per bundle on the page, for example:
+
+```
+{ 'model-121': { version: '1.1.0', algorithm: 'sha256:5dcb0364c49d', sources: 'sha256:fcd0af94eaca' } }
+```
+
 Each tool reports two hashes. **`algorithm`** covers `algorithm.py` only;
 **`sources`** covers the algorithm, the wrapper and `VERSION`. A wrapper-only
 change — a validation message, a unit conversion, a summary line — moves
 `sources` and leaves `algorithm` alone, so check `sources` against section 5.
+
+The address of the bundle actually loaded is in the page source (search for
+`sizingtool@`) or the Network tab; the seven characters after `@` are the pin.
 
 ---
 
@@ -140,19 +194,25 @@ README.md, DEPLOYING.md, VERSION
 
 ## 5. The eight tools
 
-| Tool | Page | Bundle | `algorithm` | `sources` |
-| --- | --- | --- | --- | --- |
-| all-models | `/resources/regulator-sizing-tools/general` | `usg-all-models.js` | `5044addece3f` | `e975e0379483` |
-| model-046 | `…/model-046` | `usg-model-046.js` | `d929fe2c5c0c` | `6415985e9e0e` |
-| model-121 | `…/model-121-122` | `usg-model-121.js` | `1e01c0428b8d` | `dcc9d94c2511` |
-| model-143 | `…/model-143` | `usg-model-143.js` | `44b42e7b8685` | `ddccc66697e5` |
-| model-243 | `…/model-243` | `usg-model-243.js` | `f82dfa029475` | `e9eafe6b88f6` |
-| model-461 | `…/model-441-461` | `usg-model-461.js` | `88ff4f73f9ed` | `0666de818623` |
-| model-496 | `…/model-496` | `usg-model-496.js` | `860b588597c6` | `cf51bf643122` |
-| model-rpc | `…/model-243-rpc` | `usg-model-rpc.js` | `8bf4279e24d0` | `bc6888fe47aa` |
+| Tool | Page | Bundle | `algorithm` | `sources` | Block pinned to |
+| --- | --- | --- | --- | --- | --- |
+| all-models | `/resources/regulator-sizing-tools/general` | `usg-all-models.js` | `ab4ee3ccf0ac` | `6d78d64eba68` | `7ccdaff` |
+| model-046 | `…/model-046` | `usg-model-046.js` | `d929fe2c5c0c` | `6415985e9e0e` | `a822d31` |
+| model-121 | `…/model-121-122` | `usg-model-121.js` | `5dcb0364c49d` | `fcd0af94eaca` | `7ccdaff` |
+| model-143 | `…/model-143` | `usg-model-143.js` | `44b42e7b8685` | `ddccc66697e5` | `a822d31` |
+| model-243 | `…/model-243` | `usg-model-243.js` | `f82dfa029475` | `e9eafe6b88f6` | `a822d31` |
+| model-461 | `…/model-441-461` | `usg-model-461.js` | `88ff4f73f9ed` | `0666de818623` | `a822d31` |
+| model-496 | `…/model-496` | `usg-model-496.js` | `860b588597c6` | `cf51bf643122` | `a822d31` |
+| model-rpc | `…/model-243-rpc` | `usg-model-rpc.js` | `8bf4279e24d0` | `bc6888fe47aa` | `a822d31` |
 
-All eight blocks are pinned to commit **`a822d31`**, which carries exactly these
-bundles.
+Update this table at step 7 of every release. Two pins are in use after the
+9 November 2026 release (the 121 outlet pipe size): the all-models and model-121
+blocks moved to `7ccdaff`, CI's rebuild commit for it, and the other six stayed
+on `a822d31`. Their bundles are byte-identical at both commits, so moving them
+to `7ccdaff` at the next paste is safe and would put every page back on one
+hash. Before that release the all-models and model-121 rows read `5044addece3f`
+/ `e975e0379483` and `1e01c0428b8d` / `dcc9d94c2511`; a page still showing
+either is running the old bundle.
 
 Bundles join a shared `window.USGSizing` namespace rather than replacing it
 (`sizeAllModels`, `sizeModel046`, …), so two tools could coexist on one page.
@@ -238,7 +298,7 @@ no test would have.
 field for field, so editing one alone fails the differential test. That is the
 point of having both.
 
-### The 121/122, two rules worth knowing
+### The 121/122, three rules worth knowing
 
 Both live in `will_work_vp()` and `run_regulator_selection121()`, and both exist
 in **two copies** — `tools/model-121/` and the 121 section of
@@ -259,6 +319,18 @@ in **two copies** — `tools/model-121/` and the 121 section of
   122 from contention** — every input that selected a 122 under "Standard"
   selected a 121-12 V-Port under "V-Port" in a sweep of the pressure range. If
   the 122 should still win where it fits, the V-Port pass has to consider it.
+* **The outlet pipe size note depends on inlet *and* outlet pressure.**
+  `body_size_min121(ip, op, reg)` looks the answer up in `pipe_size121`, read
+  off the heavy dashed lines in the capacity tables of brochure USG-SB-007
+  Rev. 2, pages 4-7. Each regulator lists its setpoint columns (an outlet
+  ceiling) and, in each, its inlet bands; both are "less than or equal to".
+  R1210813 at a 7" wc outlet reads the 7" wc column, where 2" pipe runs from
+  just above 3 psi up to 50 psi inclusive, so 50 psi gives 2" and 51 psi gives
+  3". It replaced an inlet-only rule that ignored the outlet. Note its callers:
+  all-models calls it **inside** `algorithm.py`, but model-121 calls it from
+  **`wrapper.js` and `reference.py`**, outside the algorithm, so a signature
+  change there is three edits, not two (section 7). Three readings of the
+  drawing are awaiting confirmation from USG (section 13).
 
 ### Pressures, units and validation
 
@@ -376,8 +448,19 @@ Keep it in the pipeline. Every one of these was invisible by inspection:
   All eight tools had it; all now validate first.
 * A bulk rename left "Model 461/122" in a user-facing message.
 * Adding a parameter to `run_regulator_selection461` without updating its call
-  site in `allmodels_selector` raised `TypeError` on every 461 selection. When
-  changing a signature, grep for the call sites - there is one per tool.
+  site in `allmodels_selector` raised `TypeError` on every 461 selection.
+* The same again, quieter: `body_size_min121` gained an outlet argument and the
+  model-121 calls in `wrapper.js` and `reference.py` kept passing two. Python
+  raised `TypeError`, which the wrapper's `try` swallowed, so it showed **no**
+  pipe note; JavaScript filled the missing argument with `undefined`, which
+  compares false against every column, so it fell through to the last column
+  and showed **a wrong** one. The build was clean; only this test noticed.
+
+When changing a signature, grep the whole tool folder, not just
+`algorithm.py` — call sites live in `wrapper.js` and `reference.py` too:
+
+```
+grep -rn "function_name" tools/
 
 ---
 
@@ -480,6 +563,27 @@ separate copies. The input is pinned as an edge case in both.
 ---
 
 ## 10. Add to Cart
+
+> **Switched off for now (November 2026).** Every block shows **Contact for a
+> Quote** in place of Add to Cart, linking to
+> `https://hollandsupplycompany.com/contact`, and shows no prices, line total
+> or account-pricing note. Lead times, the quantity box and the include-kit
+> checkbox still work. Nothing was deleted: each switched-off line is still in
+> the block as a comment marked `PRICING OFF` - four places per block, the
+> first beside `CART_ENDPOINT` explaining the rest. `build/browser_test.js`
+> has a matching `QUOTE_MODE = true` that checks the quote button instead of
+> the cart.
+>
+> **To turn pricing back on:** in each of the eight blocks, search for
+> `PRICING OFF` and do what each note says (uncomment the line or lines after
+> it; in the results, also delete the two Contact for a Quote lines). Delete
+> `QUOTE_URL` and its note. Set `QUOTE_MODE = false` in the browser test, run
+> it - the full cart checks must pass - then paste the blocks. It is a
+> block-only change, so keep each block's existing pin (section 3). This was
+> rehearsed when it was switched off: following the notes gives back the
+> original blocks line for line, and the original 422 checks pass.
+>
+> Everything below describes the cart as it works when switched on.
 
 A result with a control line kit shows an **"Include control line kit"**
 checkbox, ticked by default. Unticked, the kit leaves the cart URL and the
@@ -758,13 +862,41 @@ Details that were deliberate and are easy to undo by accident:
 15. **The out-of-range warning** still names the inlet when it is the outlet
    that falls outside a table — and it is also what a customer sees for the
    143's deliberate low-inlet gap, where it reads as the tool being broken.
+16. **Confirm three 121 pipe-size readings with USG** (section 6). The brochure
+   is marked Draft, and in each case the drawing drops the dashed line to the
+   bottom of the table, meaning no larger pipe is ever needed:
+   * page 5, 121-8 and 121-8HP 1-1/2", 2" and 2-1/2": only the 2 psi column
+     steps up (above 40 psi). The 3, 5 and 10 psi columns never do; the old
+     rule stepped the 121-8HP up above 40 psi;
+   * page 4, 121-8HP 1" and 1-1/4": the 10 psi column never steps up, though
+     the 5 psi column does;
+   * page 7, 121-16: above a 7" wc outlet there is no 6" band at all.
+
+   If USG reads any of these differently, it is a data change to
+   `pipe_size121` in **both** `tools/model-121/` and `tools/all-models/`.
+17. **README.md, DEPLOYING.md and the comment above each block's script tag
+   still describe `@main` and the purge** as the way a change goes live, and
+   README shows an `@main` script address. That was true before the pins and
+   now sends a reader down the wrong path. Bring them in line with section 3.
+18. **Pricing and Add to Cart are switched off** (section 10), with Contact for
+   a Quote in their place. Turn them back on when Holland is ready; the steps
+   are in section 10.
 
 ---
 
 ## 14. Things that bit us, in one list
 
-* Pasting a block does nothing for an algorithm change — that lives in the CDN
-  bundle. Check `USGSizing.versions`.
+* **A pushed algorithm change is not live until the blocks are re-pinned and
+  re-pasted.** A green CI run means GitHub has the bundle, not that any page
+  loads it. Check `USGSizing.versions`, and compare `sources` with section 5.
+* **Pin CI's commit, not yours.** Your commit carries the old `dist/`; the
+  rebuilt bundles arrive in the "Rebuild sizing bundles" commit after it.
+* **Purging cannot fix a pinned page.** It only clears `@main` addresses, which
+  the blocks no longer use. On 9 November 2026 the purge "worked" twice and the
+  page still ran October's bundle (section 3).
+* When opening purge links, open them **one at a time**. Pasting two together
+  makes one long address; jsDelivr reports `finished` for a path that does not
+  exist, and neither file is purged.
 * `@main` jsDelivr URLs can serve the old bundle for hours even after a
   successful purge. The blocks are pinned to a commit for that reason
   (section 3).
